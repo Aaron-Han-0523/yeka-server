@@ -1,0 +1,9 @@
+int id
+int community_type
+String community_title
+String community_content
+String community_link
+String writer
+String create_date
+String update_date
+String delete_date

@@ -1,0 +1,16 @@
+int id
+int consultant_id
+int client_id
+String client_name
+String client_image
+String payment_date
+String consulting_title
+int payment_status
+int consulting_status
+int payment_amount
+int reservation_amount
+int commission
+int final_amount
+String create_date
+String update_date
+String delete_date

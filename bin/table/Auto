@@ -1,0 +1,9 @@
+int id
+String title
+String description
+int price
+int delivery_fee
+String tag
+String create_date
+String update_date
+String delete_date

@@ -1,0 +1,9 @@
+int id
+int consultant_id
+String menu_title
+int menu_amount
+String menu_content
+String menu_image
+String create_date
+String update_date
+String delete_date

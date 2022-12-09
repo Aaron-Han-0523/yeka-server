@@ -1,0 +1,7 @@
+int id
+int product_id
+String option_title
+String option_content
+String create_date
+String update_date
+String delete_date
