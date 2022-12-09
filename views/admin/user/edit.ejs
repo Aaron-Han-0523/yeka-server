@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <%- include ("../partials/header.ejs") %>
+</head>
+
+<body class="layout-boxed remove-alt-menu">
+
+    <%- include ("../partials/loader.ejs") %>
+
+        <%- include ("../partials/nav.ejs") %>
+
+            <!--  BEGIN MAIN CONTAINER  -->
+            <div class="main-container sidebar-closed " id="container">
+
+                <div class="overlay"></div>
+                <div class="search-overlay"></div>
+
+                <%- include ("../partials/sidebar.ejs") %>
+
+                    <!--  BEGIN CONTENT AREA  -->
+                    <div id="content" class="main-content">
+                        <div class="layout-px-spacing">
+
+                            <div class="middle-content container-xxl p-0">
+                                <!-- BREADCRUMB -->
+                                <div class="page-meta">
+                                    <nav class="breadcrumb-style-one" aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="/review">고객 후기 관리</a></li>
+                                            <li class="breadcrumb-item"><a href="/review/<%= data.review_id %>">
+                                                    <%= data.review_id %>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item active" aria-current="page">수정</li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                                <!-- /BREADCRUMB -->
+
+                                <div class="row layout-spacing">
+                                    <div class="col-lg-12 layout-top-spacing">
+                                        <div class="col-lg-12">
+                                            <!-- Post Form -->
+                                            <form method="post" enctype='multipart/form-data'>
+                                                <div class="statbox widget box box-shadow">
+                                                    <div class="widget-header">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <h4></h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="widget-content widget-content-area">
+                                                        <div class="form-group row mb-4">
+                                                            <label class="col-form-label">차량
+                                                                정보 선택</label>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <select class="form-select" id="carInfo"
+                                                                    name="carInfo_id">
+                                                                    <% car.rows.forEach(function(item, index) { %>
+                                                                        <% if(data.carInfo_id==item.carInfo_id) { %>
+                                                                            <option value="<%= item.carInfo_id %>"
+                                                                                selected>
+                                                                                <%= item.maker +'-'+ item.model +'-'+
+                                                                                    item.detailModel +'-'+
+                                                                                    item.yearModel %>
+                                                                            </option>
+                                                                            <% } else { %>
+                                                                                <option value="<%= item.carInfo_id %>">
+                                                                                    <%= item.maker +'-'+ item.model
+                                                                                        +'-'+ item.detailModel +'-'+
+                                                                                        item.yearModel %>
+                                                                                </option>
+                                                                                <% } %>
+                                                                                    <% }); %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="form-group row mb-4">
+                                                            <label class="col-form-label">처리한 협력사 선택
+                                                            </label>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <select class="form-select" id="suppliereUsers"
+                                                                    name="supplierUsers_id">
+                                                                    <% supplier.rows.forEach(function(item, index) { %>
+                                                                        <% if(data.supplierUsers_id==item.supplierUsers_id)
+                                                                            { %>
+                                                                            <option value="<%= item.supplierUsers_id %>"
+                                                                                selected>
+                                                                                <%= item.companyName +'-'+
+                                                                                    item.mainPhoneNum %>
+                                                                            </option>
+                                                                            <% } else { %>
+                                                                                <option
+                                                                                    value="<%= item.supplierUsers_id %>">
+                                                                                    <%= item.companyName +'-'+
+                                                                                        item.mainPhoneNum %>
+                                                                                </option>
+                                                                                <% } %>
+                                                                                    <% }); %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row mb-4">
+                                                            <label class="col-sm-2 col-form-label col-form-label-sm">차량
+                                                                번호</label>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <input id="carNum" type="text" name="carNum"
+                                                                    placeholder="" class="form-control" required
+                                                                    value="<%= data.carNum %>">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row mb-4">
+                                                            <label
+                                                                class="col-sm-2 col-form-label col-form-label-sm">연락처</label>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <input id="phoneNum" type="text" name="phoneNum"
+                                                                    placeholder="" class="form-control" required
+                                                                    value="<%= data.phoneNum %>">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row mb-4">
+                                                            <label
+                                                                class="col-sm-2 col-form-label col-form-label-sm">소유자명</label>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <input id="clientName" type="text" name="clientName"
+                                                                    placeholder="" class="form-control" required
+                                                                    value="<%= data.clientName %>">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <h6>제목</h6>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <form method="post">
+                                                                    <div class="form-group">
+                                                                        <label for="t-text"
+                                                                            class="visually-hidden">Text</label>
+                                                                        <input id="title" type="text" name="title"
+                                                                            placeholder="" class="form-control" required
+                                                                            value="<%= data.title %>">
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row layout-top-spacing">
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                <h6>내용</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div id="editor-container">
+                                                            <textarea class="form-control w-100" name="content"
+                                                                rows="15"><%= data.content %></textarea>
+                                                        </div>
+                                                        <!-- <div id="content-container" hidden>
+                                        <div id="toolbar-container">
+                                            <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
+                                            <button class="ql-underline" data-toggle="tooltip" data-placement="bottom" title="Underline"></button>
+                                            <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Add italic text <cmd+i>"></button>
+                                            <button class="ql-image" data-toggle="tooltip" data-placement="bottom" title="Upload image"></button>
+                                            <button class="ql-code-block" data-toggle="tooltip" data-placement="bottom" title="Show code"></button>
+                                        </div>
+                                        <div id="quill-tooltip">
+                                            <h1>This is a heading text...</h1>
+                                            <br/>
+                                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dui arcu, pellentesque id mattis sed, mattis semper erat. Etiam commodo arcu a mollis consequat. Curabitur pretium auctor tortor, bibendum placerat elit feugiat et. Ut ac turpis nec dui ullamcorper ornare. Vestibulum finibus quis magna at accumsan. Praesent a purus vitae tortor fringilla tempus vel non purus. Suspendisse eleifend nibh porta dolor ullamcorper laoreet. Ut sit amet ipsum vitae lectus pharetra tincidunt. In ipsum quam, iaculis at erat ut, fermentum efficitur ipsum. Nunc odio diam, fringilla in auctor et, scelerisque at lorem. Sed convallis tempor dolor eu dictum. Cras ornare ornare imperdiet. Pellentesque sagittis lacus non libero fringilla faucibus. Aenean ullamcorper enim et metus vestibulum, eu aliquam nunc placerat. Praesent fringilla dolor sit amet leo pulvinar semper. </p>
+                                            <br/>
+                                            <p> Curabitur vel tincidunt dui. Duis vestibulum eget velit sit amet aliquet. Curabitur vitae cursus ex. Aliquam pulvinar vulputate ullamcorper. Maecenas luctus in eros et aliquet. Cras auctor luctus nisl a consectetur. Morbi hendrerit nisi nunc, quis egestas nibh consectetur nec. Aliquam vel lorem enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc placerat, enim quis varius luctus, enim arcu tincidunt purus, in vulputate tortor mi a tortor. Praesent porta ornare fermentum. Praesent sed ligula at ante tempor posuere a at lorem. </p>
+                                            <br/>
+                                            <p>Aliquam diam felis, vehicula ut ipsum eu, consectetur tincidunt ipsum. Vestibulum sed metus ac nisi tincidunt mollis sed non urna. Vivamus lacinia ullamcorper interdum. Sed sed erat vel leo venenatis pretium. Sed aliquet sem nunc, ut iaculis dolor consectetur et. Vivamus ligula sapien, maximus nec pellentesque ut, imperdiet at libero. Vivamus semper nulla lectus, id dapibus nulla convallis id. Quisque elementum lectus ac dui gravida, ut molestie nunc convallis. Pellentesque et odio non dolor convallis commodo sit amet a ante. </p>
+                                        </div>
+                                    </div> -->
+                                                        <div class="form-group mb-4 layout-top-spacing">
+                                                            <label for="exampleFormControlSelect1">평점</label>
+                                                            <select class="form-select" id="grade" name="grade">
+                                                                <% if(data.grade==1) { %>
+                                                                    <option value="1" selected>★</option>
+                                                                    <% } else { %>
+                                                                        <option value="1">★</option>
+                                                                        <% } %>
+                                                                            <% if(data.grade==2) { %>
+                                                                                <option value="2" selected>★★</option>
+                                                                                <% } else { %>
+                                                                                    <option value="2">★★</option>
+                                                                                    <% } %>
+                                                                                        <% if(data.grade==3) { %>
+                                                                                            <option value="3" selected>
+                                                                                                ★★★</option>
+                                                                                            <% } else { %>
+                                                                                                <option value="3">★★★
+                                                                                                </option>
+                                                                                                <% } %>
+                                                                                                    <% if(data.grade==4)
+                                                                                                        { %>
+                                                                                                        <option
+                                                                                                            value="4"
+                                                                                                            selected>
+                                                                                                            ★★★★
+                                                                                                        </option>
+                                                                                                        <% } else { %>
+                                                                                                            <option
+                                                                                                                value="4">
+                                                                                                                ★★★★
+                                                                                                            </option>
+                                                                                                            <% } %>
+                                                                                                                <% if(data.grade==5)
+                                                                                                                    { %>
+                                                                                                                    <option
+                                                                                                                        value="5"
+                                                                                                                        selected>
+                                                                                                                        ★★★★★
+                                                                                                                    </option>
+                                                                                                                    <% } else
+                                                                                                                        {
+                                                                                                                        %>
+                                                                                                                        <option
+                                                                                                                            value="5">
+                                                                                                                            ★★★★★
+                                                                                                                        </option>
+                                                                                                                        <% }
+                                                                                                                            %>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <input class="form-control file-upload-input" type="file"
+                                                                id="formFile1" name="files">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <input class="form-control file-upload-input" type="file"
+                                                                id="formFile2" name="files">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <input class="form-control file-upload-input" type="file"
+                                                                id="formFile3" name="files">
+                                                        </div>
+
+                                                        <div class="row layout-top-spacing">
+                                                            <div class="col-lg-6 col-12 ">
+                                                                <div class="form-group">
+                                                                    <button
+                                                                        class="btn btn-outline-success mb-2 me-4">저장</button>
+                                                                    <button class="btn btn-outline-danger mb-2 me-4"
+                                                                        type="button" onclick="cancel()">취소</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- /Post Form -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <%- include ("../partials/footer.ejs") %>
+
+                    </div>
+                    <!--  END CONTENT AREA  -->
+            </div>
+            <!-- END MAIN CONTAINER -->
+
+            <%- include ("../partials/commonScrpits.ejs") %>
+
+                <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+                <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+</body>
+
+</html>

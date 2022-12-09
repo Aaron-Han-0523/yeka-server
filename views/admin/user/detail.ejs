@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <%- include ("../partials/header.ejs") %>
+</head>
+
+<body class="layout-boxed remove-alt-menu">
+
+    <%- include ("../partials/loader.ejs") %>
+
+        <%- include ("../partials/nav.ejs") %>
+
+            <!--  BEGIN MAIN CONTAINER  -->
+            <div class="main-container sidebar-closed " id="container">
+
+                <div class="overlay"></div>
+                <div class="search-overlay"></div>
+
+                <%- include ("../partials/sidebar.ejs") %>
+
+                    <!--  BEGIN CONTENT AREA  -->
+                    <div id="content" class="main-content">
+                        <div class="layout-px-spacing">
+
+                            <div class="middle-content container-xxl p-0">
+                                <!-- BREADCRUMB -->
+                                <div class="page-meta">
+                                    <nav class="breadcrumb-style-one" aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="/review">고객 후기 관리</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">
+                                                <%= data.review_id %>
+                                            </li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                                <!-- /BREADCRUMB -->
+
+                                <div class="row layout-spacing">
+                                    <div class="col-lg-12 layout-top-spacing">
+                                        <div class="col-xl-10">
+                                            <div class="statbox widget box box-shadow">
+                                                <div class="widget-header">
+                                                    <div class="row">
+                                                        <div class="col-xl-6 col-md-12 col-sm-12 col-12">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="widget-content widget-content-area">
+                                                    <div class="form-group row mb-4">
+                                                        <label class="col-form-label col-form-label-sm">차량 정보</label>
+                                                        <div>
+                                                            <label
+                                                                class="col-form-label form-control col-xl-4 mb-xl-0 mb-2">
+                                                                <%= car ? car.maker +'-'+ car.model +'-'+
+                                                                    car.detailModel +'-'+ car.yearModel : '' %>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mb-4">
+                                                        <label class="col-form-label col-form-label-sm">처리한 협력사
+                                                        </label>
+                                                        <div>
+                                                            <label class="form-control col-xl-4 mb-xl-0 mb-2">
+                                                                <%= supplier ? supplier.companyName +'-'+
+                                                                    supplier.mainPhoneNum : '' %>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row mb-4">
+                                                        <label class="col-sm-2 col-form-label col-form-label-sm">차량
+                                                            번호</label>
+                                                        <div>
+                                                            <label
+                                                                class="col-form-label col-form-label-sm form-control col-xl-4 mb-xl-0 mb-2">
+                                                                <%= data.carNum %>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row mb-4">
+                                                        <label
+                                                            class="col-sm-2 col-form-label col-form-label-sm">연락처</label>
+                                                        <div>
+                                                            <label
+                                                                class="col-form-label col-form-label-sm form-control col-xl-4 mb-xl-0 mb-2">
+                                                                <%= data.phoneNum %>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row mb-4">
+                                                        <label
+                                                            class="col-sm-2 col-form-label col-form-label-sm">소유자명</label>
+                                                        <div>
+                                                            <label
+                                                                class="col-form-label col-form-label-sm form-control col-xl-4 mb-xl-0 mb-2">
+                                                                <%= data.clientName %>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-xl-4 mb-xl-0 mb-2">
+                                                            <h6>제목</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h3
+                                                            class="col-form-label col-form-label-sm form-control col-xl-4 mb-xl-0 mb-2">
+                                                            <%= data.title %>
+                                                        </h3>
+                                                    </div>
+
+                                                    <div class="row layout-top-spacing">
+                                                        <div class="col-xl-4 mb-xl-0 mb-2">
+                                                            <h6>내용</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <p class="form-control col-xl-4 mb-xl-0 mb-2">
+                                                            <%= data.content %>
+                                                        </p>
+                                                    </div>
+                                                    <!-- <div id="content-container" hidden>
+                                        <div id="toolbar-container">
+                                            <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
+                                            <button class="ql-underline" data-toggle="tooltip" data-placement="bottom" title="Underline"></button>
+                                            <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Add italic text <cmd+i>"></button>
+                                            <button class="ql-image" data-toggle="tooltip" data-placement="bottom" title="Upload image"></button>
+                                            <button class="ql-code-block" data-toggle="tooltip" data-placement="bottom" title="Show code"></button>
+                                        </div>
+                                        <div id="quill-tooltip">
+                                            <h1>This is a heading text...</h1>
+                                            <br/>
+                                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dui arcu, pellentesque id mattis sed, mattis semper erat. Etiam commodo arcu a mollis consequat. Curabitur pretium auctor tortor, bibendum placerat elit feugiat et. Ut ac turpis nec dui ullamcorper ornare. Vestibulum finibus quis magna at accumsan. Praesent a purus vitae tortor fringilla tempus vel non purus. Suspendisse eleifend nibh porta dolor ullamcorper laoreet. Ut sit amet ipsum vitae lectus pharetra tincidunt. In ipsum quam, iaculis at erat ut, fermentum efficitur ipsum. Nunc odio diam, fringilla in auctor et, scelerisque at lorem. Sed convallis tempor dolor eu dictum. Cras ornare ornare imperdiet. Pellentesque sagittis lacus non libero fringilla faucibus. Aenean ullamcorper enim et metus vestibulum, eu aliquam nunc placerat. Praesent fringilla dolor sit amet leo pulvinar semper. </p>
+                                            <br/>
+                                            <p> Curabitur vel tincidunt dui. Duis vestibulum eget velit sit amet aliquet. Curabitur vitae cursus ex. Aliquam pulvinar vulputate ullamcorper. Maecenas luctus in eros et aliquet. Cras auctor luctus nisl a consectetur. Morbi hendrerit nisi nunc, quis egestas nibh consectetur nec. Aliquam vel lorem enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc placerat, enim quis varius luctus, enim arcu tincidunt purus, in vulputate tortor mi a tortor. Praesent porta ornare fermentum. Praesent sed ligula at ante tempor posuere a at lorem. </p>
+                                            <br/>
+                                            <p>Aliquam diam felis, vehicula ut ipsum eu, consectetur tincidunt ipsum. Vestibulum sed metus ac nisi tincidunt mollis sed non urna. Vivamus lacinia ullamcorper interdum. Sed sed erat vel leo venenatis pretium. Sed aliquet sem nunc, ut iaculis dolor consectetur et. Vivamus ligula sapien, maximus nec pellentesque ut, imperdiet at libero. Vivamus semper nulla lectus, id dapibus nulla convallis id. Quisque elementum lectus ac dui gravida, ut molestie nunc convallis. Pellentesque et odio non dolor convallis commodo sit amet a ante. </p>
+                                        </div>
+                                    </div> -->
+                                                    <div class="form-group mb-4 layout-top-spacing">
+                                                        <label for="exampleFormControlSelect1">평점</label>
+                                                        <p class="form-control">
+                                                            <%= '★' .repeat(data.grade) %>
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="row layout-spacing">
+                                                        <div class="col col-xl-5 mb-xl-0 mb-2">
+                                                            <div class="form-group">
+                                                                <% if(data.attachedFilepath1) { %>
+                                                                    <img class="img-fluid"
+                                                                        src="/<%= data.attachedFilepath1 %>" />
+                                                                    <% } %>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-xl-5 mb-xl-0 mb-2">
+                                                            <div class="form-group">
+                                                                <% if(data.attachedFilepath2) { %>
+                                                                    <img class="img-fluid"
+                                                                        src="/<%= data.attachedFilepath2 %>" />
+                                                                    <% } %>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-6 col-xl-5 mb-xl-0 mb-2">
+                                                            <div class="form-group">
+                                                                <% if(data.attachedFilepath3) { %>
+                                                                    <img class="img-fluid"
+                                                                        src="/<%= data.attachedFilepath3 %>" />
+                                                                    <% } %>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row layout-top-spacing">
+                                                        <div class="form-group">
+                                                            <% if(user.permission2.data[0]&0b0010) { %>
+                                                                <button type="button"
+                                                                    onclick="location.href='/review/edit/<%= data.review_id %>';"
+                                                                    class="btn btn-outline-success mb-2 me-4">수정하기</button>
+                                                                <% } %>
+                                                                    <% if(user.permission2.data[0]&0b0001) { %>
+                                                                        <button class="btn btn-outline-danger mb-2 me-4"
+                                                                            type="button"
+                                                                            onclick="location.href='/review/delete/<%= data.review_id %>';">삭제하기</button>
+                                                                        <% } %>
+                                                                            <button
+                                                                                class="btn btn-outline-danger mb-2 me-4"
+                                                                                type="button"
+                                                                                onclick="location.href='/review';">뒤로가기</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <%- include ("../partials/footer.ejs") %>
+
+                    </div>
+                    <!--  END CONTENT AREA  -->
+            </div>
+            <!-- END MAIN CONTAINER -->
+
+            <%- include ("../partials/commonScrpits.ejs") %>
+
+                <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+                <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+</body>
+
+</html>
