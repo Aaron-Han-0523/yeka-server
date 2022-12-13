@@ -42,6 +42,14 @@ require("./routes/order")(app);
 require("./routes/product")(app);
 require("./routes/user")(app);
 
+require("./routes/admin/community")(app);
+require("./routes/admin/consulting")(app);
+require("./routes/admin/image")(app);
+require("./routes/admin/like_community")(app);
+require("./routes/admin/menu")(app);
+require("./routes/admin/option")(app);
+require("./routes/admin/order")(app);
+require("./routes/admin/product")(app);
 require("./routes/admin/user")(app);
 
 // catch 404 and forward to error handler
