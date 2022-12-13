@@ -13,7 +13,7 @@ exports.create = (req, res) => {
   }
 
   // Create a Consulting
-  const consulting = {
+  const Consulting = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false
@@ -32,14 +32,19 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Consulting from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Consulting.findAll({ where: condition })
     .then(data => {
-      res.send(data);
+//      res.send(data);
+      return res.render('admin/consulting/index', {
+        count: 1,
+        data: data,
+        consulting: {}
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -49,6 +54,17 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Find a empty User
+exports.findEmpty = (req, res) => {
+  const id = req.params.id;
+
+   return res.render('admin/consulting/detail', {
+       count: 1,
+       data: [],
+       consulting: {}
+     });
+};
+
 // Find a single Consulting with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -56,7 +72,11 @@ exports.findOne = (req, res) => {
   Consulting.findByPk(id)
     .then(data => {
       if (data) {
-        res.send(data);
+        return res.render('admin/consulting/detail', {
+                    count: 1,
+                    data: data,
+                    consulting: {}
+                  });
       } else {
         res.status(404).send({
           message: `Cannot find Consulting with id=${id}.`
@@ -132,7 +152,7 @@ exports.deleteAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all consulting."
+          err.message || "Some error occurred while removing all Consulting."
       });
     });
 };
@@ -146,7 +166,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving consulting."
+          err.message || "Some error occurred while retrieving Consulting."
       });
     });
 };

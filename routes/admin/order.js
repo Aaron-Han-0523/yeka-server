@@ -1,28 +1,13 @@
 module.exports = app => {
-  const order = require("../../controllers/order.js");
+  const order = require("../../controllers/admin/order.js");
 
   var router = require("express").Router();
 
-  // Create a new Order
-  router.post("/", order.create);
-
-  // Retrieve all Order
   router.get("/", order.findAll);
 
-  // Retrieve all published Order
-  router.get("/published", order.findAllPublished);
+  router.get("/add", order.findEmpty);
 
-  // Retrieve a single Order with id
-  router.get("/:id", order.findOne);
-
-  // Update a Order with id
-  router.put("/:id", order.update);
-
-  // Delete a Order with id
-  router.delete("/:id", order.delete);
-
-  // Delete all Order
-  router.delete("/", order.deleteAll);
+  router.get("/detail/:id", order.findOne);
 
   app.use('/admin/order', router);
 };

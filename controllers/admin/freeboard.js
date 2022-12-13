@@ -1,8 +1,8 @@
 const db = require("../../models");
-const Product = db.product;
+const Community = db.community;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Product
+// Create and Save a new Community
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
@@ -12,22 +12,22 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Product
-  const product = {
+  // Create a Community
+  const Community = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false
   };
 
-  // Save Product in the database
-  Product.create(product)
+  // Save Community in the database
+  Community.create(community)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Product."
+          err.message || "Some error occurred while creating the Community."
       });
     });
 };
@@ -37,19 +37,22 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Product.findAll({ where: condition })
+// "community_type": 0 (공지사항)
+// "community_type": 1 (자유게시판)
+// "community_type": 2 (유튜브)
+  Community.findAll({ where: {"community_type": 1} })
     .then(data => {
 //      res.send(data);
-      return res.render('admin/product/index', {
+      return res.render('admin/freeboard/index', {
         count: 1,
         data: data,
-        product: {}
+        community: {}
       });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving product."
+          err.message || "Some error occurred while retrieving Community."
       });
     });
 };
@@ -58,115 +61,115 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/product/detail', {
+   return res.render('admin/freeboard/detail', {
        count: 1,
        data: [],
-       product: {}
+       community: {}
      });
 };
 
-// Find a single Product with an id
+// Find a single Community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Product.findByPk(id)
+  Community.findByPk(id)
     .then(data => {
       if (data) {
-        return res.render('admin/product/detail', {
+        return res.render('admin/freeboard/detail', {
                     count: 1,
                     data: data,
-                    user: {}
+                    community: {}
                   });
       } else {
         res.status(404).send({
-          message: `Cannot find Product with id=${id}.`
+          message: `Cannot find Community with id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Product with id=" + id
+        message: "Error retrieving Community with id=" + id
       });
     });
 };
 
-// Update a Product by the id in the request
+// Update a Community by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Product.update(req.body, {
+  Community.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Product was updated successfully."
+          message: "Community was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Product with id=${id}. Maybe Product was not found or req.body is empty!`
+          message: `Cannot update Community with id=${id}. Maybe Community was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Product with id=" + id
+        message: "Error updating Community with id=" + id
       });
     });
 };
 
-// Delete a Product with the specified id in the request
+// Delete a Community with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Product.destroy({
+  Community.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Product was deleted successfully!"
+          message: "Community was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Product with id=${id}. Maybe Product was not found!`
+          message: `Cannot delete Community with id=${id}. Maybe Community was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Product with id=" + id
+        message: "Could not delete Community with id=" + id
       });
     });
 };
 
-// Delete all Products from the database.
+// Delete all Community from the database.
 exports.deleteAll = (req, res) => {
-  Product.destroy({
+  Community.destroy({
     where: {},
     truncate: false
   })
     .then(numbers => {
-      res.send({ message: `${numbers} Products were deleted successfully!` });
+      res.send({ message: `${numbers} Community were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all products."
+          err.message || "Some error occurred while removing all Community."
       });
     });
 };
 
-// find all published Product
+// find all published Community
 exports.findAllPublished = (req, res) => {
-  Product.findAll({ where: { published: true } })
+  Community.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving products."
+          err.message || "Some error occurred while retrieving Community."
       });
     });
 };

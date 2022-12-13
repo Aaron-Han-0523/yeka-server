@@ -28,7 +28,7 @@
                                 <div class="page-meta">
                                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="/product">뷰티상품 관리</a></li>
+                                            <li class="breadcrumb-item"><a href="/product">상담 관리</a></li>
                                             <li class="breadcrumb-item active" aria-current="page">글쓰기</li>
                                         </ol>
                                     </nav>
@@ -65,60 +65,137 @@
                                                         <div class="form-group row mb-4">
                                                             <div class="col-lg-10 col-12 ">
                                                                 <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">제목</label>
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">상담자 id</label>
                                                             </div>
                                                             <div class="col-lg-10 col-12 ">
-                                                                <input id="title" type="text" name="title"
+                                                                <input id="consultant_id" type="text" name="consultant_id"
                                                                     placeholder="" class="form-control"
-                                                                     value="<%= data ? data.title: '' %>" required>
+                                                                     value="<%= data ? data.consultant_id: '' %>" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group row mb-4">
                                                             <div class="col-lg-10 col-12 ">
                                                                 <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">설명</label>
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">고객 id</label>
                                                             </div>
                                                             <div class="col-lg-10 col-12 ">
-                                                                <input id="description" type="text" name="description"
+                                                                <input id="client_id" type="text" name="client_id"
                                                                     placeholder="" class="form-control"
-                                                                     value="<%= data ? data.description: '' %>" required>
+                                                                     value="<%= data ? data.client_id: '' %>" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group row mb-4">
                                                             <div class="col-lg-10 col-12 ">
                                                                 <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">가격</label>
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">고객 이름</label>
                                                             </div>
                                                             <div class="col-lg-10 col-12 ">
-                                                                <input id="price" type="text" name="price"
+                                                                <input id="client_name" type="text" name="client_name"
                                                                     placeholder="" class="form-control"
-                                                                     value="<%= data ? data.price: '' %>" required>
+                                                                     value="<%= data ? data.client_name: '' %>" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group row mb-4">
                                                             <div class="col-lg-10 col-12 ">
                                                                 <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">배송비</label>
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">고객 이미지</label>
                                                             </div>
                                                             <div class="col-lg-10 col-12 ">
-                                                                <input id="delivery_fee" type="text" name="delivery_fee"
+                                                                <input id="client_image" type="text" name="client_image"
                                                                     placeholder="" class="form-control"
-                                                                     value="<%= data ? data.delivery_fee: '' %>" required>
+                                                                     value="<%= data ? data.client_image: '' %>" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group row mb-4">
                                                             <div class="col-lg-10 col-12 ">
                                                                 <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">태그</label>
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">결제 날짜</label>
                                                             </div>
                                                             <div class="col-lg-10 col-12 ">
-                                                                <input id="tag" type="text" name="tag"
+                                                                <input id="payment_date" type="text" name="payment_date"
                                                                     placeholder="" class="form-control"
-                                                                     value="<%= data ? data.tag: '' %>" required>
+                                                                     value="<%= data ? data.payment_date: '' %>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row mb-4">
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <label
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">상담 제목</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <input id="consulting_title" type="text" name="consulting_title"
+                                                                    placeholder="" class="form-control"
+                                                                     value="<%= data ? data.consulting_title: '' %>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row mb-4">
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <label
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">결제 상태</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <input id="payment_status" type="text" name="payment_status"
+                                                                    placeholder="" class="form-control"
+                                                                     value="<%= data ? data.payment_status: '' %>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row mb-4">
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <label
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">상담 상태</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <input id="consulting_status" type="text" name="consulting_status"
+                                                                    placeholder="" class="form-control"
+                                                                     value="<%= data ? data.consulting_status: '' %>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row mb-4">
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <label
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">결제 금액</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <input id="payment_amount" type="text" name="payment_amount"
+                                                                    placeholder="" class="form-control"
+                                                                     value="<%= data ? data.payment_amount: '' %>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row mb-4">
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <label
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">예약 수</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <input id="reservation_amount" type="text" name="reservation_amount"
+                                                                    placeholder="" class="form-control"
+                                                                     value="<%= data ? data.reservation_amount: '' %>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row mb-4">
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <label
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">수수료</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <input id="commission" type="text" name="commission"
+                                                                    placeholder="" class="form-control"
+                                                                     value="<%= data ? data.commission: '' %>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row mb-4">
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <label
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">최종 금액</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-12 ">
+                                                                <input id="final_amount" type="text" name="final_amount"
+                                                                    placeholder="" class="form-control"
+                                                                     value="<%= data ? data.final_amount: '' %>" required>
                                                             </div>
                                                         </div>
 

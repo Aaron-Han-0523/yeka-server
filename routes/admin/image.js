@@ -1,28 +1,13 @@
 module.exports = app => {
-  const image = require("../../controllers/image.js");
+  const image = require("../../controllers/admin/image.js");
 
   var router = require("express").Router();
 
-  // Create a new Image
-  router.post("/", image.create);
-
-  // Retrieve all Image
   router.get("/", image.findAll);
 
-  // Retrieve all published Image
-  router.get("/published", image.findAllPublished);
+  router.get("/add", image.findEmpty);
 
-  // Retrieve a single Image with id
-  router.get("/:id", image.findOne);
-
-  // Update a Image with id
-  router.put("/:id", image.update);
-
-  // Delete a Image with id
-  router.delete("/:id", image.delete);
-
-  // Delete all Image
-  router.delete("/", image.deleteAll);
+  router.get("/detail/:id", image.findOne);
 
   app.use('/admin/image', router);
 };

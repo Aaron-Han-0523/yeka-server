@@ -1,5 +1,5 @@
 const db = require("../../models");
-const Like_community = db.community;
+const Like_community = db.like_community;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Like_community
@@ -13,14 +13,14 @@ exports.create = (req, res) => {
   }
 
   // Create a Like_community
-  const Like_community = {
+  const like_community = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false
   };
 
   // Save Like_community in the database
-  Like_community.create(Like_community)
+  Like_community.create(like_community)
     .then(data => {
       res.send(data);
     })
@@ -32,21 +32,37 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Like_communities from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Like_community.findAll({ where: condition })
     .then(data => {
-      res.send(data);
+//      res.send(data);
+      return res.render('admin/like_community/index', {
+        count: 1,
+        data: data,
+        like_community: {}
+      });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Like_community."
+          err.message || "Some error occurred while retrieving like_community."
       });
     });
+};
+
+// Find a empty User
+exports.findEmpty = (req, res) => {
+  const id = req.params.id;
+
+   return res.render('admin/like_community/detail', {
+       count: 1,
+       data: [],
+       like_community: {}
+     });
 };
 
 // Find a single Like_community with an id
@@ -56,7 +72,11 @@ exports.findOne = (req, res) => {
   Like_community.findByPk(id)
     .then(data => {
       if (data) {
-        res.send(data);
+        return res.render('admin/like_community/detail', {
+                    count: 1,
+                    data: data,
+                    like_community: {}
+                  });
       } else {
         res.status(404).send({
           message: `Cannot find Like_community with id=${id}.`
@@ -120,19 +140,19 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Like_communities from the database.
+// Delete all Like_communitys from the database.
 exports.deleteAll = (req, res) => {
   Like_community.destroy({
     where: {},
     truncate: false
   })
     .then(numbers => {
-      res.send({ message: `${numbers} Like_communities were deleted successfully!` });
+      res.send({ message: `${numbers} Like_communitys were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all like_communities."
+          err.message || "Some error occurred while removing all like_communitys."
       });
     });
 };
@@ -146,7 +166,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving like_communities."
+          err.message || "Some error occurred while retrieving like_communitys."
       });
     });
 };

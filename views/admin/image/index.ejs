@@ -29,7 +29,7 @@
                                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <!-- <li class="breadcrumb-item"><a href="#">Table</a></li> -->
-                                            <li class="breadcrumb-item active" aria-current="page">뷰티 상품 관리
+                                            <li class="breadcrumb-item active" aria-current="page">이미지 관리
                                             </li>
                                         </ol>
                                     </nav>
@@ -44,10 +44,10 @@
                                         <button class="btn btn-outline-primary" type="button"
                                             onclick="searchUser();">검색</button>
                                         <button class="btn btn-outline-primary" type="button"
-                                            onclick="exportExcel('product_list_table','product_list_file','product_list_sheet');">엑셀
+                                            onclick="exportExcel('image_list_table','image_list_file','image_list_sheet');">엑셀
                                             다운로드</button>
                                         <button class="btn btn-outline-primary" type="button"
-                                            onclick="location.href='/admin/product/add';">글쓰기</button>
+                                            onclick="location.href='/admin/image/add';">글쓰기</button>
                                     </div>
                                     <p id="searchCount"></p>
                                 </div>
@@ -57,7 +57,7 @@
 
                                     <div class="table-responsive">
                                         <table class="table table-hover table-striped table-bordered w-auto"
-                                            id="product_list_table">
+                                            id="image_list_table">
                                             <thead>
                                                 <tr>
                                                     <!-- <th scope="col" width="5%">
@@ -67,24 +67,12 @@
                                                         </div>
                                                     </th> -->
                                                     <th class="text-center" scope="col">id</th>
+                                                    <th class="text-center" scope="col">이미지 타입</th>
+                                                    <th class="text-center" scope="col">상품 id</th>
+                                                    <th class="text-center" scope="col">상담자 id</th>
+                                                    <th class="text-center" scope="col">커뮤니티 id</th>
                                                     <th class="text-center" scope="col">제목</th>
-                                                    <th class="text-center" scope="col">설명</th>
-                                                    <th class="text-center" scope="col">가격</th>
-                                                    <th class="text-center" scope="col">배송비</th>
-                                                    <th class="text-center" scope="col">태그</th>
-<!--                                                     <th class="text-center" scope="col">성별</th> -->
-<!--                                                     <th class="text-center" scope="col">주소1</th> -->
-<!--                                                     <th class="text-center" scope="col">주소2</th> -->
-<!--                                                     <th class="text-center" scope="col">주소3</th> -->
-<!--                                                     <th class="text-center" scope="col">사업자등록번호</th> -->
-<!--                                                     <th class="text-center" scope="col">사업자등록증</th> -->
-<!--                                                     <th class="text-center" scope="col">해시태그</th> -->
-<!--                                                     <th class="text-center" scope="col">이력서</th> -->
-<!--                                                     <th class="text-center" scope="col">업무시간</th> -->
-<!--                                                     <th class="text-center" scope="col">인출액</th> -->
-<!--                                                     <th class="text-center" scope="col">은행1</th> -->
-<!--                                                     <th class="text-center" scope="col">은행2</th> -->
-<!--                                                     <th class="text-center" scope="col">은행3</th> -->
+                                                    <th class="text-center" scope="col">내용</th>
                                                     <th class="text-center" scope="col">생성일</th>
                                                     <th class="text-center" scope="col">변경일</th>
                                                     <th class="text-center" scope="col">삭제일</th>
@@ -100,7 +88,7 @@
                                                     d_t.getSeconds()).slice(-2); return year + "-" + month + "-" + day
                                                     + " " + hour + ":" + minute + ":" + seconds } %>
                                                     <% data.forEach( function(item, index) { %>
-                                                        <tr onclick="location.href='/admin/product/detail/<%= item.id %>';">
+                                                        <tr onclick="location.href='/admin/image/detail/<%= item.id %>';">
                                                             <!-- <td>
                                                                 <div class="form-check form-check-primary">
                                                                     <input class="form-check-input custom_mixed_child"
@@ -114,27 +102,29 @@
                                                             </td>
                                                             <td class="text-center">
                                                                 <span class="media-body align-self-center">
+                                                                    <%= item.image_type %>
+                                                                </span>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <span class="media-body align-self-center">
+                                                                    <%= item.product_id %>
+                                                                </span>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <span class="media-body align-self-center">
+                                                                    <%= item.consultant_id %>
+                                                                </span>
+                                                            </td><td class="text-center">
+                                                                <span class="media-body align-self-center">
+                                                                    <%= item.community_id %>
+                                                                </span>
+                                                            </td><td class="text-center">
+                                                                <span class="media-body align-self-center">
                                                                     <%= item.title %>
                                                                 </span>
-                                                            </td>
-                                                            <td class="text-center">
+                                                            </td><td class="text-center">
                                                                 <span class="media-body align-self-center">
-                                                                    <%= item.description %>
-                                                                </span>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <span class="media-body align-self-center">
-                                                                    <%= item.price %>
-                                                                </span>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <span class="media-body align-self-center">
-                                                                    <%= item.delivery_fee %>
-                                                                </span>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <span class="media-body align-self-center">
-                                                                    <%= item.tag %>
+                                                                    <%= item.content %>
                                                                 </span>
                                                             </td>
                                                             <td class="text-center">
@@ -170,7 +160,7 @@
                                                                         <circle cx="12" cy="12" r="3"></circle>
                                                                     </svg>
                                                                 </a> -->
-                                                                <a href="/admin/product/edit/<%= item.id %>"
+                                                                <a href="/admin/image/edit/<%= item.id %>"
                                                                     class="action-btn btn-edit bs-tooltip me-2"
                                                                     data-toggle="tooltip" data-placement="top"
                                                                     title="Edit">
@@ -186,7 +176,7 @@
                                                                         </path>
                                                                     </svg>
                                                                 </a>
-                                                                <a onclick="delete_(event, '/admin/product/delete/<%= item.id %>');"
+                                                                <a onclick="delete_(event, '/admin/image/delete/<%= item.id %>');"
                                                                     class="action-btn btn-delete bs-tooltip"
                                                                     data-toggle="tooltip"
                                                                     data-placement="top" title="Delete">
@@ -241,7 +231,7 @@
                         const searchWord_element = document.getElementById('searchWord');
                         const searchWord = searchWord_element.value;
 
-                        const res = await fetch(`/product/search?q=${searchWord}`)
+                        const res = await fetch(`/image/search?q=${searchWord}`)
                             .then((response) => {
                                 // console.log(response.json());
                                 return response.json();
@@ -258,7 +248,7 @@
                         let tempHTML = ''
                         for (let i = 0; i < result.count; i++) {
                             tempHTML += `
-                                <tr onclick="location.href='/product/${result.rows[i].id}';">
+                                <tr onclick="location.href='/image/${result.rows[i].id}';">
                                     <td class="text-center">
                                         <div class="media">
                                             <!-- <div class="avatar me-2">
@@ -333,7 +323,7 @@
                                 tempHTML += `
                                 <td class="text-center">
                                     <div class="action-btns">
-                                    <a href="/admin/product/edit/${result.rows[i].id}"
+                                    <a href="/admin/image/edit/${result.rows[i].id}"
                                     class="action-btn btn-edit bs-tooltip me-2"
                                     data-toggle="tooltip" data-placement="top"
                                     title="Edit">
@@ -350,7 +340,7 @@
                                     </svg>
                                 </a>`
 
-                            tempHTML += `<a onclick="delete_(event, '/admin/product/delete/${result.rows[i].id}');"
+                            tempHTML += `<a onclick="delete_(event, '/admin/image/delete/${result.rows[i].id}');"
                                         class="action-btn btn-delete bs-tooltip"
                                         data-toggle="tooltip"
                                         data-placement="top" title="Delete">

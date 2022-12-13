@@ -32,14 +32,19 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Menus from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Menu.findAll({ where: condition })
     .then(data => {
-      res.send(data);
+//      res.send(data);
+      return res.render('admin/menu/index', {
+        count: 1,
+        data: data,
+        menu: {}
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -49,6 +54,17 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Find a empty User
+exports.findEmpty = (req, res) => {
+  const id = req.params.id;
+
+   return res.render('admin/menu/detail', {
+       count: 1,
+       data: [],
+       menu: {}
+     });
+};
+
 // Find a single Menu with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -56,7 +72,11 @@ exports.findOne = (req, res) => {
   Menu.findByPk(id)
     .then(data => {
       if (data) {
-        res.send(data);
+        return res.render('admin/menu/detail', {
+                    count: 1,
+                    data: data,
+                    menu: {}
+                  });
       } else {
         res.status(404).send({
           message: `Cannot find Menu with id=${id}.`

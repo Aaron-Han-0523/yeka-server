@@ -13,7 +13,7 @@ exports.create = (req, res) => {
   }
 
   // Create a Community
-  const community = {
+  const Community = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false
@@ -32,21 +32,37 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Communities from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Community.findAll({ where: condition })
     .then(data => {
-      res.send(data);
+//      res.send(data);
+      return res.render('admin/community/index', {
+        count: 1,
+        data: data,
+        community: {}
+      });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving community."
+          err.message || "Some error occurred while retrieving Community."
       });
     });
+};
+
+// Find a empty User
+exports.findEmpty = (req, res) => {
+  const id = req.params.id;
+
+   return res.render('admin/community/detail', {
+       count: 1,
+       data: [],
+       community: {}
+     });
 };
 
 // Find a single Community with an id
@@ -56,7 +72,11 @@ exports.findOne = (req, res) => {
   Community.findByPk(id)
     .then(data => {
       if (data) {
-        res.send(data);
+        return res.render('admin/community/detail', {
+                    count: 1,
+                    data: data,
+                    community: {}
+                  });
       } else {
         res.status(404).send({
           message: `Cannot find Community with id=${id}.`
@@ -120,19 +140,19 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Communities from the database.
+// Delete all Community from the database.
 exports.deleteAll = (req, res) => {
   Community.destroy({
     where: {},
     truncate: false
   })
     .then(numbers => {
-      res.send({ message: `${numbers} Communities were deleted successfully!` });
+      res.send({ message: `${numbers} Community were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all communities."
+          err.message || "Some error occurred while removing all Community."
       });
     });
 };
@@ -146,7 +166,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving communities."
+          err.message || "Some error occurred while retrieving Community."
       });
     });
 };

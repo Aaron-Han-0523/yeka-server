@@ -32,14 +32,19 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Options from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Option.findAll({ where: condition })
     .then(data => {
-      res.send(data);
+//      res.send(data);
+      return res.render('admin/option/index', {
+        count: 1,
+        data: data,
+        option: {}
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -49,6 +54,17 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Find a empty User
+exports.findEmpty = (req, res) => {
+  const id = req.params.id;
+
+   return res.render('admin/option/detail', {
+       count: 1,
+       data: [],
+       option: {}
+     });
+};
+
 // Find a single Option with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -56,7 +72,11 @@ exports.findOne = (req, res) => {
   Option.findByPk(id)
     .then(data => {
       if (data) {
-        res.send(data);
+        return res.render('admin/option/detail', {
+                    count: 1,
+                    data: data,
+                    user: {}
+                  });
       } else {
         res.status(404).send({
           message: `Cannot find Option with id=${id}.`

@@ -51,6 +51,9 @@ require("./routes/admin/option")(app);
 require("./routes/admin/order")(app);
 require("./routes/admin/product")(app);
 require("./routes/admin/user")(app);
+require("./routes/admin/notice")(app);
+require("./routes/admin/freeboard")(app);
+require("./routes/admin/youtube")(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

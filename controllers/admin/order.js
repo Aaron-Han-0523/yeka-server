@@ -13,7 +13,7 @@ exports.create = (req, res) => {
   }
 
   // Create a Order
-  const order = {
+  const Order = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false
@@ -32,14 +32,19 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Orders from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Order.findAll({ where: condition })
     .then(data => {
-      res.send(data);
+//      res.send(data);
+      return res.render('admin/order/index', {
+        count: 1,
+        data: data,
+        order: {}
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -49,6 +54,17 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Find a empty User
+exports.findEmpty = (req, res) => {
+  const id = req.params.id;
+
+   return res.render('admin/order/detail', {
+       count: 1,
+       data: [],
+       order: {}
+     });
+};
+
 // Find a single Order with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -56,7 +72,11 @@ exports.findOne = (req, res) => {
   Order.findByPk(id)
     .then(data => {
       if (data) {
-        res.send(data);
+        return res.render('admin/order/detail', {
+            count: 1,
+            data: data,
+            order: {}
+          });
       } else {
         res.status(404).send({
           message: `Cannot find Order with id=${id}.`
@@ -132,7 +152,7 @@ exports.deleteAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all orders."
+          err.message || "Some error occurred while removing all Orders."
       });
     });
 };
@@ -146,7 +166,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving orders."
+          err.message || "Some error occurred while retrieving Orders."
       });
     });
 };
