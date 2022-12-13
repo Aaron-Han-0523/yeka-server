@@ -3,6 +3,9 @@ module.exports = app => {
 
   var router = require("express").Router();
 
+  //TODO create object
+  router.post("/detail", user.create);
+
   router.get("/", user.findAll);
 
   router.get("/add", user.findEmpty);

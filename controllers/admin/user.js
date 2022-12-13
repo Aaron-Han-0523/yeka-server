@@ -14,9 +14,25 @@ exports.create = (req, res) => {
 
   // Create a User
   const user = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+//    id: req.body.id,
+    user_type: req.body.user_type,
+    username: req.body.username,
+    name: req.body.name,
+    phone: req.body.phone,
+    email: req.body.email,
+    gender: req.body.gender,
+    address1: req.body.address1,
+    address2: req.body.address2,
+    address3: req.body.address3,
+    business_registration_number: req.body.business_registration_number,
+    hashtag: req.body.hashtag,
+    resume: req.body.resume,
+    working_hour: req.body.working_hour,
+    withdrawal: req.body.withdrawal,
+    bank1: req.body.bank1,
+    bank2: req.body.bank2,
+    bank3: req.body.bank3,
+//    business_registration_file: req.body.business_registration_file,
   };
 
   // Save User in the database

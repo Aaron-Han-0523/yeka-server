@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var adminIndexRouter = require('./routes/admin/index');
 //var usersRouter = require('./routes/users');
 
 var app = express();
@@ -30,6 +31,7 @@ sequelize.sync({ force: false })
 });
 
 app.use('/', indexRouter);
+app.use('/admin', adminIndexRouter);
 //app.use('/users', usersRouter);
 
 require("./routes/community")(app);
