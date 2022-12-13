@@ -3,8 +3,11 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Index page
-  router.get("/", user.index);
+  router.get("/", user.findAll);
+
+  router.get("/add", user.findEmpty);
+
+  router.get("/detail/:id", user.findOne);
 
   app.use('/admin/user', router);
 };

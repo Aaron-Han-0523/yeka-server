@@ -2,37 +2,171 @@ const db = require("../../models");
 const User = db.user;
 const Op = db.Sequelize.Op;
 
-exports.index = async (req, res, next) => {
-    console.log("index");
-
-    return res.render('admin/user/index', {
-        count: 1,
-        data: [],
-        user: {
-                  users_id: 1,
-                  userid: 1,
-                  password: 1,
-                  userName: "이름",
-                  phoneNum: "010-1010-1010",
-                  email: "ddd@gmail.com",
-//                  permission1: 0100,
-//                  permission2: 1111,
-//                  permission3_1: 15,
-//                  permission3_2: 15,
-//                  permission4: 15,
-//                  permission5: 15,
-//                  permission6: 15,
-//                  permission7: 15,
-                  note: "memo",
-                  createUser: "dd",
-                  updateUser: "ss",
-                  createDate: "",
-                  updateDate: "",
-                  deleteUser: "",
-                  deleteDate: "",
-                  custom1: "",
-                  custom2: "",
-                  custom3: ""
-                }
+// Create and Save a new User
+exports.create = (req, res) => {
+  // Validate request
+  if (!req.body.title) {
+    res.status(400).send({
+      message: "Content can not be empty!"
     });
-}
+    return;
+  }
+
+  // Create a User
+  const user = {
+    title: req.body.title,
+    description: req.body.description,
+    published: req.body.published ? req.body.published : false
+  };
+
+  // Save User in the database
+  User.create(user)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the User."
+      });
+    });
+};
+
+// Retrieve all Users from the database.
+exports.findAll = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  User.findAll({ where: condition })
+    .then(data => {
+//      res.send(data);
+      return res.render('admin/user/index', {
+        count: 1,
+        data: data,
+        user: {}
+      });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving user."
+      });
+    });
+};
+
+// Find a empty User
+exports.findEmpty = (req, res) => {
+  const id = req.params.id;
+
+   return res.render('admin/user/detail', {
+       count: 1,
+       data: [],
+       user: {}
+     });
+};
+
+// Find a single User with an id
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+
+  User.findByPk(id)
+    .then(data => {
+      if (data) {
+        return res.render('admin/user/detail', {
+            count: 1,
+            data: data,
+            user: {}
+          });
+      } else {
+        res.status(404).send({
+          message: `Cannot find User with id=${id}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving User with id=" + id
+      });
+    });
+};
+
+// Update a User by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  User.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "User was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating User with id=" + id
+      });
+    });
+};
+
+// Delete a User with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  User.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "User was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete User with id=${id}. Maybe User was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete User with id=" + id
+      });
+    });
+};
+
+// Delete all Users from the database.
+exports.deleteAll = (req, res) => {
+  User.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(numbers => {
+      res.send({ message: `${numbers} Users were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all users."
+      });
+    });
+};
+
+// find all published User
+exports.findAllPublished = (req, res) => {
+  User.findAll({ where: { published: true } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving users."
+      });
+    });
+};
