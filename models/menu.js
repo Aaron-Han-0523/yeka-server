@@ -4,8 +4,8 @@ module.exports = function(sequelize, DataTypes) {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
+            defaultValue: 0,
             primaryKey: true,
-            autoIncrement: true,
             comment: '메뉴 식별번호'
         },
         consultant_id: {
@@ -47,13 +47,11 @@ module.exports = function(sequelize, DataTypes) {
         update_date: {
             type: DataTypes.DATE,
             allowNull: true,
-            defaultValue: Sequelize.Sequelize.NOW,
             comment: '수정일'
         },
         delete_date: {
             type: DataTypes.DATE,
             allowNull: true,
-            defaultValue: Sequelize.Sequelize.NOW,
             comment: '삭제일'
         },
     }, {

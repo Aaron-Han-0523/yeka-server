@@ -36,7 +36,7 @@ exports.create = (req, res) => {
     business_registration_file: req.body.business_registration_file,
   };
 
-console.log(user)
+  console.log(user)
   // Save User in the database
   // insert into user values(user);
 
@@ -62,9 +62,9 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  User.findAll({ where: {"user_type" : 1} })
+  User.findAll({ where: { "user_type": 1 } })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/consultant/index', {
         count: 1,
         data: data,
@@ -83,12 +83,12 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/consultant/detail', {
-       count: 1,
-       data: [],
-       user: {},
-       id,
-     });
+  return res.render('admin/consultant/detail', {
+    count: 1,
+    data: [],
+    user: {},
+    id,
+  });
 };
 
 // Find a single User with an id
@@ -99,11 +99,12 @@ exports.findOne = (req, res) => {
     .then(data => {
       if (data) {
         return res.render('admin/consultant/detail', {
-            count: 1,
-            data: data,
-            user: {},
-            id,
-          });
+          count: 1,
+          data: data,
+          user: {},
+          menu: {},
+          id: id,
+        });
       } else {
         res.status(404).send({
           message: `Cannot find User with id=${id}.`
