@@ -52,12 +52,17 @@ console.log(user)
     });
 };
 
+// 0 : 사용자
+// 1 : 컨설턴트
+// 2 : 협력사
+// 99 : 관리자
+// Retrieve all Users from the database.
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  User.findAll({ where: condition })
+  User.findAll({ where: {"user_type" : 0} })
     .then(data => {
 //      res.send(data);
       return res.render('admin/user/index', {
