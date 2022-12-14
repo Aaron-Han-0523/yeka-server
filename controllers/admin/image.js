@@ -13,16 +13,20 @@ exports.create = (req, res) => {
   }
 
   // Create a Image
-  const Image = {
+  const image = {
+    id: null,
+    image_type: req.body.image_type,
+    product_id: req.body.product_id,
+    consultant_id: req.body.consultant_id,
+    community_id: req.body.community_id,
     title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    content: req.body.content,
   };
 
   // Save Image in the database
   Image.create(image)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/image');
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +65,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/image/detail', {
        count: 1,
        data: [],
-       image: {}
+       image: {},
+       id,
      });
 };
 
@@ -75,7 +80,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/image/detail', {
                     count: 1,
                     data: data,
-                    image: {}
+                    image: {},
+                    id
                   });
       } else {
         res.status(404).send({
@@ -99,9 +105,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Image was updated successfully."
-        });
+        res.redirect('/admin/image/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Image with id=${id}. Maybe Image was not found or req.body is empty!`
@@ -124,9 +128,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Image was deleted successfully!"
-        });
+        res.redirect('/admin/image');
       } else {
         res.send({
           message: `Cannot delete Image with id=${id}. Maybe Image was not found!`

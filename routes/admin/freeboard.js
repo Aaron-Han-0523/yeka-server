@@ -9,5 +9,11 @@ module.exports = app => {
 
   router.get("/detail/:id", freeboard.findOne);
 
+  router.post("/add", freeboard.create);
+
+  router.post("/detail/:id", freeboard.update);
+
+  router.get("/delete/:id", freeboard.delete);
+
   app.use('/admin/freeboard', router);
 };

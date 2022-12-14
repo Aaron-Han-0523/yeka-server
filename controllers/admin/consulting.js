@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Consulting
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.consulting_title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -13,16 +13,26 @@ exports.create = (req, res) => {
   }
 
   // Create a Consulting
-  const Consulting = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+  const consulting = {
+    id: null,
+    consultant_id: req.body.consultant_id,
+    client_id: req.body.client_id,
+    client_name: req.body.client_name,
+    client_image: req.body.client_image,
+    payment_date: req.body.payment_date,
+    consulting_title: req.body.consulting_title,
+    payment_status: req.body.payment_status,
+    consulting_status: req.body.consulting_status,
+    payment_amount: req.body.payment_amount,
+    reservation_amount: req.body.reservation_amount,
+    commission: req.body.commission,
+    final_amount: req.body.final_amount,
   };
 
   // Save Consulting in the database
   Consulting.create(consulting)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/consulting');
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +71,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/consulting/detail', {
        count: 1,
        data: [],
-       consulting: {}
+       consulting: {},
+       id,
      });
 };
 
@@ -75,7 +86,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/consulting/detail', {
                     count: 1,
                     data: data,
-                    consulting: {}
+                    consulting: {},
+                    id,
                   });
       } else {
         res.status(404).send({
@@ -99,9 +111,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Consulting was updated successfully."
-        });
+        res.redirect('/admin/consulting/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Consulting with id=${id}. Maybe Consulting was not found or req.body is empty!`
@@ -124,9 +134,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Consulting was deleted successfully!"
-        });
+        res.redirect('/admin/consulting');
       } else {
         res.send({
           message: `Cannot delete Consulting with id=${id}. Maybe Consulting was not found!`

@@ -9,5 +9,11 @@ module.exports = app => {
 
   router.get("/detail/:id", community.findOne);
 
+  router.post("/add", community.create);
+
+  router.post("/detail/:id", community.update);
+
+  router.get("/delete/:id", community.delete);
+
   app.use('/admin/community', router);
 };

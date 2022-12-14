@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Like_community
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.product_id) {
+  if (!req.body.user_id) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -15,12 +15,8 @@ exports.create = (req, res) => {
   // Create a Like_community
   const like_community = {
     id: null,
-    image_type: req.body.image_type,
-    product_id: req.body.product_id,
-    consultant_id: req.body.consultant_id,
-    community_id: req.body.community_id,
-    title: req.body.title,
-    content: req.body.content,
+    user_id: req.body.user_id,
+    community_title: req.body.community_title,
   };
 
   // Save Like_community in the database

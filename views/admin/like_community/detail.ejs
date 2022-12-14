@@ -28,7 +28,7 @@
                                 <div class="page-meta">
                                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="/admin/like_community">좋아하는 커뮤니티 관리</a></li>
+                                            <li class="breadcrumb-item"><a href="/admin/like_community">좋아하는 페이지 관리</a></li>
                                             <li class="breadcrumb-item active" aria-current="page">글쓰기</li>
                                         </ol>
                                     </nav>
@@ -68,69 +68,24 @@
                                                         <div class="form-group row mb-4">
                                                             <div class="col-lg-10 col-12 ">
                                                                 <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">이미지 타입</label>
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">사용자 id</label>
                                                             </div>
                                                             <div class="col-lg-10 col-12 ">
-                                                                <input id="image_type" type="text" name="image_type"
+                                                                <input id="user_id" type="text" name="user_id"
                                                                     placeholder="" class="form-control"
-                                                                     value="<%= data ? data.image_type: '' %>" required>
+                                                                     value="<%= data ? data.user_id: '' %>" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group row mb-4">
                                                             <div class="col-lg-10 col-12 ">
                                                                 <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">상품 id</label>
+                                                                    class="col-sm-2 col-form-label col-form-label-sm">커뮤니티 제목</label>
                                                             </div>
                                                             <div class="col-lg-10 col-12 ">
-                                                                <input id="product_id" type="text" name="product_id"
+                                                                <input id="community_title" type="text" name="community_title"
                                                                     placeholder="" class="form-control"
-                                                                     value="<%= data ? data.product_id: '' %>" required>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
-                                                                <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">상담자 id</label>
-                                                            </div>
-                                                            <div class="col-lg-10 col-12 ">
-                                                                <input id="consultant_id" type="text" name="consultant_id"
-                                                                    placeholder="" class="form-control"
-                                                                     value="<%= data ? data.consultant_id: '' %>" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
-                                                                <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">커뮤니티 id</label>
-                                                            </div>
-                                                            <div class="col-lg-10 col-12 ">
-                                                                <input id="community_id" type="text" name="community_id"
-                                                                    placeholder="" class="form-control"
-                                                                     value="<%= data ? data.community_id: '' %>" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
-                                                                <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">제목</label>
-                                                            </div>
-                                                            <div class="col-lg-10 col-12 ">
-                                                                <input id="title" type="text" name="title"
-                                                                    placeholder="" class="form-control"
-                                                                     value="<%= data ? data.title: '' %>" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
-                                                                <label
-                                                                    class="col-sm-2 col-form-label col-form-label-sm">내용</label>
-                                                            </div>
-                                                            <div class="col-lg-10 col-12 ">
-                                                                <input id="content" type="text" name="content"
-                                                                    placeholder="" class="form-control"
-                                                                     value="<%= data ? data.content: '' %>" required>
+                                                                     value="<%= data ? data.community_title: '' %>" required>
                                                             </div>
                                                         </div>
                                                         <div class="row layout-top-spacing">
@@ -163,6 +118,7 @@
                                                                 <%= data ? data.delete_date: '' %>
                                                             </p>
                                                         </div>
+
 
                                                         <div class="row layout-top-spacing">
                                                             <div class="col-lg-6 col-12 ">

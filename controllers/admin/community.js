@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Community
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.community_type) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -13,16 +13,19 @@ exports.create = (req, res) => {
   }
 
   // Create a Community
-  const Community = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+  const community = {
+    id: null,
+    community_type: req.body.community_type,
+    community_title: req.body.community_title,
+    community_content: req.body.community_content,
+    community_link: req.body.community_link,
+    writer: req.body.writer,
   };
 
   // Save Community in the database
   Community.create(community)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/community');
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +64,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/community/detail', {
        count: 1,
        data: [],
-       community: {}
+       community: {},
+       id,
      });
 };
 
@@ -75,7 +79,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/community/detail', {
                     count: 1,
                     data: data,
-                    community: {}
+                    community: {},
+                    id,
                   });
       } else {
         res.status(404).send({
@@ -99,9 +104,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Community was updated successfully."
-        });
+        res.redirect('/admin/community/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Community with id=${id}. Maybe Community was not found or req.body is empty!`
@@ -124,9 +127,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Community was deleted successfully!"
-        });
+        res.redirect('/admin/community');
       } else {
         res.send({
           message: `Cannot delete Community with id=${id}. Maybe Community was not found!`
