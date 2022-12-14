@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Menu
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.menu_title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -14,15 +14,18 @@ exports.create = (req, res) => {
 
   // Create a Menu
   const menu = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    id: null,
+    consultant_id: req.body.consultant_id,
+    menu_title: req.body.menu_title,
+    menu_amount: req.body.menu_amount,
+    menu_content: req.body.menu_content,
+    menu_image: req.body.menu_image,
   };
 
   // Save Menu in the database
   Menu.create(menu)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/menu');
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +64,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/menu/detail', {
        count: 1,
        data: [],
-       menu: {}
+       menu: {},
+       id,
      });
 };
 
@@ -75,7 +79,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/menu/detail', {
                     count: 1,
                     data: data,
-                    menu: {}
+                    menu: {},
+                    id,
                   });
       } else {
         res.status(404).send({
@@ -99,9 +104,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Menu was updated successfully."
-        });
+        res.redirect('/admin/menu/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Menu with id=${id}. Maybe Menu was not found or req.body is empty!`
@@ -124,9 +127,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Menu was deleted successfully!"
-        });
+        res.redirect('/admin/menu');
       } else {
         res.send({
           message: `Cannot delete Menu with id=${id}. Maybe Menu was not found!`

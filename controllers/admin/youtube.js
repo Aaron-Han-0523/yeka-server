@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Community
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.community_type) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -13,16 +13,19 @@ exports.create = (req, res) => {
   }
 
   // Create a Community
-  const Community = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+  const community = {
+    id: null,
+    community_type: req.body.community_type,
+    community_title: req.body.community_title,
+    community_content: req.body.community_content,
+    community_link: req.body.community_link,
+    writer: req.body.writer,
   };
 
-  // Save Community in the database
+  // Save Community int he database
   Community.create(community)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/youtube');
     })
     .catch(err => {
       res.status(500).send({
@@ -46,7 +49,7 @@ exports.findAll = (req, res) => {
       return res.render('admin/youtube/index', {
         count: 1,
         data: data,
-        community: {}
+        community: {},
       });
     })
     .catch(err => {
@@ -64,7 +67,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/youtube/detail', {
        count: 1,
        data: [],
-       community: {}
+       community: {},
+       id,
      });
 };
 
@@ -78,7 +82,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/youtube/detail', {
                     count: 1,
                     data: data,
-                    community: {}
+                    community: {},
+                    id,
                   });
       } else {
         res.status(404).send({
@@ -88,7 +93,7 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Community with id=" + id
+        message: "Error retrieving Youtube with id=" + id
       });
     });
 };
@@ -102,9 +107,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Community was updated successfully."
-        });
+          res.redirect('/admin/youtube/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Community with id=${id}. Maybe Community was not found or req.body is empty!`
@@ -113,7 +116,7 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Community with id=" + id
+        message: "Error updating Youtube with id=" + id
       });
     });
 };
@@ -127,9 +130,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Community was deleted successfully!"
-        });
+        res.redirect('/admin/youtube');
       } else {
         res.send({
           message: `Cannot delete Community with id=${id}. Maybe Community was not found!`
@@ -138,7 +139,7 @@ exports.delete = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Community with id=" + id
+        message: "Could not delete Youtube with id=" + id
       });
     });
 };

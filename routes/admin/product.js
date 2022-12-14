@@ -9,5 +9,11 @@ module.exports = app => {
 
   router.get("/detail/:id", product.findOne);
 
+  router.post("/add", product.create);
+
+  router.post("/detail/:id", product.update);
+
+  router.get("/delete/:id", product.delete);
+
   app.use('/admin/product', router);
 };

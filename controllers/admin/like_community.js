@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Like_community
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.product_id) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -14,15 +14,19 @@ exports.create = (req, res) => {
 
   // Create a Like_community
   const like_community = {
+    id: null,
+    image_type: req.body.image_type,
+    product_id: req.body.product_id,
+    consultant_id: req.body.consultant_id,
+    community_id: req.body.community_id,
     title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    content: req.body.content,
   };
 
   // Save Like_community in the database
   Like_community.create(like_community)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/like_community');
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +65,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/like_community/detail', {
        count: 1,
        data: [],
-       like_community: {}
+       like_community: {},
+       id,
      });
 };
 
@@ -75,7 +80,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/like_community/detail', {
                     count: 1,
                     data: data,
-                    like_community: {}
+                    like_community: {},
+                    id,
                   });
       } else {
         res.status(404).send({
@@ -99,9 +105,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Like_community was updated successfully."
-        });
+        res.redirect('/admin/like_community/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Like_community with id=${id}. Maybe Like_community was not found or req.body is empty!`
@@ -124,9 +128,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Like_community was deleted successfully!"
-        });
+        res.redirect('/admin/like_community');
       } else {
         res.send({
           message: `Cannot delete Like_community with id=${id}. Maybe Like_community was not found!`

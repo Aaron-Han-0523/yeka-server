@@ -47,7 +47,7 @@
                                             onclick="exportExcel('community_list_table','community_list_file','community_list_sheet');">엑셀
                                             다운로드</button>
                                         <button class="btn btn-outline-primary" type="button"
-                                            onclick="location.href='/admin/community/add';">글쓰기</button>
+                                            onclick="location.href='/admin/notice/add';">글쓰기</button>
                                     </div>
                                     <p id="searchCount"></p>
                                 </div>
@@ -86,7 +86,7 @@
                                                     d_t.getSeconds()).slice(-2); return year + "-" + month + "-" + day
                                                     + " " + hour + ":" + minute + ":" + seconds } %>
                                                     <% data.forEach( function(item, index) { %>
-                                                        <tr onclick="location.href='/admin/community/detail/<%= item.id %>';">
+                                                        <tr onclick="location.href='/admin/notice/detail/<%= item.id %>';">
                                                             <!-- <td>
                                                                 <div class="form-check form-check-primary">
                                                                     <input class="form-check-input custom_mixed_child"

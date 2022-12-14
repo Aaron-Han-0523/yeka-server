@@ -9,5 +9,11 @@ module.exports = app => {
 
   router.get("/detail/:id", notice.findOne);
 
+  router.post("/add", notice.create);
+
+  router.post("/detail/:id", notice.update);
+
+  router.get("/delete/:id", notice.delete);
+
   app.use('/admin/notice', router);
 };

@@ -9,5 +9,11 @@ module.exports = app => {
 
   router.get("/detail/:id", option.findOne);
 
+  router.post("/add", option.create);
+
+  router.post("/detail/:id", option.update);
+
+  router.get("/delete/:id", option.delete);
+
   app.use('/admin/option', router);
 };

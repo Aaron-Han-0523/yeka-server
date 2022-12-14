@@ -14,15 +14,18 @@ exports.create = (req, res) => {
 
   // Create a Product
   const product = {
+    id: null,
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    price: req.body.price,
+    delivery_fee: req.body.delivery_fee,
+    tag: req.body.tag,
   };
 
   // Save Product in the database
   Product.create(product)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/product');
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +64,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/product/detail', {
        count: 1,
        data: [],
-       product: {}
+       product: {},
+       id,
      });
 };
 
@@ -75,7 +79,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/product/detail', {
                     count: 1,
                     data: data,
-                    user: {}
+                    user: {},
+                    id,
                   });
       } else {
         res.status(404).send({
@@ -99,9 +104,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Product was updated successfully."
-        });
+        res.redirect('/admin/product/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Product with id=${id}. Maybe Product was not found or req.body is empty!`
@@ -124,9 +127,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Product was deleted successfully!"
-        });
+        res.redirect('/admin/product');
       } else {
         res.send({
           message: `Cannot delete Product with id=${id}. Maybe Product was not found!`

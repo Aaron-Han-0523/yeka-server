@@ -13,16 +13,31 @@ exports.create = (req, res) => {
   }
 
   // Create a Order
-  const Order = {
+  const order = {
+    id: null,
+    orderer_name: req.body.orderer_name,
+    orderer_phone: req.body.orderer_phone,
+    orderer_address1: req.body.orderer_address1,
+    orderer_address2: req.body.orderer_address2,
+    orderer_address3: req.body.orderer_address3,
+    recipient_place: req.body.recipient_place,
+    recipient_name: req.body.recipient_name,
+    recipient_phone: req.body.recipient_phone,
+    recipient_placeaddress1: req.body.recipient_placeaddress1,
+    recipient_placeaddress2: req.body.recipient_placeaddress2,
+    recipient_placeaddress3: req.body.recipient_placeaddress3,
+    image1: req.body.image1,
     title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    option: req.body.option,
+    quantity: req.body.quantity,
+    price: req.body.price,
+    delivery_fee: req.body.delivery_fee,
   };
 
   // Save Order in the database
   Order.create(order)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/order');
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +76,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/order/detail', {
        count: 1,
        data: [],
-       order: {}
+       order: {},
+       id,
      });
 };
 
@@ -75,7 +91,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/order/detail', {
             count: 1,
             data: data,
-            order: {}
+            order: {},
+            id,
           });
       } else {
         res.status(404).send({
@@ -99,9 +116,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Order was updated successfully."
-        });
+          res.redirect('/admin/order/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Order with id=${id}. Maybe Order was not found or req.body is empty!`
@@ -124,9 +139,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Order was deleted successfully!"
-        });
+        res.redirect('/admin/order');
       } else {
         res.send({
           message: `Cannot delete Order with id=${id}. Maybe Order was not found!`

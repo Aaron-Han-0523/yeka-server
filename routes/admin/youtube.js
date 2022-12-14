@@ -9,5 +9,11 @@ module.exports = app => {
 
   router.get("/detail/:id", youtube.findOne);
 
+  router.post("/add", youtube.create);
+
+  router.post("/detail/:id", youtube.update);
+
+  router.get("/delete/:id", youtube.delete);
+
   app.use('/admin/youtube', router);
 };

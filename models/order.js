@@ -4,8 +4,8 @@ module.exports = function(sequelize, DataTypes) {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
-            defaultValue: 0,
             primaryKey: true,
+            autoIncrement: true,
             comment: '주문 정보 식별번호'
         },
         orderer_name: {

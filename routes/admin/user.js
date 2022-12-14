@@ -3,14 +3,18 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  //TODO create object
-  router.post("/detail", user.create);
+  //TODO edit object
+  router.post("/detail/:id", user.update);
 
   router.get("/", user.findAll);
 
   router.get("/add", user.findEmpty);
 
+  router.post("/add", user.create);
+
   router.get("/detail/:id", user.findOne);
+
+  router.get("/delete/:id", user.delete);
 
   app.use('/admin/user', router);
 };

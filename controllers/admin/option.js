@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Option
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.product_id) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -14,15 +14,16 @@ exports.create = (req, res) => {
 
   // Create a Option
   const option = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    id: null,
+    product_id: req.body.product_id,
+    option_title: req.body.option_title,
+    option_content: req.body.option_content,
   };
 
   // Save Option in the database
   Option.create(option)
     .then(data => {
-      res.send(data);
+      return res.redirect('/admin/option');
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +62,8 @@ exports.findEmpty = (req, res) => {
    return res.render('admin/option/detail', {
        count: 1,
        data: [],
-       option: {}
+       option: {},
+       id,
      });
 };
 
@@ -75,7 +77,8 @@ exports.findOne = (req, res) => {
         return res.render('admin/option/detail', {
                     count: 1,
                     data: data,
-                    user: {}
+                    user: {},
+                    id,
                   });
       } else {
         res.status(404).send({
@@ -99,9 +102,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Option was updated successfully."
-        });
+        res.redirect('/admin/option/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Option with id=${id}. Maybe Option was not found or req.body is empty!`
@@ -124,9 +125,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: "Option was deleted successfully!"
-        });
+        res.redirect('/admin/option');
       } else {
         res.send({
           message: `Cannot delete Option with id=${id}. Maybe Option was not found!`

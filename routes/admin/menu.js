@@ -9,5 +9,11 @@ module.exports = app => {
 
   router.get("/detail/:id", menu.findOne);
 
+  router.post("/add", menu.create);
+
+  router.post("/detail/:id", menu.update);
+
+  router.get("/delete/:id", menu.delete);
+
   app.use('/admin/menu', router);
 };
