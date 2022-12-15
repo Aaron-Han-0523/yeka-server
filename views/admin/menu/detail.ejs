@@ -29,7 +29,7 @@
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/menu">상담 메뉴 관리</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "추가" %></li>
               </ol>
             </nav>
           </div>
@@ -48,6 +48,19 @@
                         </div>
                       </div>
                     </div>
+
+                    <%
+                    let data = {
+                      id : id,
+                      menu_title : "menu_title"+id,
+                      menu_content : "menu_content".repeat(id),
+                      menu_amount : id*10000,
+                      menu_image : id%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg": null,
+                      create_date : new Date(),
+                      update_date : new Date(),
+                      delete_date : null
+                    }
+                    %>
 
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
@@ -102,12 +115,14 @@
                             if(data.menu_image) {
                             let image_url = encodeURI(data.menu_image.replace(/\\/g, '/'));
                           %>
-                          <div class="col-12 card-thumbnail" style="background-image: url('<%= image_url %>')"></div>
+                          <a target="_blank" href="<%= image_url %>">
+                            <div class="col-12 card-thumbnail" style="background-image: url('<%= image_url %>')"></div>
+                          </a>
                           <% }else{ %>
                           <div class="col-12 card-thumbnail" style="background-image: url('https://via.placeholder.com/150.jpg?text=No%20Image')"></div>
                           <% } %>
                         </div>
-                        <div class="col-12 ">
+                        <div class="col-12 mt-3">
                           <input id="menu_image" type="file" name="menu_image" placeholder="" class="form-control-file" required>
                         </div>
                       </div>

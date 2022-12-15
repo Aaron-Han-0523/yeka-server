@@ -42,7 +42,7 @@
               <button class="btn btn-outline-primary" type="button" onclick="searchUser();">검색</button>
               <button class="btn btn-outline-primary" type="button" onclick="exportExcel('community_list_table','community_list_file','community_list_sheet');">엑셀
                 다운로드</button>
-              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/freeboard/add';">글쓰기</button>
+              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/freeboard/add';">추가하기</button>
             </div>
             <p id="searchCount"></p>
           </div>
@@ -62,9 +62,9 @@
                                                     </th> -->
                     <th class="text-center" scope="col">식별번호</th>
                     <th class="text-center" scope="col">커뮤니티 타입</th>
-                    <th class="text-center" scope="col">커뮤니티 제목</th>
-                    <th class="text-center" scope="col">커뮤니티 내용</th>
-                    <th class="text-center" scope="col">커뮤니티 링크</th>
+                    <th class="text-center" scope="col">글제목</th>
+                    <th class="text-center" scope="col">글내용</th>
+                    <th class="text-center" scope="col">링크</th>
                     <th class="text-center" scope="col">작성자</th>
                     <th class="text-center" scope="col">생성일</th>
                     <th class="text-center" scope="col">변경일</th>
@@ -89,7 +89,7 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.community_type %>
+                        <%= codezip.community_type[item.community_type] %>
                       </span>
                     </td>
                     <td class="text-center">

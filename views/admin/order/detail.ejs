@@ -29,7 +29,7 @@
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/order">주문 관리</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "추가" %></li>
               </ol>
             </nav>
           </div>
@@ -39,7 +39,7 @@
             <div class="col-12 layout-top-spacing">
               <div class="col-12">
                 <!-- Post Form -->
-                <form method="post" <%  if(!id) { %> action="/admin/order/add" <% } %>>
+                <form method="post">
                   <div class="statbox widget box box-shadow">
                     <div class="widget-header">
                       <div class="row">
@@ -48,6 +48,35 @@
                         </div>
                       </div>
                     </div>
+
+                    <%
+                    if(id){
+                      data = {
+                        id: id,
+                        orderer_name: "orderer_name" +id,
+                        orderer_phone: "orderer_phone" +id,
+                        orderer_address1: "orderer_address1" +id,
+                        orderer_address2: "orderer_address2" +id,
+                        orderer_address3: "orderer_address3" +id,
+                        recipient_place: "recipient_place" +id,
+                        recipient_name: "recipient_name" +id,
+                        recipient_phone: "recipient_phone" +id,
+                        recipient_address1: "recipient_address1" +id,
+                        recipient_address2: "recipient_address2" +id,
+                        recipient_address3: "recipient_address3" +id,
+                        image1: id%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg": null,
+                        title: "title" +id,
+                        option: "option".repeat(id),
+                        quantity: id+1,
+                        price: id*10000,
+                        delivery_fee: id*1000,
+                        total_fee: id*11000,
+                        create_date: new Date(),
+                        update_date: new Date(),
+                        delete_date: id%2 ? new Date() : null,
+                      }
+                    }
+                    %>
 
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
@@ -136,7 +165,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 주소1</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_placeaddress1" type="text" name="recipient_placeaddress1" placeholder="" class="form-control" value="<%= data ? data.address3: '' %>" required>
+                          <input id="recipient_address1" type="text" name="recipient_address1" placeholder="" class="form-control" value="<%= data ? data.address3: '' %>" required>
                         </div>
                       </div>
 
@@ -145,7 +174,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 주소2</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_placeaddress2" type="text" name="recipient_placeaddress2" placeholder="" class="form-control" value="<%= data ? data.recipient_placeaddress2: '' %>" required>
+                          <input id="recipient_address2" type="text" name="recipient_address2" placeholder="" class="form-control" value="<%= data ? data.recipient_address2: '' %>" required>
                         </div>
                       </div>
 
@@ -154,7 +183,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 주소3</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_placeaddress3" type="text" name="recipient_placeaddress3" placeholder="" class="form-control" value="<%= data ? data.recipient_placeaddress3: '' %>" required>
+                          <input id="recipient_address3" type="text" name="recipient_address3" placeholder="" class="form-control" value="<%= data ? data.recipient_address2: '' %>" required>
                         </div>
                       </div>
 
@@ -236,22 +265,6 @@
                           <%= data ? data.delete_date: '' %>
                         </p>
                       </div>
-
-                      <% if(data.business_registration_file) { %>
-                      <div class="row">
-                        <div class="col col-6 col-xl-5 mb-xl-0 mb-2">
-                          <div class="form-group">
-                            <img class="img-fluid" src="/<%= data ? data.business_registration_file: '' %>" />
-                          </div>
-                        </div>
-                      </div>
-                      <% } else { %>
-                      <div class="mb-3">
-                        <div class="col-12 ">
-                          <input class="form-control-file" type="file" id="business_registration_file" name="files">
-                        </div>
-                      </div>
-                      <% } %>
 
                       <div class="row layout-top-spacing">
                         <div class="col-lg-6 col-12 ">

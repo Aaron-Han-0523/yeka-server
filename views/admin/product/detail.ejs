@@ -29,7 +29,7 @@
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/product">뷰티상품 관리</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "추가" %></li>
               </ol>
             </nav>
           </div>
@@ -172,6 +172,75 @@
                   </div>
                 </form>
                 <!-- /Post Form -->
+
+                <!-- 상품 옵션 -->
+                <div class="statbox widget box box-shadow layout-top-spacing">
+                  <!-- header -->
+                  <div class="widget-header">
+                    <div class="row">
+                      <div class="col-12 text-center pt-3">
+                        <h2>상품 옵션</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- content -->
+
+                  <!-- 테스트 데이터 -->
+                  <div>
+                    <%
+                        let option = {count:100, rows:[]};
+                        for(let i=0; i< 10; i++){
+                          option.rows.push({
+                            id: i,
+                            option_title: "option_title" + i,
+                            option_content: "option_content" + i,
+                            create_date: i,
+                            update_date: i,
+                            delete_date: i,
+                          })
+                        }
+                        %>
+                  </div>
+
+                  <div class="widget-content widget-content-area">
+                    <!-- content head -->
+                    <div class="container text-center">
+                      <div class="row fs-5">
+                        <div class="col-1 border rounded-start">메뉴 번호</div>
+                        <div class="col-2 border">메뉴명</div>
+                        <div class="col-3 border">메뉴설명</div>
+                        <div class="col-1 border">메뉴금액</div>
+                        <div class="col border">메뉴이미지</div>
+                        <div class="col border">생성일</div>
+                        <div class="col border">수정일</div>
+                        <div class="col border rounded-end">삭제일</div>
+                      </div>
+                    </div>
+
+                    <!-- content body -->
+                    <div class="container mt-3 text-center fs-6" id="menu_index">
+                      <% menu.rows.forEach((item,index)=>{ %>
+                      <div class="row div-hover" onclick="location.href='/admin/menu/detail/<%= item.id %>';">
+                        <div class="col-1 border"><%= item.id %></div>
+                        <div class="col-2 border text-start"><%= item.menu_title  %></div>
+                        <div class="col-3 border text-start text-ellipsis"><%= item.menu_content %></div>
+                        <div class="col-1 border"><%= Intl.NumberFormat().format(item.menu_amount) %></div>
+                        <div class="col border"><%= item.menu_image ? "O":"X" %></div>
+                        <div class="col border"><%= myUtils.formatDateTime(item.create_date) %></div>
+                        <div class="col border"><%= myUtils.formatDateTime(item.update_date) %></div>
+                        <div class="col border"><%= myUtils.formatDateTime(item.delete_date) %></div>
+                      </div>
+                      <% }) %>
+                    </div>
+
+                    <!-- pagination -->
+                    <div id="menu_pagination" class="layout-top-spacing">
+                      <%- myUtils.make_pagination_by_func(1, menu.count, "load_menu") %>
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </div>

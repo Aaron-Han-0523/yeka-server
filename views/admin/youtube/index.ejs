@@ -42,7 +42,7 @@
               <button class="btn btn-outline-primary" type="button" onclick="searchUser();">검색</button>
               <button class="btn btn-outline-primary" type="button" onclick="exportExcel('community_list_table','community_list_file','community_list_sheet');">엑셀
                 다운로드</button>
-              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/youtube/add';">글쓰기</button>
+              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/youtube/add';">추가하기</button>
             </div>
             <p id="searchCount"></p>
           </div>
@@ -89,7 +89,7 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.community_type %>
+                        <%= codezip.community_type[item.community_type] %>
                       </span>
                     </td>
                     <td class="text-center">

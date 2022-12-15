@@ -42,7 +42,7 @@
               <button class="btn btn-outline-primary" type="button" onclick="searchUser();">검색</button>
               <button class="btn btn-outline-primary" type="button" onclick="exportExcel('consulting_list_table','consulting_list_file','consulting_list_sheet');">엑셀
                 다운로드</button>
-              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/consulting/add';">글쓰기</button>
+              <!-- <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/consulting/add';">추가하기</button> -->
             </div>
             <p id="searchCount"></p>
           </div>
@@ -64,7 +64,6 @@
                     <th class="text-center" scope="col">상담자 id</th>
                     <th class="text-center" scope="col">고객 id</th>
                     <th class="text-center" scope="col">고객 이름</th>
-                    <th class="text-center" scope="col">고객 이미지</th>
                     <th class="text-center" scope="col">결제 날짜</th>
                     <th class="text-center" scope="col">상담 제목</th>
                     <th class="text-center" scope="col">결제 상태</th>
@@ -88,7 +87,6 @@
                         consultant_id: i,
                         client_id: i,
                         client_name: "client_name"+i,
-                        client_image: "client_image"+i,
                         payment_date: new Date(),
                         consulting_title: "consulting_title"+i,
                         payment_status: i%3,
@@ -133,11 +131,6 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.client_image %>
-                      </span>
-                    </td>
-                    <td class="text-center">
-                      <span class="media-body align-self-center">
                         <%= myUtils.formatDateTime(item.payment_date) %>
                       </span>
                     </td>
@@ -148,12 +141,12 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.payment_status %>
+                        <%= codezip.payment_status[item.payment_status] %>
                       </span>
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.consulting_status %>
+                        <%= codezip.consulting_status[item.consulting_status] %>
                       </span>
                     </td>
                     <td class="text-center">

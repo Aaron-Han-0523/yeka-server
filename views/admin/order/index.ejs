@@ -42,7 +42,7 @@
               <button class="btn btn-outline-primary" type="button" onclick="searchUser();">검색</button>
               <button class="btn btn-outline-primary" type="button" onclick="exportExcel('order_list_table','order_list_file','order_list_sheet');">엑셀
                 다운로드</button>
-              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/order/add';">글쓰기</button>
+              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/order/add';">추가하기</button>
             </div>
             <p id="searchCount"></p>
           </div>
@@ -78,6 +78,7 @@
                     <th class="text-center" scope="col">수량</th>
                     <th class="text-center" scope="col">가격</th>
                     <th class="text-center" scope="col">배송비</th>
+                    <th class="text-center" scope="col">총금액</th>
                     <th class="text-center" scope="col">생성일</th>
                     <th class="text-center" scope="col">변경일</th>
                     <th class="text-center" scope="col">삭제일</th>
@@ -85,6 +86,35 @@
                   </tr>
                   <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
                 </thead>
+                <%
+                let data = [];
+                for(let i=0; i< 10;i++){
+                    data.push({
+                      id: i,
+                      orderer_name: "orderer_name" +i,
+                      orderer_phone: "orderer_phone" +i,
+                      orderer_address1: "orderer_address1" +i,
+                      orderer_address2: "orderer_address2" +i,
+                      orderer_address3: "orderer_address3" +i,
+                      recipient_place: "recipient_place" +i,
+                      recipient_name: "recipient_name" +i,
+                      recipient_phone: "recipient_phone" +i,
+                      recipient_address1: "recipient_address1" +i,
+                      recipient_address2: "recipient_address2" +i,
+                      recipient_address3: "recipient_address3" +i,
+                      image1: i%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+i+".jpg": null,
+                      title: "title" +i,
+                      option: "option".repeat(i),
+                      quantity: i+1,
+                      price: i*10000,
+                      delivery_fee: i*1000,
+                      total_fee: i*11000,
+                      create_date: new Date(),
+                      update_date: new Date(),
+                      delete_date: i%2 ? new Date() : null,
+                    })
+                }
+                %>
                 <tbody id="searchResults">
                   <% data.forEach( function(item, index) { %>
                   <tr onclick="location.href='/admin/order/detail/<%= item.id %>';">
@@ -141,22 +171,22 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.recipient_placeaddress1 %>
+                        <%= item.recipient_address1 %>
                       </span>
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.recipient_placeaddress2 %>
+                        <%= item.recipient_address2 %>
                       </span>
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.recipient_placeaddress3 %>
+                        <%= item.recipient_address3 %>
                       </span>
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.image1 %>
+                        <%= item.image1 ? "O":"X" %>
                       </span>
                     </td>
                     <td class="text-center">
@@ -182,6 +212,11 @@
                     <td class="text-center">
                       <span class="media-body align-self-center">
                         <%= item.delivery_fee %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.total_fee %>
                       </span>
                     </td>
                     <td class="text-center">

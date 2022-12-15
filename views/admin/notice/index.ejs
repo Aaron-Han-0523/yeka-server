@@ -42,7 +42,7 @@
               <button class="btn btn-outline-primary" type="button" onclick="searchNotice();">검색</button>
               <button class="btn btn-outline-primary" type="button" onclick="exportExcel('notice_list_table','notice_list_file','notice_list_sheet');">엑셀
                 다운로드</button>
-              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/notice/add';">글쓰기</button>
+              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/notice/add';">추가하기</button>
             </div>
             <p id="searchCount"></p>
           </div>
@@ -89,7 +89,7 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.community_type %>
+                        <%= codezip.community_type[item.community_type] %>
                       </span>
                     </td>
                     <td class="text-center">

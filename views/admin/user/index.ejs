@@ -42,7 +42,7 @@
               <button class="btn btn-outline-primary" type="button" onclick="searchUser();">검색</button>
               <button class="btn btn-outline-primary" type="button" onclick="exportExcel('user_list_table','user_list_file','user_list_sheet');">엑셀
                 다운로드</button>
-              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/user/add';">글쓰기</button>
+              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/user/add';">추가하기</button>
             </div>
             <p id="searchCount"></p>
           </div>
@@ -89,8 +89,8 @@
                         email: "email"+i,
                         gender: i%3,
                         address1: "address1"+i,
-                        address2: "address1"+i,
-                        address3: "address1"+i,
+                        address2: "address2"+i,
+                        address3: "address3"+i,
                         create_date: new Date(),
                         update_date: new Date(),
                     })
@@ -112,7 +112,7 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.user_type %>
+                        <%= codezip.user_type[item.user_type] %>
                       </span>
                     </td>
                     <td class="text-center">
@@ -137,7 +137,7 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.gender %>
+                        <%= codezip.gender[item.gender] %>
                       </span>
                     </td>
                     <td class="text-center">

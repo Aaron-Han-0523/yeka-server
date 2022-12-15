@@ -29,7 +29,7 @@
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/consulting">상담 관리</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "추가" %></li>
               </ol>
             </nav>
           </div>
@@ -49,13 +49,35 @@
                       </div>
                     </div>
 
+                    <%
+                    if(id){
+                      data = {
+                        id: id,
+                        consultant_id: id,
+                        client_id: id,
+                        client_name: "client_name"+id,
+                        client_image: "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg",
+                        payment_date: new Date(),
+                        consulting_title: "consulting_title"+id,
+                        payment_status: id%3,
+                        consulting_status: id%3,
+                        payment_amount: id*10000,
+                        reservation_amount: id*1000,
+                        commission: id*1000,
+                        final_amount: id*13000,
+                        create_date: new Date(),
+                        update_date: new Date(),
+                      }
+                    }
+                    %>
+
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
                           <label class="col-sm-2 col-form-label col-form-label-sm">Id</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data ? data.id: '' %>" readOnly>
+                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data.id %>" readOnly>
                         </div>
                       </div>
 
@@ -64,7 +86,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">상담자 id</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="consultant_id" type="text" name="consultant_id" placeholder="" class="form-control" value="<%= data ? data.consultant_id: '' %>" required>
+                          <input id="consultant_id" type="text" name="consultant_id" placeholder="" class="form-control" value="<%= data.consultant_id %>" readOnly>
                         </div>
                       </div>
 
@@ -73,7 +95,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">고객 id</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="client_id" type="text" name="client_id" placeholder="" class="form-control" value="<%= data ? data.client_id: '' %>" required>
+                          <input id="client_id" type="text" name="client_id" placeholder="" class="form-control" value="<%= data.client_id %>" readOnly>
                         </div>
                       </div>
 
@@ -82,7 +104,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">고객 이름</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="client_name" type="text" name="client_name" placeholder="" class="form-control" value="<%= data ? data.client_name: '' %>" required>
+                          <input id="client_name" type="text" name="client_name" placeholder="" class="form-control" value="<%= data.client_name %>" readOnly>
                         </div>
                       </div>
 
@@ -91,7 +113,14 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">고객 이미지</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="client_image" type="text" name="client_image" placeholder="" class="form-control" value="<%= data ? data.client_image: '' %>" required>
+                          <%
+                          if(data.client_image){
+                            let image_url = encodeURI(data.client_image.replace(/\\/g, '/'));
+                          %>
+                          <a target="_blank" href="<%= image_url %>">
+                            <div class="card-thumbnail" style="background-image: url('<%= image_url %>');"></div>
+                          </a>
+                          <% } %>
                         </div>
                       </div>
 
@@ -100,7 +129,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">결제 날짜</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="payment_date" type="text" name="payment_date" placeholder="" class="form-control" value="<%= data ? data.payment_date: '' %>" required>
+                          <input id="payment_date" type="text" name="payment_date" placeholder="" class="form-control" value="<%= data.payment_date %>" required>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -108,7 +137,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">상담 제목</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="consulting_title" type="text" name="consulting_title" placeholder="" class="form-control" value="<%= data ? data.consulting_title: '' %>" required>
+                          <input id="consulting_title" type="text" name="consulting_title" placeholder="" class="form-control" value="<%= data.consulting_title %>" required>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -116,7 +145,15 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">결제 상태</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="payment_status" type="text" name="payment_status" placeholder="" class="form-control" value="<%= data ? data.payment_status: '' %>" required>
+                          <select id="payment_status" name="payment_status" class="form-select" required>
+                            <% codezip.payment_status.forEach((text, index)=>{ %>
+                            <% if(index == data.payment_status){ %>
+                            <option selected value="<%= index %>"><%= text %></option>
+                            <% }else{ %>
+                            <option value="<%= index %>"><%= text %></option>
+                            <% } %>
+                            <% }) %>
+                          </select>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -124,7 +161,15 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">상담 상태</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="consulting_status" type="text" name="consulting_status" placeholder="" class="form-control" value="<%= data ? data.consulting_status: '' %>" required>
+                          <select id="consulting_status" name="consulting_status" class="form-select" required>
+                            <% codezip.consulting_status.forEach((text, index)=>{ %>
+                            <% if(index == data.consulting_status){ %>
+                            <option selected value="<%= index %>"><%= text %></option>
+                            <% }else{ %>
+                            <option value="<%= index %>"><%= text %></option>
+                            <% } %>
+                            <% }) %>
+                          </select>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -132,7 +177,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">결제 금액</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="payment_amount" type="text" name="payment_amount" placeholder="" class="form-control" value="<%= data ? data.payment_amount: '' %>" required>
+                          <input id="payment_amount" type="text" name="payment_amount" placeholder="" class="form-control" value="<%= data.payment_amount %>" required>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -140,7 +185,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">예약 수</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="reservation_amount" type="text" name="reservation_amount" placeholder="" class="form-control" value="<%= data ? data.reservation_amount: '' %>" required>
+                          <input id="reservation_amount" type="text" name="reservation_amount" placeholder="" class="form-control" value="<%= data.reservation_amount %>" required>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -148,7 +193,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수수료</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="commission" type="text" name="commission" placeholder="" class="form-control" value="<%= data ? data.commission: '' %>" required>
+                          <input id="commission" type="text" name="commission" placeholder="" class="form-control" value="<%= data.commission %>" required>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -156,7 +201,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">최종 금액</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="final_amount" type="text" name="final_amount" placeholder="" class="form-control" value="<%= data ? data.final_amount: '' %>" required>
+                          <input id="final_amount" type="text" name="final_amount" placeholder="" class="form-control" value="<%= data.final_amount %>" required>
                         </div>
                       </div>
 
@@ -167,7 +212,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.create_date: '' %>
+                          <%= data.create_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -177,7 +222,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.update_date: '' %>
+                          <%= data.update_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -187,7 +232,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.delete_date: '' %>
+                          <%= data.delete_date %>
                         </p>
                       </div>
 
@@ -203,7 +248,7 @@
                             <% } %>
 
                             <% if(id) { %>
-                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/consulting/delete/<%= data ? data.id: `` %>';">삭제하기</button>
+                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/consulting/delete/<%= data.id %>';">삭제하기</button>
                             <% } %>
                             <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="cancel()">취소</button>
                           </div>
