@@ -1,6 +1,9 @@
 const db = require("../models");
 const Product = db.product;
+const Image = db.image;
 const Op = db.Sequelize.Op;
+const QueryTypes = db.Sequelize.QueryTypes;
+const sequelize = db.sequelize;
 
 // Create and Save a new Product
 exports.create = (req, res) => {
@@ -47,6 +50,36 @@ exports.findAll = (req, res) => {
           err.message || "Some error occurred while retrieving product."
       });
     });
+};
+
+// Retrieve all Products from the database.
+exports.findAllThumbnail = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+// SELECT a.*, b.path FROM yeka.product a, yeka.image b where a.id = b.product_id;
+  sequelize.query("SELECT * FROM yeka.product left join yeka.image on yeka.product.id = yeka.image.product_id", { type: QueryTypes.SELECT })
+  .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving product."
+        });
+      });
+
+//  Product.findAll({ include: [
+//    {model: Image, as: "a", attributes: ["path"]}
+//  ] })
+//    .then(data => {
+//      res.send(data);
+//    })
+//    .catch(err => {
+//      res.status(500).send({
+//        message:
+//          err.message || "Some error occurred while retrieving product."
+//      });
+//    });
 };
 
 // Find a single Product with an id

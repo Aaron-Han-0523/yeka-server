@@ -44,6 +44,12 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: '',
             comment: '내용'
         },
+        path: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+            defaultValue: '',
+            comment: '이미지 경로'
+        },
         create_date: {
             type: DataTypes.DATE,
             allowNull: true,

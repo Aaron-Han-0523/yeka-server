@@ -104,6 +104,18 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: 0,
             comment: '출금금액'
         },
+        withdrawal_request_flag: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false,
+            defaultValue: 0,
+            comment: '출금신청여부'
+        },
+        withdrawal_request_amount: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false,
+            defaultValue: 0,
+            comment: '출금신청금액'
+        },
         bank1: {
             type: DataTypes.STRING(255),
             allowNull: true,
