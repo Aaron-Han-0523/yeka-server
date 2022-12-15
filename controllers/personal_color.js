@@ -1,5 +1,5 @@
 const db = require("../models");
-const PersonalColor = db.personalColor;
+const PersonalColor = db.personal_color;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new PersonalColor
