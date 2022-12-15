@@ -50,6 +50,18 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Find a empty persornal_color
+exports.findEmpty = (req, res) => {
+  const id = req.params.id;
+
+  return res.render("admin/persornal_color/detail", {
+    count: 1,
+    data: [],
+    product: {},
+    id,
+  });
+};
+
 // Find a single PersonalColor with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
