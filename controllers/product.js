@@ -57,7 +57,7 @@ exports.findAllThumbnail = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 // SELECT a.*, b.path FROM yeka.product a, yeka.image b where a.id = b.product_id;
-  sequelize.query("SELECT a.*, b.path thumbnail FROM yeka.product a left join yeka.image b on a.id = b.product_id", { type: QueryTypes.SELECT })
+  sequelize.query("SELECT a.*, b.path title_image FROM yeka.user a left join (select * from yeka.image limit 1) b on a.id = b.consultant_id", { type: QueryTypes.SELECT })
   .then(data => {
         res.send(data);
       })
