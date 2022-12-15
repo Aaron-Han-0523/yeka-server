@@ -10,7 +10,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!",
     });
     return;
   }
@@ -19,18 +19,18 @@ exports.create = (req, res) => {
   const product = {
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    published: req.body.published ? req.body.published : false,
   };
 
   // Save Product in the database
   Product.create(product)
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Product."
+          err.message || "Some error occurred while creating the Product.",
       });
     });
 };
@@ -40,14 +40,17 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-sequelize.query("SELECT a.*, b.path thumbnail FROM yeka.product a left join yeka.image b on a.id = b.product_id", { type: QueryTypes.SELECT })
-    .then(data => {
+  sequelize
+    .query(
+      "SELECT a.*, b.path thumbnail FROM yeka.product a left join yeka.image b on a.id = b.product_id",
+      { type: QueryTypes.SELECT }
+    )
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving product."
+        message: err.message || "Some error occurred while retrieving product.",
       });
     });
 };
@@ -56,17 +59,20 @@ sequelize.query("SELECT a.*, b.path thumbnail FROM yeka.product a left join yeka
 exports.findAllThumbnail = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-// SELECT a.*, b.path FROM yeka.product a, yeka.image b where a.id = b.product_id;
-  sequelize.query("SELECT a.*, b.path title_image FROM yeka.user a left join (select * from yeka.image limit 1) b on a.id = b.consultant_id", { type: QueryTypes.SELECT })
-  .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving product."
-        });
+
+  sequelize
+    .query(
+      "SELECT a.*, b.path thumbnail FROM yeka.product a left join (select b1.path, b1.product_id from yeka.product a1, yeka.image b1 where a1.id = b1.product_id limit 1) b on a.id = b.product_id",
+      { type: QueryTypes.SELECT }
+    )
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving product.",
       });
+    });
 };
 
 // Find a single Product with an id
@@ -74,18 +80,18 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Product.findByPk(id)
-    .then(data => {
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Product with id=${id}.`
+          message: `Cannot find Product with id=${id}.`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Product with id=" + id
+        message: "Error retrieving Product with id=" + id,
       });
     });
 };
@@ -95,22 +101,22 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Product.update(req.body, {
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Product was updated successfully."
+          message: "Product was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update Product with id=${id}. Maybe Product was not found or req.body is empty!`
+          message: `Cannot update Product with id=${id}. Maybe Product was not found or req.body is empty!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating Product with id=" + id
+        message: "Error updating Product with id=" + id,
       });
     });
 };
@@ -120,22 +126,22 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Product.destroy({
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Product was deleted successfully!"
+          message: "Product was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Product with id=${id}. Maybe Product was not found!`
+          message: `Cannot delete Product with id=${id}. Maybe Product was not found!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Product with id=" + id
+        message: "Could not delete Product with id=" + id,
       });
     });
 };
@@ -144,15 +150,15 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   Product.destroy({
     where: {},
-    truncate: false
+    truncate: false,
   })
-    .then(numbers => {
+    .then((numbers) => {
       res.send({ message: `${numbers} Products were deleted successfully!` });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all products."
+          err.message || "Some error occurred while removing all products.",
       });
     });
 };
@@ -160,13 +166,13 @@ exports.deleteAll = (req, res) => {
 // find all published Product
 exports.findAllPublished = (req, res) => {
   Product.findAll({ where: { published: true } })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving products."
+          err.message || "Some error occurred while retrieving products.",
       });
     });
 };

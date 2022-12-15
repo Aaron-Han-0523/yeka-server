@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const image = require("../controllers/image.js");
 
   var router = require("express").Router();
@@ -8,6 +8,9 @@ module.exports = app => {
 
   // Retrieve all Image
   router.get("/", image.findAll);
+
+  // Retrieve all Image with ProductId
+  router.get("/list", image.findAllProductId);
 
   // Retrieve all published Image
   router.get("/published", image.findAllPublished);
@@ -24,5 +27,5 @@ module.exports = app => {
   // Delete all Image
   router.delete("/", image.deleteAll);
 
-  app.use('/api/image', router);
+  app.use("/api/image", router);
 };

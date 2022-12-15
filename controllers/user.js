@@ -9,7 +9,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!",
     });
     return;
   }
@@ -18,18 +18,17 @@ exports.create = (req, res) => {
   const user = {
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    published: req.body.published ? req.body.published : false,
   };
 
   // Save User in the database
   User.create(user)
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the User."
+        message: err.message || "Some error occurred while creating the User.",
       });
     });
 };
@@ -44,13 +43,12 @@ exports.findAll = (req, res) => {
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   User.findAll({ where: condition })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving user."
+        message: err.message || "Some error occurred while retrieving user.",
       });
     });
 };
@@ -59,17 +57,20 @@ exports.findAll = (req, res) => {
 exports.findAllThumbnail = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-// SELECT a.*, b.path FROM yeka.product a, yeka.image b where a.id = b.product_id;
-  sequelize.query("SELECT a.*, b.path title_image FROM yeka.user a left join (select * from yeka.image limit 1) b on a.id = b.consultant_id", { type: QueryTypes.SELECT })
-  .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving product."
-        });
+  // SELECT a.*, b.path FROM yeka.product a, yeka.image b where a.id = b.product_id;
+  sequelize
+    .query(
+      "SELECT a.*, b.path title_image FROM yeka.user a left join (select b1.path, b1.consultant_id from yeka.user a1, yeka.image b1 where a1.id = b1.consultant_id limit 1) b on a.id = b.consultant_id",
+      { type: QueryTypes.SELECT }
+    )
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving product.",
       });
+    });
 };
 
 // Find a single User with an id
@@ -77,18 +78,18 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   User.findByPk(id)
-    .then(data => {
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find User with id=${id}.`
+          message: `Cannot find User with id=${id}.`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving User with id=" + id
+        message: "Error retrieving User with id=" + id,
       });
     });
 };
@@ -98,22 +99,22 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   User.update(req.body, {
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "User was updated successfully."
+          message: "User was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
+          message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating User with id=" + id
+        message: "Error updating User with id=" + id,
       });
     });
 };
@@ -123,22 +124,22 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   User.destroy({
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "User was deleted successfully!"
+          message: "User was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete User with id=${id}. Maybe User was not found!`
+          message: `Cannot delete User with id=${id}. Maybe User was not found!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Could not delete User with id=" + id
+        message: "Could not delete User with id=" + id,
       });
     });
 };
@@ -147,15 +148,14 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   User.destroy({
     where: {},
-    truncate: false
+    truncate: false,
   })
-    .then(numbers => {
+    .then((numbers) => {
       res.send({ message: `${numbers} Users were deleted successfully!` });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all users."
+        message: err.message || "Some error occurred while removing all users.",
       });
     });
 };
@@ -163,13 +163,12 @@ exports.deleteAll = (req, res) => {
 // find all published User
 exports.findAllPublished = (req, res) => {
   User.findAll({ where: { published: true } })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving users."
+        message: err.message || "Some error occurred while retrieving users.",
       });
     });
 };
@@ -179,19 +178,19 @@ exports.login = (req, res) => {
   const username = req.params.username;
   const password = req.params.password;
 
-  User.findOne({ where : {username : username, password: password }})
-    .then(data => {
+  User.findOne({ where: { username: username, password: password } })
+    .then((data) => {
       if (data.length > 0) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find User with id=${id}.`
+          message: `Cannot find User with id=${id}.`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving User with id=" + id
+        message: "Error retrieving User with id=" + id,
       });
     });
 };
