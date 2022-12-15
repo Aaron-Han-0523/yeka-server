@@ -33,9 +33,8 @@ module.exports = function(sequelize, DataTypes) {
             comment: '고객이미지'
         },
         payment_date: {
-            type: DataTypes.STRING(255),
-            allowNull: false,
-            defaultValue: '',
+            type: DataTypes.DATE,
+            allowNull: true,
             comment: '결제일'
         },
         consulting_title: {
