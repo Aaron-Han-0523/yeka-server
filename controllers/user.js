@@ -42,7 +42,10 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  User.findAll({ where: condition })
+  sequelize
+      .query(
+        "SELECT a.*, b.path title_image FROM yeka.user a left join yeka.image b on a.id = b.consultant_id",
+        { type: QueryTypes.SELECT }
     .then((data) => {
       res.send(data);
     })
