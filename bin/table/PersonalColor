@@ -1,0 +1,14 @@
+int id
+String color_name
+String fashion
+String hair
+String perfume
+String makeup_base
+String makeup_eye
+String makeup_blusher
+String lip
+String description
+String tag
+String create_date
+String update_date
+String delete_date
