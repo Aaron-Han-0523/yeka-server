@@ -29,7 +29,7 @@
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/consultant">컨설턴트 관리</a></li>
-                <li class="breadcrumb-item active" aria-current="page">글쓰기</li>
+                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
               </ol>
             </nav>
           </div>
@@ -161,10 +161,10 @@
 
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">이력</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">자격현황 및 이력</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="resume" type="text" name="resume" placeholder="" class="form-control" value="<%= data ? data.resume: '' %>" required>
+                          <textarea rows="10" id="resume" type="text" name="resume" placeholder="" class="form-control" required><%= data ? data.resume: '' %></textarea>
                         </div>
                       </div>
 
@@ -260,7 +260,7 @@
                       </div>
                       <div class="mt-3">
                         <div class="col-12 ">
-                          <input class="form-control file-upload-input" type="file" id="business_registration_file" name="files">
+                          <input class="form-control-file" type="file" id="business_registration_file" name="files">
                         </div>
                       </div>
 
@@ -288,6 +288,7 @@
 
                 <!-- 상담 메뉴 -->
                 <div class="statbox widget box box-shadow layout-top-spacing">
+                  <!-- header -->
                   <div class="widget-header">
                     <div class="row">
                       <div class="col-12 text-center pt-3">
@@ -295,66 +296,126 @@
                       </div>
                     </div>
                   </div>
-                  <div class="widget-content widget-content-area">
-                    <!-- table head -->
-                    <div class="container">
-                      <div class="row">
-                        <div class="col">메뉴 식별번호</div>
-                        <div class="col">메뉴명</div>
-                        <div class="col">메뉴금액</div>
-                        <div class="col">생성일</div>
-                        <div class="col">수정일</div>
-                        <div class="col">삭제일</div>
-                      </div>
-                    </div>
+                  <!-- content -->
 
-                    <!-- 테스트 데이터 -->
-                    <div>
-                      <%
-                        let menu = {};
-                        for(let i=0; i< 9; i++){
-                            menu.id = i,
-                            menu.menu_title = "menu_title"+i,
-                            menu.menu_amount = i*10000,
-                            menu.create_date = new Date(),
-                            menu.update_date = new Date(),
-                            menu.delete_date = null;
+                  <!-- 테스트 데이터 -->
+                  <div>
+                    <%
+                        let menu = {count:100, rows:[]};
+                        for(let i=0; i< 10; i++){
+                            menu.rows.push({
+                              id : i,
+                              menu_title : "menu_title"+i,
+                              menu_content : "menu_content".repeat(i),
+                              menu_amount : i*10000,
+                              create_date : new Date(),
+                              update_date : new Date(),
+                              delete_date : null
+                          })
                         }
                         %>
+                  </div>
+
+                  <div class="widget-content widget-content-area">
+                    <!-- content head -->
+                    <div class="container text-center">
+                      <div class="row fs-5">
+                        <div class="col-1 border rounded-start">메뉴 번호</div>
+                        <div class="col-3 border">메뉴명</div>
+                        <div class="col-3 border">메뉴설명</div>
+                        <div class="col-1 border">메뉴금액</div>
+                        <div class="col border">생성일</div>
+                        <div class="col border">수정일</div>
+                        <div class="col border rounded-end">삭제일</div>
+                      </div>
                     </div>
 
-                    <!-- table body -->
-                    <div class="container">
-                      <div class="row">
-                        <div class="col"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
+                    <!-- content body -->
+                    <div class="container mt-3 text-center fs-6" id="menu_index">
+                      <% menu.rows.forEach((item,index)=>{ %>
+                      <div class="row div-hover" onclick="location.href='';">
+                        <div class="col-1 border"><%= item.id %></div>
+                        <div class="col-3 border text-start"><%= item.menu_title  %></div>
+                        <div class="col-3 border text-start text-ellipsis"><%= item.menu_content %></div>
+                        <div class="col-1 border"><%= Intl.NumberFormat().format(item.menu_amount) %></div>
+                        <div class="col border"><%= myUtils.formatDateTime(item.create_date) %></div>
+                        <div class="col border"><%= myUtils.formatDateTime(item.update_date) %></div>
+                        <div class="col border"><%= myUtils.formatDateTime(item.delete_date) %></div>
                       </div>
+                      <% }) %>
+                    </div>
+
+                    <!-- pagination -->
+                    <div id="menu_pagination" class="layout-top-spacing">
+                      <%- myUtils.make_pagination_by_func(1, menu.count, "load_menu") %>
                     </div>
                   </div>
                 </div>
+
+
+
+
+                <!-- 포트폴리오 -->
+                <div>
+                  <!-- 테스트 데이터 -->
+                  <% let portfolio = {count:35, rows:[]}; %>
+                  <%
+                  for(let i=0; i< 35; i++){
+                    portfolio.rows.push({
+                      path:"https://ktsmemo.cdn3.cafe24.com/p/"+ ("001"+i).slice(-4) +".jpg"
+                    })
+                  }
+                  %>
+                </div>
+                <div class="statbox widget box box-shadow layout-top-spacing">
+                  <!-- header -->
+                  <div class="widget-header">
+                    <div class="row">
+                      <div class="col-12 text-center pt-3">
+                        <h2>포트폴리오</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- content -->
+                  <div class="widget-content widget-content-area">
+                    <div class="container row">
+                      <% portfolio.rows.forEach((item, index)=>{
+                        let image_url = encodeURI(item.path.replace(/\\/g,'/'));
+                      %>
+                      <div class="col-2">
+                        <a target="_blank" href="<%= image_url %>">
+                          <div class="card-preview" style="background-image: url('<%= image_url %>');"></div>
+                        </a>
+                      </div>
+                      <% }) %>
+                    </div>
+
+                    <!-- pagination -->
+                    <div id="portfolio_paginatnio" class="layout-top-spacing">
+                      <%- myUtils.make_pagination_by_func(1, portfolio.count, "load_portfolio", 36) %>
+                    </div>
+                  </div>
+                </div>
+
+
 
               </div>
             </div>
           </div>
         </div>
+
+        <%- include("../partials/footer.ejs") %>
+
       </div>
-
-      <%- include("../partials/footer.ejs") %>
-
+      <!--  END CONTENT AREA  -->
     </div>
-    <!--  END CONTENT AREA  -->
-  </div>
-  <!-- END MAIN CONTAINER -->
+    <!-- END MAIN CONTAINER -->
 
-  <%- include("../partials/commonScrpits.ejs") %>
+    <%- include("../partials/commonScrpits.ejs") %>
 
-  <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
-  <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 </body>
 
 </html>

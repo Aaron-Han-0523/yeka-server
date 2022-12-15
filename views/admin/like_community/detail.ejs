@@ -29,15 +29,15 @@
                                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="/admin/like_community">좋아하는 페이지 관리</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">글쓰기</li>
+                                            <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
                                         </ol>
                                     </nav>
                                 </div>
                                 <!-- /BREADCRUMB -->
 
                                 <div class="row layout-spacing">
-                                    <div class="col-lg-12 layout-top-spacing">
-                                        <div class="col-lg-12">
+                                    <div class="col-12 layout-top-spacing">
+                                        <div class="col-12">
                                             <!-- Post Form -->
                                             <form method="post"  <%  if(!id) { %>
                                             action ="/admin/like_community/add"
@@ -46,7 +46,7 @@
                                                 <div class="statbox widget box box-shadow">
                                                     <div class="widget-header">
                                                         <div class="row">
-                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                            <div class="col-12">
                                                                 <h4></h4>
                                                             </div>
                                                         </div>
@@ -54,11 +54,11 @@
 
                                                     <div class="widget-content widget-content-area">
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">Id</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="id" type="text" name="id"
                                                                     placeholder="" class="form-control"
                                                                     value="<%= data ? data.id: '' %>" readOnly>
@@ -66,11 +66,11 @@
                                                         </div>
 
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">사용자 id</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="user_id" type="text" name="user_id"
                                                                     placeholder="" class="form-control"
                                                                      value="<%= data ? data.user_id: '' %>" required>
@@ -78,11 +78,11 @@
                                                         </div>
 
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">커뮤니티 제목</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="community_title" type="text" name="community_title"
                                                                     placeholder="" class="form-control"
                                                                      value="<%= data ? data.community_title: '' %>" required>
@@ -133,7 +133,7 @@
 
                                                                      <% if(id) { %>
                                                                      <button class="btn btn-outline-danger mb-2 me-4"
-                                                                         type="button" onclick="location.href='/admin/like_community/delete/<%= data ? data.id: '' %>';">삭제하기</button>
+                                                                         type="button" onclick="location.href='/admin/like_community/delete/<%= data ? data.id: `` %>';">삭제하기</button>
                                                                          <% } %>
                                                                      <button class="btn btn-outline-danger mb-2 me-4"
                                                                          type="button" onclick="cancel()">취소</button>

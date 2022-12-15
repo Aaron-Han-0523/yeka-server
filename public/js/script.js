@@ -7,6 +7,18 @@ function formatDate(d_t) {
     let year = d_t.getFullYear();
     let month = ("0" + (d_t.getMonth() + 1)).slice(-2);
     let day = ("0" + d_t.getDate()).slice(-2);
+    return year + "-" + month + "-" + day;
+}
+
+function formatDateTime(d_t) {
+    if (!d_t) return '';
+
+    d_t = new Date(d_t);
+    //console.log(typeof d_t);
+
+    let year = d_t.getFullYear();
+    let month = ("0" + (d_t.getMonth() + 1)).slice(-2);
+    let day = ("0" + d_t.getDate()).slice(-2);
     let hour = ("0" + d_t.getHours()).slice(-2);
     let minute = ("0" + d_t.getMinutes()).slice(-2);
     let seconds = ("0" + d_t.getSeconds()).slice(-2);

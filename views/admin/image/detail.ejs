@@ -29,15 +29,15 @@
                                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="admin/image">이미지 관리</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">글쓰기</li>
+                                            <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
                                         </ol>
                                     </nav>
                                 </div>
                                 <!-- /BREADCRUMB -->
 
                                 <div class="row layout-spacing">
-                                    <div class="col-lg-12 layout-top-spacing">
-                                        <div class="col-lg-12">
+                                    <div class="col-12 layout-top-spacing">
+                                        <div class="col-12">
                                             <!-- Post Form -->
                                             <form method="post"  <%  if(!id) { %>
                                             action ="/admin/image/add"
@@ -46,7 +46,7 @@
                                                 <div class="statbox widget box box-shadow">
                                                     <div class="widget-header">
                                                         <div class="row">
-                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                            <div class="col-12">
                                                                 <h4></h4>
                                                             </div>
                                                         </div>
@@ -54,11 +54,11 @@
 
                                                     <div class="widget-content widget-content-area">
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">Id</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="id" type="text" name="id"
                                                                     placeholder="" class="form-control"
                                                                     value="<%= data ? data.id: '' %>" readOnly>
@@ -66,11 +66,11 @@
                                                         </div>
 
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">이미지 타입</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="image_type" type="text" name="image_type"
                                                                     placeholder="" class="form-control"
                                                                      value="<%= data ? data.image_type: '' %>" required>
@@ -78,11 +78,11 @@
                                                         </div>
 
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">상품 id</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="product_id" type="text" name="product_id"
                                                                     placeholder="" class="form-control"
                                                                      value="<%= data ? data.product_id: '' %>" required>
@@ -90,44 +90,44 @@
                                                         </div>
 
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">상담자 id</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="consultant_id" type="text" name="consultant_id"
                                                                     placeholder="" class="form-control"
                                                                      value="<%= data ? data.consultant_id: '' %>" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">커뮤니티 id</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="community_id" type="text" name="community_id"
                                                                     placeholder="" class="form-control"
                                                                      value="<%= data ? data.community_id: '' %>" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">제목</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="title" type="text" name="title"
                                                                     placeholder="" class="form-control"
                                                                      value="<%= data ? data.title: '' %>" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row mb-4">
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <label
                                                                     class="col-sm-2 col-form-label col-form-label-sm">내용</label>
                                                             </div>
-                                                            <div class="col-lg-10 col-12 ">
+                                                            <div class="col-12 ">
                                                                 <input id="content" type="text" name="content"
                                                                     placeholder="" class="form-control"
                                                                      value="<%= data ? data.content: '' %>" required>
@@ -178,7 +178,7 @@
 
                                                                      <% if(id) { %>
                                                                      <button class="btn btn-outline-danger mb-2 me-4"
-                                                                         type="button" onclick="location.href='/admin/image/delete/<%= data ? data.id: '' %>';">삭제하기</button>
+                                                                         type="button" onclick="location.href='/admin/image/delete/<%= data ? data.id: `` %>';">삭제하기</button>
                                                                          <% } %>
                                                                      <button class="btn btn-outline-danger mb-2 me-4"
                                                                          type="button" onclick="cancel()">취소</button>

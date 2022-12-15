@@ -1,0 +1,39 @@
+.card-preview {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.card-thumbnail {
+    position: relative;
+    width: 150px;
+    padding-bottom: 150px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.form-control {
+    min-height: 3rem;
+}
+
+.div-hover:hover * {
+    color: #515365;
+    background-color: #ebedf2;
+    cursor: pointer;
+}
+
+body.dark .div-hover:hover * {
+    color: #fff;
+    background-color: #1b2e4b;
+    cursor: pointer;
+}

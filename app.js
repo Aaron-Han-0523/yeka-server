@@ -20,6 +20,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ejs 도구 추가
+const myUtils = require("./utils/myUtils");
+
+app.use((req, res, next) => {
+  // res.locals.host = req.get('host');
+  res.locals.path = path;
+  res.locals.myUtils = myUtils;
+  return next();
+})
 const { sequelize } = require('./models');
 
 sequelize.sync({ force: false })
