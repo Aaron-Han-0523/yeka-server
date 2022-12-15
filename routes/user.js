@@ -9,6 +9,9 @@ module.exports = app => {
   // Retrieve all User
   router.get("/", user.findAll);
 
+  // Retrieve all User with Thumbnail
+  router.get("/list", user.findAllThumbnail);
+
   // Retrieve all published User
   router.get("/published", user.findAllPublished);
 
@@ -23,6 +26,9 @@ module.exports = app => {
 
   // Delete all User
   router.delete("/", user.deleteAll);
+
+  // Retrieve all Product with Thumbnail
+  router.get("/login", user.login);
 
   app.use('/api/user', router);
 };

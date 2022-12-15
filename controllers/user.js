@@ -1,6 +1,8 @@
 const db = require("../models");
 const User = db.user;
 const Op = db.Sequelize.Op;
+const QueryTypes = db.Sequelize.QueryTypes;
+const sequelize = db.sequelize;
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -51,6 +53,23 @@ exports.findAll = (req, res) => {
           err.message || "Some error occurred while retrieving user."
       });
     });
+};
+
+// Retrieve all Products from the database.
+exports.findAllThumbnail = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+// SELECT a.*, b.path FROM yeka.product a, yeka.image b where a.id = b.product_id;
+  sequelize.query("SELECT a.*, b.path title_image FROM yeka.user a left join yeka.image b on a.id = b.consultant_id", { type: QueryTypes.SELECT })
+  .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving product."
+        });
+      });
 };
 
 // Find a single User with an id
@@ -151,6 +170,28 @@ exports.findAllPublished = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving users."
+      });
+    });
+};
+
+// Find a single User with an id
+exports.login = (req, res) => {
+  const username = req.params.username;
+  const password = req.params.password;
+
+  User.findOne({ where : {username : username, password: password }})
+    .then(data => {
+      if (data.length > 0) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find User with id=${id}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving User with id=" + id
       });
     });
 };
