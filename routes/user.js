@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const user = require("../controllers/user.js");
 
   var router = require("express").Router();
@@ -33,5 +33,5 @@ module.exports = app => {
   // Retrieve all Product with Thumbnail
   router.post("/register", user.register);
 
-  app.use('/api/user', router);
+  app.use("/api/user", router);
 };
