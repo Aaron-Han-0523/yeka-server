@@ -177,95 +177,94 @@ exports.findAllPublished = (req, res) => {
     });
 };
 
-// Find a single User with an id
+// Login a single User with an username
 exports.login = (req, res) => {
-  console.log(">>>>>");
-  console.log(">>>>>" + req.body.username);
-  console.log(">>>>>" + req.params.username);
   const username = req.body.username;
   const password = req.body.password;
 
   User.findOne({ where: { username: username, password: password } })
     .then((data) => {
-      if (data.length > 0) {
+      if (data) {
         res.send(data);
       } else {
+        console.log("ddd");
         res.status(404).send({
-          message: `Cannot find User with id=${id}.`,
+          message: `Cannot find User with username=${username}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving User with id=" + id,
+        message: "Error retrieving User with username=" + username,
       });
     });
 };
 
-// Find a single User with an id
+// Join a single User with an username
 exports.register = (req, res) => {
-  console.log(">>>>> user register");
+  var username = req.body.username;
 
   // Validate request
   if (!req.body.username) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Content can not be empty!",
     });
-    return;
-  }
+  } else {
+    User.findOne({ where: { username: username } })
+      .then((data) => {
+        if (data) {
+          res.status(500).send({
+            message: "Exists user is " + data.username + ", user : " + data,
+          });
+        } else {
+          // Create a User
+          const user = {
+            id: null,
+            username: req.body.username,
+            password: req.body.password,
+            user_type: req.body.user_type,
+            username: req.body.username,
+            password: req.body.password,
+            name: req.body.name,
+            phone: req.body.phone,
+            email: req.body.email,
+            gender: req.body.gender,
+            address1: req.body.address1,
+            address2: req.body.address2,
+            address3: req.body.address3,
+            business_registration_number: req.body.business_registration_number,
+            business_registration_file: req.body.business_registration_file,
+            hashtag: req.body.hashtag,
+            resume: req.body.resume,
+            working_hour: req.body.working_hour,
+            withdrawal: req.body.withdrawal ? req.body.withdrawal : 0,
+            bank1: req.body.bank1,
+            bank2: req.body.bank2,
+            bank3: req.body.bank3,
+            create_date: req.body.create_date,
+            update_date: req.body.update_date,
+            delete_date: req.body.delete_date,
+          };
 
-  // Create a User
-  const user = {
-    username: req.body.username,
-    password: req.body.password,
-    user_type: req.body.user_type,
-    username: req.body.username,
-    password: req.body.password,
-    name: req.body.name,
-    phone: req.body.phone,
-    email: req.body.email,
-    gender: req.body.gender,
-    address1: req.body.address1,
-    address2: req.body.address2,
-    address3: req.body.address3,
-    business_registration_number: req.body.business_registration_number,
-    business_registration_file: req.body.business_registration_file,
-    hashtag: req.body.hashtag,
-    resume: req.body.resume,
-    working_hour: req.body.working_hour,
-    withdrawal: req.body.withdrawal,
-    bank1: req.body.bank1,
-    bank2: req.body.bank2,
-    bank3: req.body.bank3,
-    create_date: req.body.create_date,
-    update_date: req.body.update_date,
-    delete_date: req.body.delete_date,
-  };
-
-  // Save User in the database
-  User.create(user)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the User.",
-      });
-    });
-
-  User.findOne({ where: { username: username, password: password } })
-    .then((data) => {
-      if (data.length > 0) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find User with id=${id}.`,
+          // Save User in the database
+          User.create(user)
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(500).send({
+                message:
+                  err.message || "Some error occurred while creating the User.",
+              });
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+          message: "Error retrieving User with username=" + username,
         });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error retrieving User with id=" + id,
       });
-    });
+  }
 };
