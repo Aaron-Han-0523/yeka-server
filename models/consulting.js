@@ -55,6 +55,60 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: 0,
             comment: '상담상태'
         },
+        culture_type: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            comment: '분류 (동양식, 서양식)'
+        },
+        season: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            comment: '계절'
+        },
+        detail_season_type: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            comment: '세부분류(비비드,페일...)'
+        },
+        consulting_content: {
+            type: DataTypes.STRING(),
+            allowNull: true,
+            defaultValue: '',
+            comment: '상담내용'
+        },
+        tone: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            comment: '웜/쿨'
+        },
+        chroma: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            comment: '청/탁'
+        },
+        contrast: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            comment: '대비'
+        },
+        brightness: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            comment: '명도'
+        },
+        gloss: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            comment: '광택'
+        },
         payment_amount: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: true,

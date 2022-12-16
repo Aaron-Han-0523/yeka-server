@@ -7,6 +7,15 @@ String payment_date
 String consulting_title
 int payment_status
 int consulting_status
+int culture_type
+int season
+int detail_season_type
+String consulting_content
+int tone
+int chroma
+int contrast
+int brightness
+int gloss
 int payment_amount
 int reservation_amount
 int commission
