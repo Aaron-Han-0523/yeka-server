@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs") %>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs") %>
 
@@ -61,6 +61,15 @@
                         consulting_title: "consulting_title"+id,
                         payment_status: id%3,
                         consulting_status: id%3,
+                        culture_type: id%2,
+                        season: id%4,
+                        detail_season_type: id%5,
+                        consulting_content: "consulting_content".repeat(id+1),
+                        tone: id*10,
+                        chroma: id*10,
+                        contrast: id*10,
+                        brightness: id*10,
+                        gloss: id*10,
                         payment_amount: id*10000,
                         reservation_amount: id*1000,
                         commission: id*1000,
@@ -126,10 +135,10 @@
 
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">결제 날짜</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">결제일</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="payment_date" type="text" name="payment_date" placeholder="" class="form-control" value="<%= data.payment_date %>" required>
+                          <input id="payment_date" type="date" name="payment_date" placeholder="" class="form-control w-auto" value="<%= myUtils.formatDate(data.payment_date) %>" required>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -174,18 +183,114 @@
                       </div>
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">결제 금액</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">문화 분류</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="payment_amount" type="text" name="payment_amount" placeholder="" class="form-control" value="<%= data.payment_amount %>" required>
+                          <select id="culture_type" name="culture_type" class="form-select">
+                            <% codezip.culture_type.forEach((text, index)=>{ %>
+                            <% if(index == data.culture_type){ %>
+                            <option selected value="<%= index %>"><%= text %></option>
+                            <% }else{ %>
+                            <option value="<%= index %>"><%= text %></option>
+                            <% } %>
+                            <% }) %>
+                          </select>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">예약 수</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">계절</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="reservation_amount" type="text" name="reservation_amount" placeholder="" class="form-control" value="<%= data.reservation_amount %>" required>
+                          <select id="season" name="season" class="form-select">
+                            <% codezip.season.forEach((text, index)=>{ %>
+                            <% if(index == data.season){ %>
+                            <option selected value="<%= index %>"><%= text %></option>
+                            <% }else{ %>
+                            <option value="<%= index %>"><%= text %></option>
+                            <% } %>
+                            <% }) %>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">세부 계절 분류</label>
+                        </div>
+                        <div class="col-12 ">
+                          <select id="detail_season_type" name="detail_season_type" class="form-select">
+                            <% codezip.detail_season_type.forEach((text, index)=>{ %>
+                            <% if(index == data.consulting_status){ %>
+                            <option selected value="<%= index %>"><%= text %></option>
+                            <% }else{ %>
+                            <option value="<%= index %>"><%= text %></option>
+                            <% } %>
+                            <% }) %>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">상담내용</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="10" id="consulting_content" type="text" name="consulting_content" placeholder="" class="form-control"><%= data.consulting_content %></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">웜/쿨</label>
+                        </div>
+                        <div class="col-12 ">
+                          <input id="tone" type="number" name="tone" placeholder="" class="form-control" value="<%= data.tone %>">
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">채도</label>
+                        </div>
+                        <div class="col-12 ">
+                          <input id="chroma" type="number" name="chroma" placeholder="" class="form-control" value="<%= data.chroma %>">
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">대비</label>
+                        </div>
+                        <div class="col-12 ">
+                          <input id="contrast" type="number" name="contrast" placeholder="" class="form-control" value="<%= data.contrast %>">
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">명도</label>
+                        </div>
+                        <div class="col-12 ">
+                          <input id="brightness" type="number" name="brightness" placeholder="" class="form-control" value="<%= data.brightness %>">
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">광택</label>
+                        </div>
+                        <div class="col-12 ">
+                          <input id="gloss" type="number" name="gloss" placeholder="" class="form-control" value="<%= data.gloss %>">
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">결제 금액</label>
+                        </div>
+                        <div class="col-12 ">
+                          <input id="payment_amount" type="number" name="payment_amount" placeholder="" class="form-control" value="<%= data.payment_amount %>">
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">예약금액</label>
+                        </div>
+                        <div class="col-12 ">
+                          <input id="reservation_amount" type="number" name="reservation_amount" placeholder="" class="form-control" value="<%= data.reservation_amount %>">
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -193,7 +298,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수수료</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="commission" type="text" name="commission" placeholder="" class="form-control" value="<%= data.commission %>" required>
+                          <input id="commission" type="number" name="commission" placeholder="" class="form-control" value="<%= data.commission %>">
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -201,37 +306,37 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">최종 금액</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="final_amount" type="text" name="final_amount" placeholder="" class="form-control" value="<%= data.final_amount %>" required>
+                          <input id="final_amount" type="number" name="final_amount" placeholder="" class="form-control" value="<%= data.final_amount %>">
                         </div>
                       </div>
 
                       <div class="row layout-top-spacing">
-                        <div class="col-xl-4 mb-xl-0 mb-2">
+                        <div class="mb-xl-0 mb-2">
                           <h6>생성일</h6>
                         </div>
                       </div>
                       <div>
-                        <p class="form-control col-xl-4 mb-xl-0 mb-2">
+                        <p class="form-control mb-xl-0 mb-2">
                           <%= data.create_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
-                        <div class="col-xl-4 mb-xl-0 mb-2">
+                        <div class="mb-xl-0 mb-2">
                           <h6>변경일</h6>
                         </div>
                       </div>
                       <div>
-                        <p class="form-control col-xl-4 mb-xl-0 mb-2">
+                        <p class="form-control mb-xl-0 mb-2">
                           <%= data.update_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
-                        <div class="col-xl-4 mb-xl-0 mb-2">
+                        <div class="mb-xl-0 mb-2">
                           <h6>삭제일</h6>
                         </div>
                       </div>
                       <div>
-                        <p class="form-control col-xl-4 mb-xl-0 mb-2">
+                        <p class="form-control mb-xl-0 mb-2">
                           <%= data.delete_date %>
                         </p>
                       </div>

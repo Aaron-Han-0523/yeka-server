@@ -236,7 +236,7 @@ a {
   outline: none;
 }
 a:hover {
-  color: #888ea8;
+  /* color: #888ea8; */
   text-decoration: none;
 }
 a:focus {

@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs")%>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs")%>
 
@@ -73,7 +73,23 @@
                   </tr>
                   <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
                 </thead>
-                <tbody id="searchResults">
+                <%
+                let data = [];
+                for(let i=0; i< 10;i++){
+                    data.push({
+                      id: i,
+                      community_type: 0,
+                      community_title: "community_title".slice(0, i +2),
+                      community_content: "community_content".repeat(i +1),
+                      community_link: "https://ktsmemo.cdn3.cafe24.com/p/001"+i+".jpg",
+                      writer: "writer" + i,
+                      create_date: new Date(),
+                      update_date: new Date(),
+                      delete_date: i%2 ? new Date() : null,
+                    })
+                }
+                %>
+                <tbody id="searchResults" class="text-center">
                   <% data.forEach( function(item, index) { %>
                   <tr onclick="location.href='/admin/notice/detail/<%= item.id %>';">
                     <!-- <td>
@@ -82,52 +98,52 @@
                                                                         type="checkbox">
                                                                 </div>
                                                             </td> -->
-                    <td class="text-center">
+                    <td class="">
                       <h6 class="mb-0">
                         <%= item.id %>
                       </h6>
                     </td>
-                    <td class="text-center">
+                    <td class="">
                       <span class="media-body align-self-center">
                         <%= codezip.community_type[item.community_type] %>
                       </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-start">
                       <span class="media-body align-self-center">
                         <%= item.community_title %>
                       </span>
                     </td>
-                    <td class="text-center">
-                      <span class="media-body align-self-center text-ellipsis">
-                        <%= item.community_content %>
-                      </span>
-                    </td>
-                    <td class="text-center">
+                    <td class="text-start">
                       <span class="media-body align-self-center">
-                        <%= item.community_link %>
+                        <%= myUtils.text_ellipsis(item.community_content) %>
                       </span>
                     </td>
-                    <td class="text-center">
+                    <td class="">
+                      <a class="media-body align-self-center" href="<%= item.community_link %>">
+                        <%= myUtils.text_ellipsis(item.community_link) %>
+                      </a>
+                    </td>
+                    <td class="">
                       <span class="media-body align-self-center">
                         <%= item.writer %>
                       </span>
                     </td>
-                    <td class="text-center">
+                    <td class="">
                       <span class="media-body align-self-center">
                         <%= myUtils.formatDateTime(item.create_date) %>
                       </span>
                     </td>
-                    <td class="text-center">
+                    <td class="">
                       <span class="media-body align-self-center">
                         <%= myUtils.formatDateTime(item.update_date) %>
                       </span>
                     </td>
-                    <td class="text-center">
+                    <td class="">
                       <span class="media-body align-self-center">
                         <%= myUtils.formatDateTime(item.delete_date) %>
                       </span>
                     </td>
-                    <td class="text-center">
+                    <td class="">
                       <div class="action-btns">
                         <!-- <a href="javascript:void(0);"
                                                                     class="action-btn btn-view bs-tooltip me-2"
@@ -211,7 +227,7 @@
       for (let i = 0; i < result.count; i++) {
         tempHTML += `
                                 <tr onclick="location.href='/community/${result.rows[i].id}';">
-                                    <td class="text-center">
+                                    <td class="">
                                         <div class="media">
                                             <!-- <div class="avatar me-2">
                                 <img alt="avatar" src="../src/assets/img/profile-7.jpeg"
@@ -224,7 +240,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <span class="media-body align-self-center">
                                             ${result.rows[i].carNum.slice(0, -2) + "**"}
                                         </span>
@@ -234,33 +250,33 @@
                                             ${result.rows[i].title}
                                             </a></h6>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <span class="media-body align-self-center">
                                             ${result.rows[i].phoneNum.slice(0, -4) + "****"}
                                         </span>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <span class="media-body align-self-center">
                                             ${result.rows[i].clientName[0] + '*' +
                                 result.rows[i].clientName.slice(2)}
                                         </span>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <span class="media-body align-self-center">
                                             ${formatDate(result.rows[i].createDate)}
                                         </span>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <span class="media-body align-self-center">
                                             ${result.rows[i].updateUser ? result.rows[i].updateUser : ''}
                                         </span>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <span class="media-body align-self-center">
                                             ${result.rows[i].updateDate ? formatDate(result.rows[i].updateDate) : ''}
                                         </span>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                     <label hidden>
                                         ${result.rows[i].grade}
                                     </label>`
@@ -283,7 +299,7 @@
         tempHTML += `</td>`
 
         tempHTML += `
-                                <td class="text-center">
+                                <td class="">
                                     <div class="action-btns">
                                     <a href="/admin/community/detail/${result.rows[i].id}"
                                     class="action-btn btn-edit bs-tooltip me-2"

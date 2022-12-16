@@ -22,7 +22,7 @@ exports.create = (req, res) => {
   // Save PersonalColor in the database
   PersonalColor.create(personalColor)
     .then((data) => {
-      res.send(data);
+      return res.redirect('/admin/personal_color');
     })
     .catch((err) => {
       res.status(500).send({
@@ -40,7 +40,11 @@ exports.findAll = (req, res) => {
 
   PersonalColor.findAll({ where: condition })
     .then((data) => {
-      res.send(data);
+      return res.render('admin/personal_color/index', {
+        count: 1,
+        data: data,
+        personal_color: {}
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -50,11 +54,11 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a empty persornal_color
+// Find a empty personal_color
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-  return res.render("admin/persornal_color/detail", {
+  return res.render("admin/personal_color/detail", {
     count: 1,
     data: [],
     product: {},
@@ -65,7 +69,13 @@ exports.findEmpty = (req, res) => {
 // Find a single PersonalColor with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+// FE작업용
+return res.render("admin/personal_color/detail", {
+  count: 1,
+  data: [],
+  product: {},
+  id,
+});
   PersonalColor.findByPk(id)
     .then((data) => {
       if (data) {

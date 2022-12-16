@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs") %>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs") %>
 
@@ -28,7 +28,7 @@
           <div class="page-meta">
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/admin/product">뷰티상품 관리</a></li>
+                <li class="breadcrumb-item"><a href="/admin/product">AI 결과 데이터 관리</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
               </ol>
             </nav>
@@ -48,67 +48,141 @@
                         </div>
                       </div>
                     </div>
+                    <%
+                    if(id){
+                      data = {
+                        id: id,
+                        season: id%4,
+                        detail_season_type: id%5,
+                        fashion: "fashion".repeat(id+1),
+                        hair: "hair".repeat(id+1),
+                        perfume: "perfume".repeat(id+1),
+                        makeup_base: "makeup_base".repeat(id+1),
+                        makeup_eye: "makeup_eye".repeat(id+1),
+                        makeup_blusher: "makeup_blusher".repeat(id+1),
+                        lip: "lip".repeat(id+1),
+                        description: "description".repeat(id+1),
+                        tag: "tag" + id,
+                        create_date: new Date(),
+                        update_date: new Date(),
+                        delete_date: id%2 ? new Date() : null,
+                      }
+                    }
+                    %>
 
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">Id</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">식별번호</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data ? data.id: '' %>" readOnly>
-                        </div>
-                      </div>
-
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">상품 썸네일</label>
-                        </div>
-                        <div class="col-12 ">
-                          <%
-                            if(data.thumbnail) {
-                            let image_url = encodeURI(data.thumbnail.replace(/\\/g, '/'));
-                          %>
-                          <div class="col-12 card-thumbnail" style="background-image: url('<%= image_url %>')"></div>
-                          <% }else{ %>
-                          <div class="col-12 card-thumbnail" style="background-image: url('https://via.placeholder.com/150.jpg?text=No%20Image')"></div>
-                          <% } %>
+                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data.id %>" readOnly>
                         </div>
                       </div>
 
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">계절</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="title" type="text" name="title" placeholder="" class="form-control" value="<%= data ? data.title: '' %>" required>
-                        </div>
-                      </div>
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">설명</label>
-                        </div>
-                        <div class="col-12 ">
-                          <textarea rows="5" id="description" type="text" name="description" placeholder="" class="form-control" required><%= data ? data.description: '' %></textarea>
-                        </div>
-                      </div>
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">가격</label>
-                        </div>
-                        <div class="col-12 ">
-                          <input id="price" type="text" name="price" placeholder="" class="form-control" value="<%= data ? data.price: '' %>" required>
+                          <select id="season" name="season" class="form-select" required>
+                            <% codezip.season.forEach((text, index)=>{ %>
+                            <% if(index == data.season){ %>
+                            <option selected value="<%= index %>"><%= text %></option>
+                            <% }else{ %>
+                            <option value="<%= index %>"><%= text %></option>
+                            <% } %>
+                            <% }) %>
+                          </select>
                         </div>
                       </div>
 
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">배송비</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">세부 계절 분류</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="delivery_fee" type="text" name="delivery_fee" placeholder="" class="form-control" value="<%= data ? data.delivery_fee: '' %>" required>
+                          <select id="detail_season_type" name="detail_season_type" class="form-select" required>
+                            <% codezip.detail_season_type.forEach((text, index)=>{ %>
+                            <% if(index == data.consulting_status){ %>
+                            <option selected value="<%= index %>"><%= text %></option>
+                            <% }else{ %>
+                            <option value="<%= index %>"><%= text %></option>
+                            <% } %>
+                            <% }) %>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">패션</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="5" id="fashion" type="text" name="fashion" placeholder="" class="form-control"><%= data.fashion %></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">헤어</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="5" id="hair" type="text" name="hair" placeholder="" class="form-control"><%= data.hair %></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">향수</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="5" id="perfume" type="text" name="perfume" placeholder="" class="form-control"><%= data.perfume %></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">메이크업 베이스</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="5" id="makeup_base" type="text" name="makeup_base" placeholder="" class="form-control"><%= data.makeup_base %></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">메이크업 아이</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="5" id="makeup_eye" type="text" name="makeup_eye" placeholder="" class="form-control"><%= data.makeup_eye %></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">메이크업 블러셔</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="5" id="makeup_blusher" type="text" name="makeup_blusher" placeholder="" class="form-control"><%= data.makeup_blusher %></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">립</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="5" id="lip" type="text" name="lip" placeholder="" class="form-control"><%= data.lip %></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">간단한 설명</label>
+                        </div>
+                        <div class="col-12 ">
+                          <textarea rows="5" id="description" type="text" name="description" placeholder="" class="form-control"><%= data.description %></textarea>
                         </div>
                       </div>
 
@@ -117,7 +191,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">태그</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="tag" type="text" name="tag" placeholder="" class="form-control" value="<%= data ? data.tag: '' %>" required>
+                          <input id="tag" type="text" name="tag" placeholder="" class="form-control" value="<%= data.tag %>">
                         </div>
                       </div>
 
@@ -128,7 +202,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.create_date: '' %>
+                          <%= data.create_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -138,7 +212,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.update_date: '' %>
+                          <%= data.update_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -148,7 +222,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.delete_date: '' %>
+                          <%= data.delete_date %>
                         </p>
                       </div>
 
@@ -162,7 +236,7 @@
                             <% } %>
 
                             <% if(id) { %>
-                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/product/delete/<%= data ? data.id: `` %>';">삭제하기</button>
+                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/product/delete/<%= data.id %>';">삭제하기</button>
                             <% } %>
                             <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="cancel()">취소</button>
                           </div>

@@ -5,7 +5,7 @@
     <%- include("../partials/header.ejs") %>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
     <%- include("../partials/loader.ejs") %>
 
@@ -28,7 +28,7 @@
                                 <div class="page-meta">
                                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="admin/image">이미지 관리</a></li>
+                                            <li class="breadcrumb-item"><a href="/admin/image">이미지 관리</a></li>
                                             <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "추가" %></li>
                                         </ol>
                                     </nav>

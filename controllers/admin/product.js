@@ -72,7 +72,8 @@ exports.findEmpty = (req, res) => {
 // Find a single Product with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+// FE 작업용
+return res.render('admin/product/detail', {id:id, data:{}});
   Product.findByPk(id)
     .then(data => {
       if (data) {

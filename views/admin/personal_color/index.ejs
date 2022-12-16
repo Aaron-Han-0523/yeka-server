@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs")%>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs")%>
 
@@ -29,8 +29,7 @@
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <!-- <li class="breadcrumb-item"><a href="#">Table</a></li> -->
-                <li class="breadcrumb-item active" aria-current="page">뷰티 상품 관리
-                </li>
+                <li class="breadcrumb-item active" aria-current="page">AI 결과 데이터 관리</li>
               </ol>
             </nav>
           </div>
@@ -61,26 +60,18 @@
                                                         </div>
                                                     </th> -->
                     <th class="text-center" scope="col">식별번호</th>
-                    <th class="text-center" scope="col">제목</th>
-                    <th class="text-center" scope="col">설명</th>
-                    <th class="text-center" scope="col">판매가</th>
-                    <th class="text-center" scope="col">배송비</th>
+                    <th class="text-center" scope="col">컬러명</th>
+                    <th class="text-center" scope="col">패션</th>
+                    <th class="text-center" scope="col">헤어</th>
+                    <th class="text-center" scope="col">향수</th>
+                    <th class="text-center" scope="col">메이크업 베이스</th>
+                    <th class="text-center" scope="col">메이크업 아이</th>
+                    <th class="text-center" scope="col">메이크업 블러셔</th>
+                    <th class="text-center" scope="col">립</th>
+                    <th class="text-center" scope="col">간단한 설명</th>
                     <th class="text-center" scope="col">태그</th>
-                    <!--                                                     <th class="text-center" scope="col">성별</th> -->
-                    <!--                                                     <th class="text-center" scope="col">주소1</th> -->
-                    <!--                                                     <th class="text-center" scope="col">주소2</th> -->
-                    <!--                                                     <th class="text-center" scope="col">주소3</th> -->
-                    <!--                                                     <th class="text-center" scope="col">사업자등록번호</th> -->
-                    <!--                                                     <th class="text-center" scope="col">사업자등록증</th> -->
-                    <!--                                                     <th class="text-center" scope="col">해시태그</th> -->
-                    <!--                                                     <th class="text-center" scope="col">이력서</th> -->
-                    <!--                                                     <th class="text-center" scope="col">업무시간</th> -->
-                    <!--                                                     <th class="text-center" scope="col">인출액</th> -->
-                    <!--                                                     <th class="text-center" scope="col">은행1</th> -->
-                    <!--                                                     <th class="text-center" scope="col">은행2</th> -->
-                    <!--                                                     <th class="text-center" scope="col">은행3</th> -->
                     <th class="text-center" scope="col">생성일</th>
-                    <th class="text-center" scope="col">변경일</th>
+                    <th class="text-center" scope="col">수정일</th>
                     <th class="text-center" scope="col">삭제일</th>
                     <th class="text-center" scope="col">수정/삭제</th>
                   </tr>
@@ -90,20 +81,27 @@
                 let data = [];
                 for(let i=0; i< 10;i++){
                     data.push({
-                        id:  +i,
-                        title: "title" +i,
-                        description: "description".repeat(i),
-                        price: +"100".repeat(i%4),
-                        delivery_fee: i%4*1000,
-                        tag: "tag" +i,
-                        create_date: new Date(),
-                        update_date: new Date(),
+                      id: i,
+                      season: i%4,
+                      detail_season_type: i%5,
+                      fashion: "fashion".repeat(i+1),
+                      hair: "hair".repeat(i+1),
+                      perfume: "perfume".repeat(i+1),
+                      makeup_base: "makeup_base".repeat(i+1),
+                      makeup_eye: "makeup_eye".repeat(i+1),
+                      makeup_blusher: "makeup_blusher".repeat(i+1),
+                      lip: "lip".repeat(i+1),
+                      description: "description".repeat(i+1),
+                      tag: "tag" + i,
+                      create_date: new Date(),
+                      update_date: new Date(),
+                      delete_date: i%2 ? new Date() : null,
                     })
                 }
                 %>
                 <tbody id="searchResults">
                   <% data.forEach( function(item, index) { %>
-                  <tr onclick="location.href='/admin/product/detail/<%= item.id %>';">
+                  <tr onclick="location.href='/admin/personal_color/detail/<%= item.id %>';">
                     <!-- <td>
                                                                 <div class="form-check form-check-primary">
                                                                     <input class="form-check-input custom_mixed_child"
@@ -117,22 +115,52 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.title %>
+                        <%= codezip.season[item.season] %>
                       </span>
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= myUtils.text_ellipsis(item.description, 30) %>
+                        <%= codezip.detail_season_type[item.detail_season_type] %>
                       </span>
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= Intl.NumberFormat().format(item.price) %>
+                        <%= myUtils.text_ellipsis(item.fashion) %>
                       </span>
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= Intl.NumberFormat().format(item.delivery_fee) %>
+                        <%= myUtils.text_ellipsis(item.hair) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= myUtils.text_ellipsis(item.perfume) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= myUtils.text_ellipsis(item.makeup_base) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= myUtils.text_ellipsis(item.makeup_eye) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= myUtils.text_ellipsis(item.makeup_blusher) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= myUtils.text_ellipsis(item.lip) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= myUtils.text_ellipsis(item.description) %>
                       </span>
                     </td>
                     <td class="text-center">

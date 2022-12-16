@@ -70,7 +70,8 @@ exports.findEmpty = (req, res) => {
 // Find a single Option with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+// FE 작업용
+return res.render('admin/option/detail', {id:id, data:{}});
   Option.findByPk(id)
     .then(data => {
       if (data) {

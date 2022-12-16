@@ -75,7 +75,7 @@ exports.findEmpty = (req, res) => {
 
    return res.render('admin/order/detail', {
        count: 1,
-       data: [],
+       data: {},
        order: {},
        id,
      });
@@ -84,7 +84,8 @@ exports.findEmpty = (req, res) => {
 // Find a single Order with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+// FE 작업용
+return res.render('admin/order/detail', {id:id, data:{}});
   Order.findByPk(id)
     .then(data => {
       if (data) {

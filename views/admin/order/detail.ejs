@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs") %>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs") %>
 
@@ -39,7 +39,7 @@
             <div class="col-12 layout-top-spacing">
               <div class="col-12">
                 <!-- Post Form -->
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                   <div class="statbox widget box box-shadow">
                     <div class="widget-header">
                       <div class="row">
@@ -84,7 +84,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">Id</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data ? data.id: '' %>" readOnly>
+                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data.id %>" readOnly>
                         </div>
                       </div>
 
@@ -93,7 +93,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">사용자 이름</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="orderer_name" type="text" name="orderer_name" placeholder="" class="form-control" value="<%= data ? data.orderer_name: '' %>" required>
+                          <input id="orderer_name" type="text" name="orderer_name" placeholder="" class="form-control" value="<%= data.orderer_name %>" required>
                         </div>
                       </div>
 
@@ -102,7 +102,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">사용자 핸드폰</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="orderer_phone" type="text" name="orderer_phone" placeholder="" class="form-control" value="<%= data ? data.orderer_phone: '' %>" required>
+                          <input id="orderer_phone" type="text" name="orderer_phone" placeholder="" class="form-control" value="<%= data.orderer_phone %>" required>
                         </div>
                       </div>
 
@@ -111,7 +111,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">사용자 주소1</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="orderer_address1" type="text" name="orderer_address1" placeholder="" class="form-control" value="<%= data ? data.orderer_address1: '' %>" required>
+                          <input id="orderer_address1" type="text" name="orderer_address1" placeholder="" class="form-control" value="<%= data.orderer_address1 %>" required>
                         </div>
                       </div>
 
@@ -120,7 +120,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">사용자 주소2</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="orderer_address2" type="text" name="orderer_address2" placeholder="" class="form-control" value="<%= data ? data.orderer_address2: '' %>" required>
+                          <input id="orderer_address2" type="text" name="orderer_address2" placeholder="" class="form-control" value="<%= data.orderer_address2 %>" required>
                         </div>
                       </div>
 
@@ -129,7 +129,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">사용자 주소3</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="orderer_address3" type="text" name="orderer_address3" placeholder="" class="form-control" value="<%= data ? data.orderer_address3: '' %>" required>
+                          <input id="orderer_address3" type="text" name="orderer_address3" placeholder="" class="form-control" value="<%= data.orderer_address3 %>" required>
                         </div>
                       </div>
 
@@ -138,7 +138,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 장소</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_place" type="text" name="recipient_place" placeholder="" class="form-control" value="<%= data ? data.recipient_place: '' %>" required>
+                          <input id="recipient_place" type="text" name="recipient_place" placeholder="" class="form-control" value="<%= data.recipient_place %>" required>
                         </div>
                       </div>
 
@@ -147,7 +147,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 이름</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_name" type="text" name="recipient_name" placeholder="" class="form-control" value="<%= data ? data.recipient_name: '' %>" required>
+                          <input id="recipient_name" type="text" name="recipient_name" placeholder="" class="form-control" value="<%= data.recipient_name %>" required>
                         </div>
                       </div>
 
@@ -156,7 +156,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 전화번호</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_phone" type="text" name="recipient_phone" placeholder="" class="form-control" value="<%= data ? data.recipient_phone: '' %>" required>
+                          <input id="recipient_phone" type="text" name="recipient_phone" placeholder="" class="form-control" value="<%= data.recipient_phone %>" required>
                         </div>
                       </div>
 
@@ -165,7 +165,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 주소1</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_address1" type="text" name="recipient_address1" placeholder="" class="form-control" value="<%= data ? data.address3: '' %>" required>
+                          <input id="recipient_address1" type="text" name="recipient_address1" placeholder="" class="form-control" value="<%= data.recipient_address1 %>" required>
                         </div>
                       </div>
 
@@ -174,7 +174,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 주소2</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_address2" type="text" name="recipient_address2" placeholder="" class="form-control" value="<%= data ? data.recipient_address2: '' %>" required>
+                          <input id="recipient_address2" type="text" name="recipient_address2" placeholder="" class="form-control" value="<%= data.recipient_address2 %>" required>
                         </div>
                       </div>
 
@@ -183,25 +183,43 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수령인 주소3</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="recipient_address3" type="text" name="recipient_address3" placeholder="" class="form-control" value="<%= data ? data.recipient_address2: '' %>" required>
+                          <input id="recipient_address3" type="text" name="recipient_address3" placeholder="" class="form-control" value="<%= data.recipient_address2 %>" required>
                         </div>
                       </div>
 
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">이미지</label>
+                      <div class="row">
+                        <div class="row layout-top-spacing">
+                          <div class="mb-2">
+                            <h6>대표 이미지</h6>
+                          </div>
                         </div>
+                        <% if(data.image1) { %>
                         <div class="col-12 ">
-                          <input id="image1" type="text" name="image1" placeholder="" class="form-control" value="<%= data ? data.image1: '' %>" required>
+                          <%
+                            if(data.image1) {
+                            let image_url = encodeURI(data.image1.replace(/\\/g, '/'));
+                          %>
+                          <a target="_blank" href="<%= image_url %>">
+                            <div class="card-thumbnail" style="background-image: url('<%= image_url %>');"></div>
+                          </a>
+                          <% }else{ %>
+                          <div class="col-12 card-thumbnail" style="background-image: url('https://via.placeholder.com/150.jpg?text=No%20Image')"></div>
+                          <% } %>
+                        </div>
+                        <% } %>
+                      </div>
+                      <div class="mt-3">
+                        <div class="col-12 ">
+                          <input class="form-control-file" type="file" id="image1" name="files">
                         </div>
                       </div>
 
-                      <div class="form-group row mb-4">
+                      <div class="form-group row my-4">
                         <div class="col-12 ">
                           <label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="title" type="text" name="title" placeholder="" class="form-control" value="<%= data ? data.title: '' %>" required>
+                          <input id="title" type="text" name="title" placeholder="" class="form-control" value="<%= data.title %>" required>
                         </div>
                       </div>
 
@@ -210,7 +228,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">옵션</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="option" type="text" name="option" placeholder="" class="form-control" value="<%= data ? data.option: '' %>" required>
+                          <input id="option" type="text" name="option" placeholder="" class="form-control" value="<%= data.option %>" required>
                         </div>
                       </div>
 
@@ -219,7 +237,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">수량</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="quantity" type="text" name="quantity" placeholder="" class="form-control" value="<%= data ? data.quantity: '' %>" required>
+                          <input id="quantity" type="text" name="quantity" placeholder="" class="form-control" value="<%= data.quantity %>" required>
                         </div>
                       </div>
 
@@ -228,7 +246,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">가격</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="price" type="text" name="price" placeholder="" class="form-control" value="<%= data ? data.price: '' %>" required>
+                          <input id="price" type="text" name="price" placeholder="" class="form-control" value="<%= data.price %>" required>
                         </div>
                       </div>
 
@@ -237,12 +255,12 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">배송비</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="delivery_fee" type="text" name="delivery_fee" placeholder="" class="form-control" value="<%= data ? data.delivery_fee: '' %>" required>
+                          <input id="delivery_fee" type="text" name="delivery_fee" placeholder="" class="form-control" value="<%= data.delivery_fee %>" required>
                         </div>
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.create_date: '' %>
+                          <%= data.create_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -252,7 +270,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.update_date: '' %>
+                          <%= data.update_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -262,15 +280,13 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.delete_date: '' %>
+                          <%= data.delete_date %>
                         </p>
                       </div>
 
                       <div class="row layout-top-spacing">
                         <div class="col-lg-6 col-12 ">
                           <div class="form-group">
-                            <!--                                                                     <button -->
-                            <!--                                                                         class="btn btn-outline-success mb-2 me-4">생성하기</button> -->
                             <% if(id) { %>
                             <button class="btn btn-outline-success mb-2 me-4">수정하기</button>
                             <% } else { %>
@@ -278,7 +294,7 @@
                             <% } %>
 
                             <% if(id) { %>
-                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/order/delete/<%= data ? data.id: `` %>';">삭제하기</button>
+                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/order/delete/<%= data.id %>';">삭제하기</button>
                             <% } %>
                             <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="cancel()">취소</button>
                           </div>

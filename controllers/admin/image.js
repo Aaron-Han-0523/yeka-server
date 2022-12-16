@@ -73,7 +73,8 @@ exports.findEmpty = (req, res) => {
 // Find a single Image with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+// FE 작업용
+return res.render('admin/image/detail', {id:id, data:{}});
   Image.findByPk(id)
     .then(data => {
       if (data) {

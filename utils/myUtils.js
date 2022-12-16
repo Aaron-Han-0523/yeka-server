@@ -53,7 +53,7 @@ module.exports.formatDate = (d_t, option = { sep: '-', style: 'iso' }) => {
   }
 }
 
-module.exports.text_ellipsis = (text, max_length) => {
+module.exports.text_ellipsis = (text, max_length=20) => {
   return text.length > max_length ? text.slice(0, max_length) + "..." : text
 }
 

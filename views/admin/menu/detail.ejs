@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs") %>
 </head>
 
-<body class="layout-boxed remove-alt-menu">
+<body class="layout-boxed remove-remove-alt-menu">
 
   <%- include("../partials/loader.ejs") %>
 
@@ -28,7 +28,7 @@
           <div class="page-meta">
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/admin/menu">상담 메뉴 관리</a></li>
+                <li class="breadcrumb-item"><a href="#">상담 메뉴 관리</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "추가" %></li>
               </ol>
             </nav>
@@ -50,15 +50,18 @@
                     </div>
 
                     <%
-                    let data = {
-                      id : id,
-                      menu_title : "menu_title"+id,
-                      menu_content : "menu_content".repeat(id),
-                      menu_amount : id*10000,
-                      menu_image : id%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg": null,
-                      create_date : new Date(),
-                      update_date : new Date(),
-                      delete_date : null
+                    if(id){
+                      data = {
+                        id : id,
+                        consultant_id : id,
+                        menu_title : "menu_title"+id,
+                        menu_content : "menu_content".repeat(id),
+                        menu_amount : id*10000,
+                        menu_image : id%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg": null,
+                        create_date : new Date(),
+                        update_date : new Date(),
+                        delete_date : null
+                      }
                     }
                     %>
 
@@ -68,7 +71,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">Id</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data ? data.id: '' %>" readOnly>
+                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data.id %>" readOnly>
                         </div>
                       </div>
 
@@ -77,7 +80,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">상담자 id</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="consultant_id" type="text" name="consultant_id" placeholder="" class="form-control" value="<%= data ? data.consultant_id: '' %>" required>
+                          <input id="consultant_id" type="text" name="consultant_id" placeholder="" class="form-control" value="<%= data.consultant_id %>" readonly>
                         </div>
                       </div>
 
@@ -86,16 +89,16 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">메뉴 제목</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="menu_title" type="text" name="menu_title" placeholder="" class="form-control" value="<%= data ? data.menu_title: '' %>" required>
+                          <input id="menu_title" type="text" name="menu_title" placeholder="" class="form-control" value="<%= data.menu_title %>" required>
                         </div>
                       </div>
 
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">메뉴 계정</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">메뉴 금액</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="menu_amount" type="text" name="menu_amount" placeholder="" class="form-control" value="<%= data ? data.menu_amount: '' %>" required>
+                          <input id="menu_amount" type="number" name="menu_amount" placeholder="" class="form-control" value="<%= data.menu_amount %>" required>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -103,7 +106,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">메뉴 내용</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="menu_content" type="text" name="menu_content" placeholder="" class="form-control" value="<%= data ? data.menu_content: '' %>" required>
+                          <input id="menu_content" type="text" name="menu_content" placeholder="" class="form-control" value="<%= data.menu_content %>" required>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -123,7 +126,7 @@
                           <% } %>
                         </div>
                         <div class="col-12 mt-3">
-                          <input id="menu_image" type="file" name="menu_image" placeholder="" class="form-control-file" required>
+                          <input id="menu_image" type="file" name="menu_image" placeholder="" class="form-control-file">
                         </div>
                       </div>
 
@@ -134,7 +137,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.create_date: '' %>
+                          <%= data.create_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -144,7 +147,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.update_date: '' %>
+                          <%= data.update_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -154,7 +157,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.delete_date: '' %>
+                          <%= data.delete_date %>
                         </p>
                       </div>
 
@@ -168,7 +171,7 @@
                             <% } %>
 
                             <% if(id) { %>
-                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/menu/delete/<%= data ? data.id: `` %>';">삭제하기</button>
+                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/menu/delete/<%= data.id %>';">삭제하기</button>
                             <% } %>
                             <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="cancel()">취소</button>
                           </div>

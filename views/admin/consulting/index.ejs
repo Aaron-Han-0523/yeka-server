@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs")%>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs")%>
 
@@ -68,8 +68,17 @@
                     <th class="text-center" scope="col">상담 제목</th>
                     <th class="text-center" scope="col">결제 상태</th>
                     <th class="text-center" scope="col">상담 상태</th>
+                    <th class="text-center" scope="col">문화 분류</th>
+                    <th class="text-center" scope="col">계절</th>
+                    <th class="text-center" scope="col">계절 세부 분류</th>
+                    <th class="text-center" scope="col">상담내용</th>
+                    <th class="text-center" scope="col">웜/쿨</th>
+                    <th class="text-center" scope="col">채도</th>
+                    <th class="text-center" scope="col">대비</th>
+                    <th class="text-center" scope="col">명도</th>
+                    <th class="text-center" scope="col">광택</th>
                     <th class="text-center" scope="col">결제 금액</th>
-                    <th class="text-center" scope="col">예약 수</th>
+                    <th class="text-center" scope="col">예약 금액</th>
                     <th class="text-center" scope="col">수수료</th>
                     <th class="text-center" scope="col">최종 금액</th>
                     <th class="text-center" scope="col">생성일</th>
@@ -91,6 +100,15 @@
                         consulting_title: "consulting_title"+i,
                         payment_status: i%3,
                         consulting_status: i%3,
+                        culture_type: i%2,
+                        season: i%4,
+                        detail_season_type: i%5,
+                        consulting_content: "consulting_content".repeat(i+1),
+                        tone: i*10,
+                        chroma: i*10,
+                        contrast: i*10,
+                        brightness: i*10,
+                        gloss: i*10,
                         payment_amount: i*10000,
                         reservation_amount: i*1000,
                         commission: i*1000,
@@ -147,6 +165,51 @@
                     <td class="text-center">
                       <span class="media-body align-self-center">
                         <%= codezip.consulting_status[item.consulting_status] %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= codezip.culture_type[item.culture_type] %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= codezip.season[item.season] %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= codezip.detail_season_type[item.detail_season_type] %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= myUtils.text_ellipsis(item.consulting_content) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.tone %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.chroma %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.contrast %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.brightness %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.gloss %>
                       </span>
                     </td>
                     <td class="text-center">

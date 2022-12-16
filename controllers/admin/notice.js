@@ -41,8 +41,8 @@ exports.findAll = (req, res) => {
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
 // "community_type": 0 (공지사항)
-// "community_type": 1 (자유게시판)
-// "community_type": 2 (유튜브)
+// "community_type": 1 (유튜브)
+// "community_type": 2 (자유게시판)
   Community.findAll({ where: {"community_type": 0} })
     .then(data => {
 //      res.send(data);
@@ -75,7 +75,8 @@ exports.findEmpty = (req, res) => {
 // Find a single Community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+// FE 작업용
+return res.render('admin/notice/detail', {id:id, data:{}});
   Community.findByPk(id)
     .then(data => {
       if (data) {

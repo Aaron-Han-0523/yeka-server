@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs") %>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs") %>
 
@@ -49,13 +49,29 @@
                       </div>
                     </div>
 
+                    <%
+                    if(id){
+                      data = {
+                        id: id,
+                        community_type: id,
+                        community_title: "community_title" + id,
+                        community_content: "community_content".repeat(id+1),
+                        community_link: "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg",
+                        writer: "writer" + id,
+                        create_date: new Date(),
+                        update_date: new Date(),
+                        delete_date: id%2 ? new Date() : null,
+                      }
+                    }
+                    %>
+
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
                           <label class="col-sm-2 col-form-label col-form-label-sm">Id</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data ? data.id: '' %>" readOnly>
+                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data.id %>" readOnly>
                         </div>
                       </div>
 
@@ -64,7 +80,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">커뮤니티 타입</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="community_type" type="text" name="community_type" placeholder="" class="form-control" value="<%= data ? data.community_type: '' %>" required>
+                          <input id="community_type" type="text" name="community_type" placeholder="" class="form-control" value="<%= data.community_type %>" required>
                         </div>
                       </div>
 
@@ -73,7 +89,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">글제목</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="community_title" type="text" name="community_title" placeholder="" class="form-control" value="<%= data ? data.community_title: '' %>" required>
+                          <input id="community_title" type="text" name="community_title" placeholder="" class="form-control" value="<%= data.community_title %>" required>
                         </div>
                       </div>
 
@@ -82,7 +98,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">글내용</label>
                         </div>
                         <div class="col-12 ">
-                          <textarea rows="5" id="community_content" type="text" name="community_content" placeholder="" class="form-control" required><%= data ? data.community_content: '' %></textarea>
+                          <textarea rows="5" id="community_content" type="text" name="community_content" placeholder="" class="form-control" required><%= data.community_content %></textarea>
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -90,7 +106,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">링크</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="community_link" type="text" name="community_link" placeholder="" class="form-control" value="<%= data ? data.community_link: '' %>" required>
+                          <input id="community_link" type="text" name="community_link" placeholder="" class="form-control" value="<%= data.community_link %>">
                         </div>
                       </div>
                       <div class="form-group row mb-4">
@@ -98,7 +114,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="writer" type="text" name="writer" placeholder="" class="form-control" value="<%= data ? data.writer: '' %>" required>
+                          <input id="writer" type="text" name="writer" placeholder="" class="form-control" value="<%= data.writer %>" required>
                         </div>
                       </div>
 
@@ -109,7 +125,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.create_date: '' %>
+                          <%= data.create_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -119,7 +135,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.update_date: '' %>
+                          <%= data.update_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -129,7 +145,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.delete_date: '' %>
+                          <%= data.delete_date %>
                         </p>
                       </div>
 
@@ -145,7 +161,7 @@
                             <% } %>
 
                             <% if(id) { %>
-                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/youtube/delete/<%= data ? data.id: `` %>';">삭제하기</button>
+                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/youtube/delete/<%= data.id %>';">삭제하기</button>
                             <% } %>
                             <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="cancel()">취소</button>
                           </div>

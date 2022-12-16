@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 
   Community.findAll({ where: condition })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/community/index', {
         count: 1,
         data: data,
@@ -61,27 +61,28 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/community/detail', {
-       count: 1,
-       data: [],
-       community: {},
-       id,
-     });
+  return res.render('admin/community/detail', {
+    count: 1,
+    data: [],
+    community: {},
+    id,
+  });
 };
 
 // Find a single Community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+  // FE 작업용
+  return res.render('admin/community/detail', {id:id, data:{}});
   Community.findByPk(id)
     .then(data => {
       if (data) {
         return res.render('admin/community/detail', {
-                    count: 1,
-                    data: data,
-                    community: {},
-                    id,
-                  });
+          count: 1,
+          data: data,
+          community: {},
+          id,
+        });
       } else {
         res.status(404).send({
           message: `Cannot find Community with id=${id}.`

@@ -94,7 +94,8 @@ exports.findEmpty = (req, res) => {
 // Find a single User with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+  // FE 작업용
+  return res.render('admin/consultant/detail', { id: id, data: {}, menu: {} });
   User.findByPk(id)
     .then(data => {
       if (data) {

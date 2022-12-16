@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs") %>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs") %>
 
@@ -49,13 +49,29 @@
                       </div>
                     </div>
 
+
+                    <%
+                    if(id){
+                      data = {
+                          id:  +id,
+                          title: "title" +id,
+                          description: "description".repeat(id),
+                          price: +"100".repeat(id%4),
+                          delivery_fee: id%4*1000,
+                          tag: "tag" +id,
+                          create_date: new Date(),
+                          update_date: new Date(),
+                      }
+                    }
+                    %>
+
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
                           <label class="col-sm-2 col-form-label col-form-label-sm">Id</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data ? data.id: '' %>" readOnly>
+                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data.id %>" readOnly>
                         </div>
                       </div>
 
@@ -81,7 +97,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="title" type="text" name="title" placeholder="" class="form-control" value="<%= data ? data.title: '' %>" required>
+                          <input id="title" type="text" name="title" placeholder="" class="form-control" value="<%= data.title %>" required>
                         </div>
                       </div>
 
@@ -90,7 +106,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">설명</label>
                         </div>
                         <div class="col-12 ">
-                          <textarea rows="5" id="description" type="text" name="description" placeholder="" class="form-control" required><%= data ? data.description: '' %></textarea>
+                          <textarea rows="5" id="description" type="text" name="description" placeholder="" class="form-control" required><%= data.description %></textarea>
                         </div>
                       </div>
 
@@ -99,7 +115,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">가격</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="price" type="text" name="price" placeholder="" class="form-control" value="<%= data ? data.price: '' %>" required>
+                          <input id="price" type="text" name="price" placeholder="" class="form-control" value="<%= data.price %>" required>
                         </div>
                       </div>
 
@@ -108,7 +124,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">배송비</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="delivery_fee" type="text" name="delivery_fee" placeholder="" class="form-control" value="<%= data ? data.delivery_fee: '' %>" required>
+                          <input id="delivery_fee" type="text" name="delivery_fee" placeholder="" class="form-control" value="<%= data.delivery_fee %>" required>
                         </div>
                       </div>
 
@@ -117,7 +133,7 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">태그</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="tag" type="text" name="tag" placeholder="" class="form-control" value="<%= data ? data.tag: '' %>" required>
+                          <input id="tag" type="text" name="tag" placeholder="" class="form-control" value="<%= data.tag %>">
                         </div>
                       </div>
 
@@ -128,7 +144,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.create_date: '' %>
+                          <%= data.create_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -138,7 +154,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.update_date: '' %>
+                          <%= data.update_date %>
                         </p>
                       </div>
                       <div class="row layout-top-spacing">
@@ -148,7 +164,7 @@
                       </div>
                       <div>
                         <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data ? data.delete_date: '' %>
+                          <%= data.delete_date %>
                         </p>
                       </div>
 
@@ -162,7 +178,7 @@
                             <% } %>
 
                             <% if(id) { %>
-                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/product/delete/<%= data ? data.id: `` %>';">삭제하기</button>
+                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/product/delete/<%= data.id %>';">삭제하기</button>
                             <% } %>
                             <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="cancel()">취소</button>
                           </div>
@@ -188,15 +204,15 @@
                   <!-- 테스트 데이터 -->
                   <div>
                     <%
-                        let option = {count:100, rows:[]};
+                        option = {count:100, rows:[]};
                         for(let i=0; i< 10; i++){
                           option.rows.push({
                             id: i,
                             option_title: "option_title" + i,
-                            option_content: "option_content" + i,
-                            create_date: i,
-                            update_date: i,
-                            delete_date: i,
+                            option_content: "option_content".repeat(i),
+                            create_date: new Date(),
+                            update_date: new Date(),
+                            delete_date: i%2 ? new Date() : null,
                           })
                         }
                         %>
@@ -206,11 +222,9 @@
                     <!-- content head -->
                     <div class="container text-center">
                       <div class="row fs-5">
-                        <div class="col-1 border rounded-start">메뉴 번호</div>
-                        <div class="col-2 border">메뉴명</div>
-                        <div class="col-3 border">메뉴설명</div>
-                        <div class="col-1 border">메뉴금액</div>
-                        <div class="col border">메뉴이미지</div>
+                        <div class="col border rounded-start">옵션 식별번호</div>
+                        <div class="col-2 border">옵션명</div>
+                        <div class="col-4 border">옵션설명</div>
                         <div class="col border">생성일</div>
                         <div class="col border">수정일</div>
                         <div class="col border rounded-end">삭제일</div>
@@ -218,14 +232,12 @@
                     </div>
 
                     <!-- content body -->
-                    <div class="container mt-3 text-center fs-6" id="menu_index">
-                      <% menu.rows.forEach((item,index)=>{ %>
-                      <div class="row div-hover" onclick="location.href='/admin/menu/detail/<%= item.id %>';">
-                        <div class="col-1 border"><%= item.id %></div>
-                        <div class="col-2 border text-start"><%= item.menu_title  %></div>
-                        <div class="col-3 border text-start text-ellipsis"><%= item.menu_content %></div>
-                        <div class="col-1 border"><%= Intl.NumberFormat().format(item.menu_amount) %></div>
-                        <div class="col border"><%= item.menu_image ? "O":"X" %></div>
+                    <div class="container mt-3 text-center fs-6" id="option_index">
+                      <% option.rows.forEach((item,index)=>{ %>
+                      <div class="row div-hover" onclick="location.href='/admin/option/detail/<%= item.id %>';">
+                        <div class="col border"><%= item.id %></div>
+                        <div class="col-2 border text-start"><%= item.option_title  %></div>
+                        <div class="col-4 border text-start text-ellipsis"><%= item.option_content %></div>
                         <div class="col border"><%= myUtils.formatDateTime(item.create_date) %></div>
                         <div class="col border"><%= myUtils.formatDateTime(item.update_date) %></div>
                         <div class="col border"><%= myUtils.formatDateTime(item.delete_date) %></div>
@@ -234,8 +246,8 @@
                     </div>
 
                     <!-- pagination -->
-                    <div id="menu_pagination" class="layout-top-spacing">
-                      <%- myUtils.make_pagination_by_func(1, menu.count, "load_menu") %>
+                    <div id="option_pagination" class="layout-top-spacing">
+                      <%- myUtils.make_pagination_by_func(1, option.count, "load_option") %>
                     </div>
                   </div>
                 </div>

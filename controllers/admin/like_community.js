@@ -69,7 +69,7 @@ exports.findEmpty = (req, res) => {
 // Find a single Like_community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+  
   Like_community.findByPk(id)
     .then(data => {
       if (data) {

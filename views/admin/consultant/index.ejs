@@ -5,7 +5,7 @@
   <%- include("../partials/header.ejs")%>
 </head>
 
-<body class="layout-boxed alt-menu">
+<body class="layout-boxed remove-alt-menu">
 
   <%- include("../partials/loader.ejs")%>
 
@@ -29,8 +29,7 @@
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <!-- <li class="breadcrumb-item"><a href="#">Table</a></li> -->
-                <li class="breadcrumb-item active" aria-current="page">사용자 관리
-                </li>
+                <li class="breadcrumb-item active" aria-current="page">컨설턴트 관리</li>
               </ol>
             </nav>
           </div>
@@ -74,7 +73,10 @@
                     <th class="text-center" scope="col">해시태그</th>
                     <th class="text-center" scope="col">이력서</th>
                     <th class="text-center" scope="col">업무시간</th>
-                    <th class="text-center" scope="col">인출액</th>
+                    <th class="text-center" scope="col">총 매출액</th>
+                    <th class="text-center" scope="col">총 지급액</th>
+                    <th class="text-center" scope="col">출금신청여부</th>
+                    <th class="text-center" scope="col">출금신청금액</th>
                     <th class="text-center" scope="col">은행1</th>
                     <th class="text-center" scope="col">은행2</th>
                     <th class="text-center" scope="col">은행3</th>
@@ -104,7 +106,10 @@
                         hashtag: "hashtag".repeat(i),
                         resume: "resume".repeat(i),
                         working_hour: "working_hour".repeat(i),
+                        total_sales_amount: i*220000,
                         withdrawal: i*110000,
+                        withdrawal_request_flag: i%2,
+                        withdrawal_request_amount: i*10000,
                         withdrawal_request_flag: i%2,
                         withdrawal_request_amount: i*10000,
                         bank1: "bank1"+i,
@@ -202,7 +207,22 @@
                     </td>
                     <td class="text-center">
                       <span class="media-body align-self-center">
-                        <%= item.withdrawal %>
+                        <%= Intl.NumberFormat().format(item.total_sales_amount) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= Intl.NumberFormat().format(item.withdrawal) %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.withdrawal_request_flag ? "O" : "X" %>
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.withdrawal_request_amount %>
                       </span>
                     </td>
                     <td class="text-center">
