@@ -10,11 +10,17 @@ module.exports = function (sequelize, DataTypes) {
         autoIncrement: true,
         comment: "퍼스널 컬러 식별번호",
       },
-      color_name: {
-        type: DataTypes.STRING(255),
+      season: {
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true,
-        defaultValue: "",
-        comment: "컬러명",
+        defaultValue: 0,
+        comment: "계절",
+      },
+      detail_season_type: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
+        defaultValue: 0,
+        comment: "세부분류(비비드,페일...)",
       },
       fashion: {
         type: DataTypes.STRING(255),
@@ -57,6 +63,12 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: true,
         defaultValue: "",
         comment: "립",
+      },
+      matching_color_array: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        defaultValue: "",
+        comment: "매칭 컬러 배열",
       },
       description: {
         type: DataTypes.STRING(255),

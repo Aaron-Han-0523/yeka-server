@@ -1,5 +1,6 @@
 int id
-String color_name
+int season
+int detail_season_type
 String fashion
 String hair
 String perfume
@@ -7,6 +8,7 @@ String makeup_base
 String makeup_eye
 String makeup_blusher
 String lip
+String matching_color_array
 String description
 String tag
 String create_date
