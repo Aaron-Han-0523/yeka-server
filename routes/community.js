@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const community = require("../controllers/community.js");
 
   var router = require("express").Router();
@@ -8,6 +8,15 @@ module.exports = app => {
 
   // Retrieve all Community
   router.get("/", community.findAll);
+
+  // Retrieve all Community
+  router.get("/notice", community.findAllNotice);
+
+  // Retrieve all Community
+  router.get("/youtube", community.findAllYoutube);
+
+  // Retrieve all Community
+  router.get("/freeboard", community.findAllFreeboard);
 
   // Retrieve all published Community
   router.get("/published", community.findAllPublished);
@@ -24,5 +33,5 @@ module.exports = app => {
   // Delete all Community
   router.delete("/", community.deleteAll);
 
-  app.use('/api/community', router);
+  app.use("/api/community", router);
 };

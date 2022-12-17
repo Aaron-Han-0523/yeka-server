@@ -7,7 +7,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!",
     });
     return;
   }
@@ -16,18 +16,18 @@ exports.create = (req, res) => {
   const community = {
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    published: req.body.published ? req.body.published : false,
   };
 
   // Save Community in the database
   Community.create(community)
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Community."
+          err.message || "Some error occurred while creating the Community.",
       });
     });
 };
@@ -38,13 +38,64 @@ exports.findAll = (req, res) => {
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Community.findAll({ where: condition })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving community."
+          err.message || "Some error occurred while retrieving community.",
+      });
+    });
+};
+
+// Retrieve all Communities from the database.
+exports.findAllNotice = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  Community.findAll({ where: { community_type: 0 } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving community.",
+      });
+    });
+};
+
+// Retrieve all Communities from the database.
+exports.findAllYoutube = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  Community.findAll({ where: { community_type: 1 } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving community.",
+      });
+    });
+};
+
+// Retrieve all Communities from the database.
+exports.findAllFreeboard = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  Community.findAll({ where: { community_type: 2 } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving community.",
       });
     });
 };
@@ -54,18 +105,18 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Community.findByPk(id)
-    .then(data => {
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Community with id=${id}.`
+          message: `Cannot find Community with id=${id}.`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Community with id=" + id
+        message: "Error retrieving Community with id=" + id,
       });
     });
 };
@@ -75,22 +126,22 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Community.update(req.body, {
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Community was updated successfully."
+          message: "Community was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update Community with id=${id}. Maybe Community was not found or req.body is empty!`
+          message: `Cannot update Community with id=${id}. Maybe Community was not found or req.body is empty!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating Community with id=" + id
+        message: "Error updating Community with id=" + id,
       });
     });
 };
@@ -100,22 +151,22 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Community.destroy({
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Community was deleted successfully!"
+          message: "Community was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Community with id=${id}. Maybe Community was not found!`
+          message: `Cannot delete Community with id=${id}. Maybe Community was not found!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Community with id=" + id
+        message: "Could not delete Community with id=" + id,
       });
     });
 };
@@ -124,15 +175,17 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   Community.destroy({
     where: {},
-    truncate: false
+    truncate: false,
   })
-    .then(numbers => {
-      res.send({ message: `${numbers} Communities were deleted successfully!` });
+    .then((numbers) => {
+      res.send({
+        message: `${numbers} Communities were deleted successfully!`,
+      });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all communities."
+          err.message || "Some error occurred while removing all communities.",
       });
     });
 };
@@ -140,13 +193,13 @@ exports.deleteAll = (req, res) => {
 // find all published Community
 exports.findAllPublished = (req, res) => {
   Community.findAll({ where: { published: true } })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving communities."
+          err.message || "Some error occurred while retrieving communities.",
       });
     });
 };
