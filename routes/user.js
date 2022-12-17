@@ -27,10 +27,10 @@ module.exports = (app) => {
   // Delete all User
   router.delete("/", user.deleteAll);
 
-  // Retrieve all Product with Thumbnail
+  // Login
   router.post("/login", user.login);
 
-  // Retrieve all Product with Thumbnail
+  // Join
   router.post("/register", user.register);
 
   app.use("/api/user", router);
