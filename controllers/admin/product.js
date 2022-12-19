@@ -37,12 +37,12 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const searchWord = req.query.searchWord;
+  var condition = searchWord ? { title: { [Op.like]: `%${searchWord}%` } } : null;
 
   Product.findAll({ where: condition })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/product/index', {
         count: 1,
         data: data,
@@ -61,28 +61,29 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/product/detail', {
-       count: 1,
-       data: [],
-       product: {},
-       id,
-     });
+  return res.render('admin/product/detail', {
+    count: 1,
+    data: [],
+    product: {},
+    id,
+  });
 };
 
 // Find a single Product with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-// FE 작업용
-return res.render('admin/product/detail', {id:id, data:{}});
+
   Product.findByPk(id)
-    .then(data => {
+    .then(async data => {
       if (data) {
+        const option = await db.option.findAll({ where: { product_id: id } })
         return res.render('admin/product/detail', {
-                    count: 1,
-                    data: data,
-                    user: {},
-                    id,
-                  });
+          count: 1,
+          data: data,
+          user: {},
+          option: option,
+          id,
+        });
       } else {
         res.status(404).send({
           message: `Cannot find Product with id=${id}.`

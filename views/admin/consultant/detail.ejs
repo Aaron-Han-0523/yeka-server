@@ -49,37 +49,6 @@
                       </div>
                     </div>
 
-                    <%
-                    if(id){
-                      data = {
-                        id : id,
-                        user_type: 1,
-                        username: "username"+id,
-                        name: "name"+id,
-                        phone: "phone"+id,
-                        email: "email"+id,
-                        gender: id%3,
-                        address1: "address1"+id,
-                        address2: "address2"+id,
-                        address3: "address3"+id,
-                        business_registration_number: `${id}${id}-${id}${id}${id}-${id}${id}${id}${id}`,
-                        business_registration_file: id%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg": null,
-                        hashtag: "hashtag".repeat(id),
-                        resume: "resume".repeat(id),
-                        working_hour: "working_hour".repeat(id),
-                        total_sales_amount: id*220000,
-                        withdrawal: id*110000,
-                        withdrawal_request_flag: id%2,
-                        withdrawal_request_amount: id*10000,
-                        bank1: "bank1"+id,
-                        bank2: "bank2"+id,
-                        bank3: "bank3"+id,
-                        create_date: new Date(),
-                        update_date: new Date(),
-                      }
-                    }
-                    %>
-
                     <div class="widget-content widget-content-area">
 
                       <div class="form-group row mb-4">
@@ -278,9 +247,9 @@
                             <option value="">선택해주세요.</option>
                             <% for(let i=0; i< 2; i++){ %>
                             <% if(i==data.withdrawal_request_flag){ %>
-                            <option value="<%= i %>">X</option>
+                            <option selected value="<%= i %>"><%= codezip.withdrawal_request_flag[i] %></option>
                             <% }else{ %>
-                            <option value="<%= i %>">O</option>
+                            <option value="<%= i %>"><%= codezip.withdrawal_request_flag[i] %></option>
                             <% } %>
                             <% } %>
                           </select>
@@ -377,7 +346,7 @@
                 <!-- /Post Form -->
 
 
-
+                <% if(id) { %>
                 <!-- 상담 메뉴 -->
                 <div class="statbox widget box box-shadow layout-top-spacing">
                   <!-- header -->
@@ -389,26 +358,6 @@
                     </div>
                   </div>
                   <!-- content -->
-
-                  <!-- 테스트 데이터 -->
-                  <div>
-                    <%
-                        menu = {count:100, rows:[]};
-                        for(let i=0; i< 10; i++){
-                            menu.rows.push({
-                              id : i,
-                              menu_title : "menu_title"+i,
-                              menu_content : "menu_content".repeat(i),
-                              menu_amount : i*10000,
-                              menu_image : i%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+i+".jpg": null,
-                              create_date : new Date(),
-                              update_date : new Date(),
-                              delete_date : null
-                          })
-                        }
-                        %>
-                  </div>
-
                   <div class="widget-content widget-content-area">
                     <!-- content head -->
                     <div class="container text-center">
@@ -426,7 +375,7 @@
 
                     <!-- content body -->
                     <div class="container mt-3 text-center fs-6" id="menu_index">
-                      <% menu.rows.forEach((item,index)=>{ %>
+                      <% menu.forEach((item,index)=>{ %>
                       <div class="row div-hover" onclick="location.href='/admin/menu/detail/<%= item.id %>';">
                         <div class="col-1 border"><%= item.id %></div>
                         <div class="col-2 border text-start"><%= item.menu_title  %></div>
@@ -441,9 +390,9 @@
                     </div>
 
                     <!-- pagination -->
-                    <div id="menu_pagination" class="layout-top-spacing">
-                      <%- myUtils.make_pagination_by_func(1, menu.count, "load_menu") %>
-                    </div>
+                    <!-- <div id="menu_pagination" class="layout-top-spacing">
+                      <%# myUtils.make_pagination_by_func(1, menu.count, "load_menu") %>
+                    </div> -->
                   </div>
                 </div>
 
@@ -451,17 +400,6 @@
 
 
                 <!-- 포트폴리오 -->
-                <div>
-                  <!-- 테스트 데이터 -->
-                  <% let portfolio = {count:35, rows:[]}; %>
-                  <%
-                  for(let i=0; i< 35; i++){
-                    portfolio.rows.push({
-                      path:"https://ktsmemo.cdn3.cafe24.com/p/"+ ("001"+i).slice(-4) +".jpg"
-                    })
-                  }
-                  %>
-                </div>
                 <div class="statbox widget box box-shadow layout-top-spacing">
                   <!-- header -->
                   <div class="widget-header">
@@ -474,7 +412,7 @@
                   <!-- content -->
                   <div class="widget-content widget-content-area">
                     <div class="container row">
-                      <% portfolio.rows.forEach((item, index)=>{
+                      <% portfolio.forEach((item, index)=>{
                         let image_url = encodeURI(item.path.replace(/\\/g,'/'));
                       %>
                       <div class="col-2">
@@ -486,12 +424,12 @@
                     </div>
 
                     <!-- pagination -->
-                    <div id="portfolio_paginatnio" class="layout-top-spacing">
-                      <%- myUtils.make_pagination_by_func(1, portfolio.count, "load_portfolio", 36) %>
-                    </div>
+                    <!-- <div id="portfolio_paginatnio" class="layout-top-spacing">
+                      <%# myUtils.make_pagination_by_func(1, portfolio.count, "load_portfolio", 36) %>
+                    </div> -->
                   </div>
                 </div>
-
+                <% } %>
 
 
               </div>

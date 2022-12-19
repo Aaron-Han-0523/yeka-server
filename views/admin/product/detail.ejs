@@ -49,22 +49,6 @@
                       </div>
                     </div>
 
-
-                    <%
-                    if(id){
-                      data = {
-                          id:  +id,
-                          title: "title" +id,
-                          description: "description".repeat(id),
-                          price: +"100".repeat(id%4),
-                          delivery_fee: id%4*1000,
-                          tag: "tag" +id,
-                          create_date: new Date(),
-                          update_date: new Date(),
-                      }
-                    }
-                    %>
-
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
@@ -200,24 +184,6 @@
                     </div>
                   </div>
                   <!-- content -->
-
-                  <!-- 테스트 데이터 -->
-                  <div>
-                    <%
-                        option = {count:100, rows:[]};
-                        for(let i=0; i< 10; i++){
-                          option.rows.push({
-                            id: i,
-                            option_title: "option_title" + i,
-                            option_content: "option_content".repeat(i),
-                            create_date: new Date(),
-                            update_date: new Date(),
-                            delete_date: i%2 ? new Date() : null,
-                          })
-                        }
-                        %>
-                  </div>
-
                   <div class="widget-content widget-content-area">
                     <!-- content head -->
                     <div class="container text-center">
@@ -233,7 +199,7 @@
 
                     <!-- content body -->
                     <div class="container mt-3 text-center fs-6" id="option_index">
-                      <% option.rows.forEach((item,index)=>{ %>
+                      <% option.forEach((item,index)=>{ %>
                       <div class="row div-hover" onclick="location.href='/admin/option/detail/<%= item.id %>';">
                         <div class="col border"><%= item.id %></div>
                         <div class="col-2 border text-start"><%= item.option_title  %></div>
@@ -246,9 +212,9 @@
                     </div>
 
                     <!-- pagination -->
-                    <div id="option_pagination" class="layout-top-spacing">
-                      <%- myUtils.make_pagination_by_func(1, option.count, "load_option") %>
-                    </div>
+                    <!-- <div id="option_pagination" class="layout-top-spacing">
+                      <%# myUtils.make_pagination_by_func(1, option.count, "load_option") %>
+                    </div> -->
                   </div>
                 </div>
 

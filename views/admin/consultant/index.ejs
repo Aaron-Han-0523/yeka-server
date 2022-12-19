@@ -36,13 +36,15 @@
           <!-- /BREADCRUMB -->
 
           <div class="col-12 layout-top-spacing">
-            <div class="input-group">
-              <input id="searchWord" type="text" class="form-control" placeholder="검색할 제목 또는 내용을 입력하세요." aria-label="Recipient's username with two button addons">
-              <button class="btn btn-outline-primary" type="button" onclick="searchUser();">검색</button>
-              <button class="btn btn-outline-primary" type="button" onclick="exportExcel('consultant_list_table','consultant_list_file','consultant_list_sheet');">엑셀
-                다운로드</button>
-              <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/consultant/add';">추가하기</button>
-            </div>
+            <form>
+              <div class="input-group">
+                <input name="searchWord" type="text" class="form-control" placeholder="검색할 이름을 입력하세요." aria-label="Recipient's username with two button addons">
+                <button class="btn btn-outline-primary">검색</button>
+                <button class="btn btn-outline-primary" type="button" onclick="exportExcel('consultant_list_table','consultant_list_file','consultant_list_sheet');">엑셀
+                  다운로드</button>
+                <button class="btn btn-outline-primary" type="button" onclick="location.href='/admin/consultant/add';">추가하기</button>
+              </div>
+            </form>
             <p id="searchCount"></p>
           </div>
 
@@ -87,39 +89,6 @@
                   </tr>
                   <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
                 </thead>
-                <%
-                for(let i=0; i< 10;i++){
-                    data.push({
-                        id : i,
-                        user_type: 1,
-                        username: "username"+i,
-                        name: "name"+i,
-                        phone: "phone"+i,
-                        email: "email"+i,
-                        gender: i%3,
-                        address1: "address1"+i,
-                        address2: "address2"+i,
-                        address3: "address3"+i,
-                        business_registration_number: `${i}${i}-${i}${i}${i}-${i}${i}${i}${i}`,
-                        business_registration_file: i%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+i+".jpg": null,
-                        hashtag: "hashtag".repeat(i),
-                        resume: "resume".repeat(i),
-                        working_hour: "working_hour".repeat(i),
-                        total_sales_amount: i*220000,
-                        withdrawal: i*110000,
-                        withdrawal_request_flag: i%2,
-                        withdrawal_request_amount: i*10000,
-                        withdrawal_request_flag: i%2,
-                        withdrawal_request_amount: i*10000,
-                        bank1: "bank1"+i,
-                        bank2: "bank2"+i,
-                        bank3: "bank3"+i,
-                        create_date: new Date(),
-                        update_date: new Date(),
-                        delete_date: i%2 ? new Date() : null,
-                    })
-                }
-                %>
                 <tbody id="searchResults">
                   <% data.forEach( function(item, index) { %>
                   <tr onclick="location.href='/admin/consultant/detail/<%= item.id %>';">

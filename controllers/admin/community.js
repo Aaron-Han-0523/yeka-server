@@ -37,7 +37,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
+  const title = req.query.searchWord;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Community.findAll({ where: condition })
@@ -72,8 +72,7 @@ exports.findEmpty = (req, res) => {
 // Find a single Community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  // FE 작업용
-  return res.render('admin/community/detail', {id:id, data:{}});
+  
   Community.findByPk(id)
     .then(data => {
       if (data) {

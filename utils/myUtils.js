@@ -1,6 +1,4 @@
 const fs = require('fs');
-const multer = require('multer');
-const { resolve } = require('path');
 const path = require('path');
 
 
@@ -53,8 +51,8 @@ module.exports.formatDate = (d_t, option = { sep: '-', style: 'iso' }) => {
   }
 }
 
-module.exports.text_ellipsis = (text, max_length=20) => {
-  return text.length > max_length ? text.slice(0, max_length) + "..." : text
+module.exports.text_ellipsis = (text, max_length = 20) => {
+  return text && (text.length > max_length) ? text.slice(0, max_length) + "..." : text
 }
 
 // array = "1,2,3,4"
@@ -65,43 +63,6 @@ module.exports.array_i18n = (array, i18n_func) => {
     result.push(i18n_func(item));
   })
   return result;
-}
-
-
-// 업로드 파일 저장 설정
-let storage = (dir_path) => multer.diskStorage({
-  destination: function (req, file, callback) {
-    const FILES_PATH = path.join(process.env.UPLOADFILES_ROOT, dir_path);
-    const FOLDER_PATH = path.join(process.cwd(), FILES_PATH);
-    exports.mkdir(FOLDER_PATH);
-
-    callback(null, FILES_PATH)
-  }, filename: function (req, file, callback) {
-    let extension = path.extname(file.originalname);
-    let basename = path.basename(file.originalname, extension);
-    let encoding = []
-    for (let i = 0; i < basename.length; i++) {
-      encoding.push(basename.codePointAt(i).toString(36));
-    }
-    encoding = encoding.slice(0, 200);
-    callback(null, req.res.locals.user.id + '-' + Date.now() + "-" + encoding.join('_') + extension);
-  },
-});
-
-// 미들웨어 등록
-module.exports.upload = (dir_path) => multer({
-  storage: storage(dir_path),
-  // file size 제한(MB)
-  limits: {
-    fileSize: process.env.FILE_MAX_SIZE * 1024 * 1024,
-  },
-});
-
-module.exports.multerConsoleError = (err, req, res, next) => {
-  if (err instanceof Error) {
-    console.error(err);
-  }
-  next(err);
 }
 
 function make_url(baseURL, page, limit, word) {

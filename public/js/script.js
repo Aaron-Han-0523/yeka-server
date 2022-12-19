@@ -35,7 +35,7 @@ function cancel() {
 function delete_(event, url) {
     event.stopPropagation();
 
-    // console.log('/' + url.split('/')[1]);
+    console.log('/' + url);
 
     let chk = confirm("정말로 삭제하시겠습니까?");
     if (chk) {
@@ -43,8 +43,7 @@ function delete_(event, url) {
             .then(res => {
                 if (res.ok) {
                     alert("삭제되었습니다.");
-                    const redirectUrl = url.split('/')[1];
-                    location.href = redirectUrl;
+                    location.href = res.url;
                     // window.location.reload();
                 } else {
                     alert(res.statusText);

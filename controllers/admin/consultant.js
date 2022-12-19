@@ -59,12 +59,23 @@ exports.create = (req, res) => {
 // Retrieve all Users from the database.
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const searchWord = req.query.searchWord;
 
-  User.findAll({ where: { "user_type": 1 } })
+  let query = `
+  SELECT consultant.*, SUM(consulting.final_amount) as total_sales_amount
+  FROM user consultant
+  LEFT JOIN consulting
+    ON consulting.consultant_id=consultant.id`
+  let where = `
+  WHERE consultant.user_type=1`
+  if (searchWord) {
+    where += ` and consultant.name like "%${searchWord}%"`
+  }
+  let option = `
+  GROUP BY consultant.id`
+
+  db.sequelize.query(query + where + option, { type: db.Sequelize.QueryTypes.SELECT })
     .then(data => {
-      //      res.send(data);
       return res.render('admin/consultant/index', {
         count: 1,
         data: data,
@@ -77,6 +88,22 @@ exports.findAll = (req, res) => {
           err.message || "Some error occurred while retrieving consultant."
       });
     });
+
+  // User.findAll({ where: { "user_type": 1 } })
+  //   .then(data => {
+  //     //      res.send(data);
+  //     return res.render('admin/consultant/index', {
+  //       count: 1,
+  //       data: data,
+  //       user: {}
+  //     });
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while retrieving consultant."
+  //     });
+  //   });
 };
 
 // Find a empty User
@@ -94,18 +121,24 @@ exports.findEmpty = (req, res) => {
 // Find a single User with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  // FE 작업용
-  return res.render('admin/consultant/detail', { id: id, data: {}, menu: {} });
+
   User.findByPk(id)
     .then(data => {
       if (data) {
-        return res.render('admin/consultant/detail', {
-          count: 1,
-          data: data,
-          user: {},
-          menu: {},
-          id: id,
-        });
+        const menu = db.menu.findAll({ where: { consultant_id: id } });
+        const portfolio = db.image.findAll({ where: { image_type: 3, consultant_id: id } });
+        const total_sales_amount = db.consulting.sum("final_amount", { where: { consultant_id: id } });
+
+        Promise.all([menu, portfolio, total_sales_amount]).then(([menu, portfolio, total_sales_amount]) => {
+          data.total_sales_amount = total_sales_amount;
+          return res.render('admin/consultant/detail', {
+            data: data,
+            portfolio: portfolio || [],
+            menu: menu || [],
+            id: id,
+          });
+        })
+
       } else {
         res.status(404).send({
           message: `Cannot find User with id=${id}.`

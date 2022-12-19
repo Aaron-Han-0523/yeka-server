@@ -34,7 +34,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
+  const title = req.query.searchWord;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Like_community.findAll({ where: condition })

@@ -37,13 +37,19 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const searchWord = req.query.searchWord;
+  let condition = { "community_type": 1 }
+  if (searchWord) {
+    condition[Op.or] = [
+      { community_title: { [Op.like]: `%${searchWord}%` } },
+      { community_content: { [Op.like]: `%${searchWord}%` } }
+    ]
+  }
 
-// "community_type": 0 (공지사항)
-// "community_type": 1 (유튜브)
-// "community_type": 2 (자유게시판)
-  Community.findAll({ where: {"community_type": 1} })
+  // "community_type": 0 (공지사항)
+  // "community_type": 1 (유튜브)
+  // "community_type": 2 (자유게시판)
+  Community.findAll({ where: condition })
     .then(data => {
 //      res.send(data);
       return res.render('admin/youtube/index', {
@@ -75,8 +81,7 @@ exports.findEmpty = (req, res) => {
 // Find a single Community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-// FE 작업용
-return res.render('admin/youtube/detail', {id:id, data:{}});
+  
   Community.findByPk(id)
     .then(data => {
       if (data) {

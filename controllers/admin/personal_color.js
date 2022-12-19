@@ -35,8 +35,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Communities from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const searchWord = req.query.searchWord;
+  var condition = searchWord ? { season: searchWord } : null;
 
   PersonalColor.findAll({ where: condition })
     .then((data) => {
@@ -69,17 +69,15 @@ exports.findEmpty = (req, res) => {
 // Find a single PersonalColor with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-// FE작업용
-return res.render("admin/personal_color/detail", {
-  count: 1,
-  data: [],
-  product: {},
-  id,
-});
+
   PersonalColor.findByPk(id)
     .then((data) => {
       if (data) {
-        res.send(data);
+        return res.render("admin/personal_color/detail", {
+          count: 1,
+          data: data,
+          id,
+        });
       } else {
         res.status(404).send({
           message: `Cannot find PersonalColor with id=${id}.`,
@@ -127,9 +125,7 @@ exports.delete = (req, res) => {
   })
     .then((num) => {
       if (num == 1) {
-        res.send({
-          message: "PersonalColor was deleted successfully!",
-        });
+        return res.redirect("/admin/personal_color");
       } else {
         res.send({
           message: `Cannot delete PersonalColor with id=${id}. Maybe PersonalColor was not found!`,

@@ -37,7 +37,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
+  const title = req.query.searchWord;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Menu.findAll({ where: condition })
@@ -72,8 +72,7 @@ exports.findEmpty = (req, res) => {
 // Find a single Menu with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-// FE 작업용
-return res.render('admin/menu/detail', {id:id, data:{}});
+  
   Menu.findByPk(id)
     .then(data => {
       if (data) {

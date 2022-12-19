@@ -36,7 +36,7 @@ exports.create = (req, res) => {
     business_registration_file: req.body.business_registration_file,
   };
 
-console.log(user)
+  console.log(user)
   // Save User in the database
   // insert into user values(user);
 
@@ -59,12 +59,15 @@ console.log(user)
 // Retrieve all Users from the database.
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const name = req.query.searchWord;
+  let condition = { "user_type": 0 };
+  if (name) {
+    condition.name = { [Op.like]: `%${name}%` }
+  }
 
-  User.findAll({ where: {"user_type" : 0} })
+  User.findAll({ where: condition })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/user/index', {
         count: 1,
         data: data,
@@ -83,28 +86,27 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/user/detail', {
-       count: 1,
-       data: [],
-       user: {},
-       id,
-     });
+  return res.render('admin/user/detail', {
+    count: 1,
+    data: [],
+    user: {},
+    id,
+  });
 };
 
 // Find a single User with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-// FE 작업용
-return res.render('admin/user/detail', {id:id, data:{}});
+  
   User.findByPk(id)
     .then(data => {
       if (data) {
         return res.render('admin/user/detail', {
-            count: 1,
-            data: data,
-            user: {},
-            id,
-          });
+          count: 1,
+          data: data,
+          user: {},
+          id,
+        });
       } else {
         res.status(404).send({
           message: `Cannot find User with id=${id}.`

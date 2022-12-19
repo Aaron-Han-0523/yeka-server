@@ -37,15 +37,21 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const searchWord = req.query.searchWord;
+  let condition = { "community_type": 2 }
+  if (searchWord) {
+    condition[Op.or] = [
+      { community_title: { [Op.like]: `%${searchWord}%` } },
+      { community_content: { [Op.like]: `%${searchWord}%` } }
+    ]
+  }
 
-// "community_type": 0 (공지사항)
-// "community_type": 1 (유튜브)
-// "community_type": 2 (자유게시판)
-  Community.findAll({ where: {"community_type": 2} })
+  // "community_type": 0 (공지사항)
+  // "community_type": 1 (유튜브)
+  // "community_type": 2 (자유게시판)
+  Community.findAll({ where: condition })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/freeboard/index', {
         count: 1,
         data: data,
@@ -64,28 +70,27 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/freeboard/detail', {
-       count: 1,
-       data: [],
-       community: {},
-       id
-     });
+  return res.render('admin/freeboard/detail', {
+    count: 1,
+    data: [],
+    community: {},
+    id
+  });
 };
 
 // Find a single Community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-// FE 작업용
-return res.render('admin/freeboard/detail', {id:id, data:{}});
+
   Community.findByPk(id)
     .then(data => {
       if (data) {
         return res.render('admin/freeboard/detail', {
-                    count: 1,
-                    data: data,
-                    community: {},
-                    id
-                  });
+          count: 1,
+          data: data,
+          community: {},
+          id
+        });
       } else {
         res.status(404).send({
           message: `Cannot find Community with id=${id}.`

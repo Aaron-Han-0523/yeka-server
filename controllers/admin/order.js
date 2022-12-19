@@ -49,12 +49,12 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const searchWord = req.query.searchWord;
+  var condition = searchWord ? { orderer_name: { [Op.like]: `%${searchWord}%` } } : null;
 
   Order.findAll({ where: condition })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/order/index', {
         count: 1,
         data: data,
@@ -73,28 +73,27 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/order/detail', {
-       count: 1,
-       data: {},
-       order: {},
-       id,
-     });
+  return res.render('admin/order/detail', {
+    count: 1,
+    data: {},
+    order: {},
+    id,
+  });
 };
 
 // Find a single Order with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-// FE 작업용
-return res.render('admin/order/detail', {id:id, data:{}});
+
   Order.findByPk(id)
     .then(data => {
       if (data) {
         return res.render('admin/order/detail', {
-            count: 1,
-            data: data,
-            order: {},
-            id,
-          });
+          count: 1,
+          data: data,
+          order: {},
+          id,
+        });
       } else {
         res.status(404).send({
           message: `Cannot find Order with id=${id}.`
@@ -117,7 +116,7 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
-          res.redirect('/admin/order/detail/' + id);
+        res.redirect('/admin/order/detail/' + id);
       } else {
         res.send({
           message: `Cannot update Order with id=${id}. Maybe Order was not found or req.body is empty!`

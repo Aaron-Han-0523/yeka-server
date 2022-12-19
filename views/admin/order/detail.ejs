@@ -49,35 +49,6 @@
                       </div>
                     </div>
 
-                    <%
-                    if(id){
-                      data = {
-                        id: id,
-                        orderer_name: "orderer_name" +id,
-                        orderer_phone: "orderer_phone" +id,
-                        orderer_address1: "orderer_address1" +id,
-                        orderer_address2: "orderer_address2" +id,
-                        orderer_address3: "orderer_address3" +id,
-                        recipient_place: "recipient_place" +id,
-                        recipient_name: "recipient_name" +id,
-                        recipient_phone: "recipient_phone" +id,
-                        recipient_address1: "recipient_address1" +id,
-                        recipient_address2: "recipient_address2" +id,
-                        recipient_address3: "recipient_address3" +id,
-                        image1: id%2? "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg": null,
-                        title: "title" +id,
-                        option: "option".repeat(id),
-                        quantity: id+1,
-                        price: id*10000,
-                        delivery_fee: id*1000,
-                        total_fee: id*11000,
-                        create_date: new Date(),
-                        update_date: new Date(),
-                        delete_date: id%2 ? new Date() : null,
-                      }
-                    }
-                    %>
-
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">

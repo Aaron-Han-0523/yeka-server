@@ -49,37 +49,6 @@
                       </div>
                     </div>
 
-                    <%
-                    if(id){
-                      data = {
-                        id: id,
-                        consultant_id: id,
-                        client_id: id,
-                        client_name: "client_name"+id,
-                        client_image: "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg",
-                        payment_date: new Date(),
-                        consulting_title: "consulting_title"+id,
-                        payment_status: id%3,
-                        consulting_status: id%3,
-                        culture_type: id%2,
-                        season: id%4,
-                        detail_season_type: id%5,
-                        consulting_content: "consulting_content".repeat(id+1),
-                        tone: id*10,
-                        chroma: id*10,
-                        contrast: id*10,
-                        brightness: id*10,
-                        gloss: id*10,
-                        payment_amount: id*10000,
-                        reservation_amount: id*1000,
-                        commission: id*1000,
-                        final_amount: id*13000,
-                        create_date: new Date(),
-                        update_date: new Date(),
-                      }
-                    }
-                    %>
-
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">

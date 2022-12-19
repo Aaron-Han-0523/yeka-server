@@ -49,22 +49,6 @@
                       </div>
                     </div>
 
-                    <%
-                    if(id){
-                      data = {
-                        id: id,
-                        community_type: 2,
-                        community_title: "freeboard_title" + id,
-                        community_content: "freeboard_content".repeat(id+1),
-                        community_link: "https://ktsmemo.cdn3.cafe24.com/p/001"+id+".jpg",
-                        writer: "writer" + id,
-                        create_date: new Date(),
-                        update_date: new Date(),
-                        delete_date: id%2 ? new Date() : null,
-                      }
-                    }
-                    %>
-
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
@@ -80,7 +64,15 @@
                           <label class="col-sm-2 col-form-label col-form-label-sm">커뮤니티 타입</label>
                         </div>
                         <div class="col-12 ">
-                          <input id="community_type" type="text" name="community_type" placeholder="" class="form-control" value="<%= data.community_type %>" required>
+                          <select name="community_type" class="form-select" required>
+                            <% codezip.community_type.forEach((item, index)=>{ %>
+                            <% if(index==2) { %>
+                            <option selected value="<%= index %>"><%= item %></option>
+                            <% }else{ %>
+                            <option value="<%= index %>"><%= item %></option>
+                            <% } %>
+                            <% }) %>
+                          </select>
                         </div>
                       </div>
 

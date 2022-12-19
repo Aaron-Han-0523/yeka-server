@@ -29,7 +29,7 @@
             <nav class="breadcrumb-style-one" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/product">AI 결과 데이터 관리</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "글쓰기" %></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= id? "수정" : "추가" %></li>
               </ol>
             </nav>
           </div>
@@ -48,28 +48,7 @@
                         </div>
                       </div>
                     </div>
-                    <%
-                    if(id){
-                      data = {
-                        id: id,
-                        season: id%4,
-                        detail_season_type: id%5,
-                        fashion: "fashion".repeat(id+1),
-                        hair: "hair".repeat(id+1),
-                        perfume: "perfume".repeat(id+1),
-                        makeup_base: "makeup_base".repeat(id+1),
-                        makeup_eye: "makeup_eye".repeat(id+1),
-                        makeup_blusher: "makeup_blusher".repeat(id+1),
-                        lip: "lip".repeat(id+1),
-                        description: "description".repeat(id+1),
-                        tag: "tag" + id,
-                        create_date: new Date(),
-                        update_date: new Date(),
-                        delete_date: id%2 ? new Date() : null,
-                      }
-                    }
-                    %>
-
+                    
                     <div class="widget-content widget-content-area">
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
