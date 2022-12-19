@@ -52,9 +52,20 @@ exports.findAll = (req, res) => {
 // Retrieve all Communities from the database.
 exports.findAllNotice = (req, res) => {
   const title = req.query.title;
+  const pageNum = req.query.pageNum;
+  let offset = 0;
+
+  if (pageNum > 1) {
+    offset = 10 * (pageNum - 1);
+  }
+
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Community.findAll({ where: { community_type: 0 } })
+  Community.findAndCountAll({
+    where: { community_type: 0 },
+    offset: offset,
+    limit: 10,
+  })
     .then((data) => {
       res.send(data);
     })
@@ -69,9 +80,20 @@ exports.findAllNotice = (req, res) => {
 // Retrieve all Communities from the database.
 exports.findAllYoutube = (req, res) => {
   const title = req.query.title;
+  const pageNum = req.query.pageNum;
+  let offset = 0;
+
+  if (pageNum > 1) {
+    offset = 10 * (pageNum - 1);
+  }
+
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Community.findAll({ where: { community_type: 1 } })
+  Community.findAndCountAll({
+    where: { community_type: 1 },
+    offset: offset,
+    limit: 10,
+  })
     .then((data) => {
       res.send(data);
     })
@@ -86,9 +108,20 @@ exports.findAllYoutube = (req, res) => {
 // Retrieve all Communities from the database.
 exports.findAllFreeboard = (req, res) => {
   const title = req.query.title;
+  const pageNum = req.query.pageNum;
+  let offset = 0;
+
+  if (pageNum > 1) {
+    offset = 10 * (pageNum - 1);
+  }
+
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Community.findAll({ where: { community_type: 2 } })
+  Community.findAndCountAll({
+    where: { community_type: 2 },
+    offset: offset,
+    limit: 10,
+  })
     .then((data) => {
       res.send(data);
     })
