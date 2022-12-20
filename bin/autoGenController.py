@@ -39,7 +39,7 @@ file_list = os.listdir(path)
 for res_file in file_list:
     ref_file   = sys.argv[1]
 
-    ref_str    = "controller"
+    ref_str    = "auto"
     res_str    = res_file
 
     ref_lower  = ref_str.lower()

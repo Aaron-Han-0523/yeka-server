@@ -1,28 +1,28 @@
-module.exports = app => {
-  const like_community = require("../controllers/like_community.js");
+module.exports = (app) => {
+  const likeCommunity = require("../controllers/likeCommunity.js");
 
   var router = require("express").Router();
 
-  // Create a new Like_community
-  router.post("/", like_community.create);
+  // Create a new LikeCommunity
+  router.post("/", likeCommunity.create);
 
-  // Retrieve all Like_community
-  router.get("/", like_community.findAll);
+  // Retrieve all LikeCommunity
+  router.get("/", likeCommunity.findAll);
 
-  // Retrieve all published Like_community
-  router.get("/published", like_community.findAllPublished);
+  // Retrieve all published LikeCommunity
+  router.get("/published", likeCommunity.findAllPublished);
 
-  // Retrieve a single Like_community with id
-  router.get("/:id", like_community.findOne);
+  // Retrieve a single LikeCommunity with id
+  router.get("/:id", likeCommunity.findOne);
 
-  // Update a Like_community with id
-  router.put("/:id", like_community.update);
+  // Update a LikeCommunity with id
+  router.put("/:id", likeCommunity.update);
 
-  // Delete a Like_community with id
-  router.delete("/:id", like_community.delete);
+  // Delete a LikeCommunity with id
+  router.delete("/:id", likeCommunity.delete);
 
-  // Delete all Like_community
-  router.delete("/", like_community.deleteAll);
+  // Delete all LikeCommunity
+  router.delete("/", likeCommunity.deleteAll);
 
-  app.use('/api/like_community', router);
+  app.use("/api/likeCommunity", router);
 };

@@ -1,152 +1,155 @@
 const db = require("../models");
-const Like_community = db.community;
+const LikeCommunity = db.likeCommunity;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Like_community
+// Create and Save a new LikeCommunity
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!",
     });
     return;
   }
 
-  // Create a Like_community
-  const Like_community = {
+  // Create a LikeCommunity
+  const likeCommunity = {
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    published: req.body.published ? req.body.published : false,
   };
 
-  // Save Like_community in the database
-  Like_community.create(Like_community)
-    .then(data => {
+  // Save LikeCommunity in the database
+  LikeCommunity.create(likeCommunity)
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Like_community."
+          err.message ||
+          "Some error occurred while creating the LikeCommunity.",
       });
     });
 };
 
-// Retrieve all Like_communities from the database.
+// Retrieve all Communities from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Like_community.findAll({ where: condition })
-    .then(data => {
+  LikeCommunity.findAll({ where: condition })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Like_community."
+          err.message || "Some error occurred while retrieving likeCommunity.",
       });
     });
 };
 
-// Find a single Like_community with an id
+// Find a single LikeCommunity with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Like_community.findByPk(id)
-    .then(data => {
+  LikeCommunity.findByPk(id)
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Like_community with id=${id}.`
+          message: `Cannot find LikeCommunity with id=${id}.`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Like_community with id=" + id
+        message: "Error retrieving LikeCommunity with id=" + id,
       });
     });
 };
 
-// Update a Like_community by the id in the request
+// Update a LikeCommunity by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Like_community.update(req.body, {
-    where: { id: id }
+  LikeCommunity.update(req.body, {
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Like_community was updated successfully."
+          message: "LikeCommunity was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update Like_community with id=${id}. Maybe Like_community was not found or req.body is empty!`
+          message: `Cannot update LikeCommunity with id=${id}. Maybe LikeCommunity was not found or req.body is empty!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating Like_community with id=" + id
+        message: "Error updating LikeCommunity with id=" + id,
       });
     });
 };
 
-// Delete a Like_community with the specified id in the request
+// Delete a LikeCommunity with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Like_community.destroy({
-    where: { id: id }
+  LikeCommunity.destroy({
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Like_community was deleted successfully!"
+          message: "LikeCommunity was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Like_community with id=${id}. Maybe Like_community was not found!`
+          message: `Cannot delete LikeCommunity with id=${id}. Maybe LikeCommunity was not found!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Like_community with id=" + id
+        message: "Could not delete LikeCommunity with id=" + id,
       });
     });
 };
 
-// Delete all Like_communities from the database.
+// Delete all Communities from the database.
 exports.deleteAll = (req, res) => {
-  Like_community.destroy({
+  LikeCommunity.destroy({
     where: {},
-    truncate: false
+    truncate: false,
   })
-    .then(numbers => {
-      res.send({ message: `${numbers} Like_communities were deleted successfully!` });
+    .then((numbers) => {
+      res.send({
+        message: `${numbers} Communities were deleted successfully!`,
+      });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all like_communities."
+          err.message || "Some error occurred while removing all communities.",
       });
     });
 };
 
-// find all published Like_community
+// find all published LikeCommunity
 exports.findAllPublished = (req, res) => {
-  Like_community.findAll({ where: { published: true } })
-    .then(data => {
+  LikeCommunity.findAll({ where: { published: true } })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving like_communities."
+          err.message || "Some error occurred while retrieving communities.",
       });
     });
 };
