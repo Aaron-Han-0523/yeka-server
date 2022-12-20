@@ -4,6 +4,7 @@ package-lock.json
 *.iml
 config/config.json
 seeders
+uploads
 
 # Logs
 logs

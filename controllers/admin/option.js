@@ -23,7 +23,7 @@ exports.create = (req, res) => {
   // Save Option in the database
   Option.create(option)
     .then(data => {
-      return res.redirect('/admin/option');
+      return res.redirect('/admin/product/detail/' + data.product_id);
     })
     .catch(err => {
       res.status(500).send({
@@ -40,7 +40,7 @@ exports.findAll = (req, res) => {
 
   Option.findAll({ where: condition })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/option/index', {
         count: 1,
         data: data,
@@ -58,28 +58,29 @@ exports.findAll = (req, res) => {
 // Find a empty User
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
+  const product_id = req.query.product_id;
 
-   return res.render('admin/option/detail', {
-       count: 1,
-       data: [],
-       option: {},
-       id,
-     });
+  return res.render('admin/option/detail', {
+    count: 1,
+    data: { product_id: product_id },
+    option: {},
+    id,
+  });
 };
 
 // Find a single Option with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  
+
   Option.findByPk(id)
     .then(data => {
       if (data) {
         return res.render('admin/option/detail', {
-                    count: 1,
-                    data: data,
-                    user: {},
-                    id,
-                  });
+          count: 1,
+          data: data,
+          user: {},
+          id,
+        });
       } else {
         res.status(404).send({
           message: `Cannot find Option with id=${id}.`
@@ -101,7 +102,7 @@ exports.update = (req, res) => {
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num == 1 || num == 0) {
         res.redirect('/admin/option/detail/' + id);
       } else {
         res.send({

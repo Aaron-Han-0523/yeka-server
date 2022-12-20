@@ -72,7 +72,7 @@ exports.findEmpty = (req, res) => {
 // Find a single Community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  
+
   Community.findByPk(id)
     .then(data => {
       if (data) {
@@ -103,7 +103,7 @@ exports.update = (req, res) => {
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num == 1 || num == 0) {
         res.redirect('/admin/community/detail/' + id);
       } else {
         res.send({

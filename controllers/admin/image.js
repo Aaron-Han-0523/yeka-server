@@ -3,30 +3,39 @@ const Image = db.image;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Image
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.file) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Image file can not be empty!"
     });
     return;
   }
 
+  let id = null;
+  if (req.body.image_type == 0) {
+    thumbnail = await Image.findOne({ where: { image_type: 0, product_id: req.body.product_id } })
+    if (thumbnail) {
+      id = thumbnail.id
+    }
+  }
+
   // Create a Image
   const image = {
-    id: null,
+    id: id,
     image_type: req.body.image_type,
     product_id: req.body.product_id,
     consultant_id: req.body.consultant_id,
     community_id: req.body.community_id,
     title: req.body.title,
     content: req.body.content,
+    path: req.file.path,
   };
 
   // Save Image in the database
-  Image.create(image)
+  Image.upsert(image)
     .then(data => {
-      return res.redirect('/admin/image');
+      return res.redirect('back');
     })
     .catch(err => {
       res.status(500).send({
@@ -43,7 +52,7 @@ exports.findAll = (req, res) => {
 
   Image.findAll({ where: condition })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/image/index', {
         count: 1,
         data: data,
@@ -62,27 +71,27 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/image/detail', {
-       count: 1,
-       data: [],
-       image: {},
-       id,
-     });
+  return res.render('admin/image/detail', {
+    count: 1,
+    data: [],
+    image: {},
+    id,
+  });
 };
 
 // Find a single Image with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  
+
   Image.findByPk(id)
     .then(data => {
       if (data) {
         return res.render('admin/image/detail', {
-                    count: 1,
-                    data: data,
-                    image: {},
-                    id
-                  });
+          count: 1,
+          data: data,
+          image: {},
+          id
+        });
       } else {
         res.status(404).send({
           message: `Cannot find Image with id=${id}.`
@@ -104,7 +113,7 @@ exports.update = (req, res) => {
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num == 1 || num == 0) {
         res.redirect('/admin/image/detail/' + id);
       } else {
         res.send({

@@ -110,7 +110,7 @@ exports.update = (req, res) => {
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num == 1 || num == 0) {
         res.redirect('/admin/consulting/detail/' + id);
       } else {
         res.send({

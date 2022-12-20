@@ -37,3 +37,7 @@ body.dark .div-hover:hover * {
     background-color: #1b2e4b;
     cursor: pointer;
 }
+
+/* .row>* {
+    padding: calc(var(--bs-gutter-x) * .5);
+} */

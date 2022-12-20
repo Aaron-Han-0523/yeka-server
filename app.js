@@ -46,6 +46,13 @@ app.use("/", indexRouter);
 app.use("/admin", adminIndexRouter);
 //app.use('/users', usersRouter);
 
+const UPLOADFILES_ROOT = process.env.UPLOADFILES_ROOT || "uploads"
+
+app.use(
+  path.join('/', UPLOADFILES_ROOT).replace('\\', '/'),
+  express.static(path.join(process.cwd(), UPLOADFILES_ROOT))
+)
+
 require("./routes/community")(app);
 require("./routes/consulting")(app);
 require("./routes/image")(app);

@@ -135,7 +135,7 @@ exports.delete = (req, res) => {
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num == 1 || num == 0) {
         res.redirect('/admin/notice');
       } else {
         res.send({

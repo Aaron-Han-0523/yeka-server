@@ -118,8 +118,8 @@
                             if(data.menu_image) {
                             let image_url = encodeURI(data.menu_image.replace(/\\/g, '/'));
                           %>
-                          <a target="_blank" href="<%= image_url %>">
-                            <div class="col-12 card-thumbnail" style="background-image: url('<%= image_url %>')"></div>
+                          <a target="_blank" href="/<%= image_url %>">
+                            <div class="col-12 card-thumbnail" style="background-image: url('/<%= image_url %>')"></div>
                           </a>
                           <% }else{ %>
                           <div class="col-12 card-thumbnail" style="background-image: url('https://via.placeholder.com/150.jpg?text=No%20Image')"></div>

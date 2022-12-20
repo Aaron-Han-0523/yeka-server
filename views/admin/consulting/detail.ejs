@@ -95,8 +95,8 @@
                           if(data.client_image){
                             let image_url = encodeURI(data.client_image.replace(/\\/g, '/'));
                           %>
-                          <a target="_blank" href="<%= image_url %>">
-                            <div class="card-thumbnail" style="background-image: url('<%= image_url %>');"></div>
+                          <a target="_blank" href="/<%= image_url %>">
+                            <div class="card-thumbnail" style="background-image: url('/<%= image_url %>');"></div>
                           </a>
                           <% } %>
                         </div>

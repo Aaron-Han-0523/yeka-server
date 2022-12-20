@@ -39,147 +39,176 @@
             <div class="col-12 layout-top-spacing">
               <div class="col-12">
                 <!-- Post Form -->
-                <form method="post">
-                  <div class="statbox widget box box-shadow">
-                    <div class="widget-header">
-                      <div class="row">
-                        <div class="col-12">
-                          <h4></h4>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="widget-content widget-content-area">
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">Id</label>
-                        </div>
-                        <div class="col-12 ">
-                          <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data.id %>" readOnly>
-                        </div>
-                      </div>
-
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">상품 썸네일</label>
-                        </div>
-                        <div class="col-12 ">
-                          <%
-                            if(data.thumbnail) {
-                            let image_url = encodeURI(data.thumbnail.replace(/\\/g, '/'));
-                          %>
-                          <div class="col-12 card-thumbnail" style="background-image: url('<%= image_url %>')"></div>
-                          <% }else{ %>
-                          <div class="col-12 card-thumbnail" style="background-image: url('https://via.placeholder.com/150.jpg?text=No%20Image')"></div>
-                          <% } %>
-                        </div>
-                      </div>
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
-                        </div>
-                        <div class="col-12 ">
-                          <input id="title" type="text" name="title" placeholder="" class="form-control" value="<%= data.title %>" required>
-                        </div>
-                      </div>
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">설명</label>
-                        </div>
-                        <div class="col-12 ">
-                          <textarea rows="5" id="description" type="text" name="description" placeholder="" class="form-control" required><%= data.description %></textarea>
-                        </div>
-                      </div>
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">가격</label>
-                        </div>
-                        <div class="col-12 ">
-                          <input id="price" type="text" name="price" placeholder="" class="form-control" value="<%= data.price %>" required>
-                        </div>
-                      </div>
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">배송비</label>
-                        </div>
-                        <div class="col-12 ">
-                          <input id="delivery_fee" type="text" name="delivery_fee" placeholder="" class="form-control" value="<%= data.delivery_fee %>" required>
-                        </div>
-                      </div>
-
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">태그</label>
-                        </div>
-                        <div class="col-12 ">
-                          <input id="tag" type="text" name="tag" placeholder="" class="form-control" value="<%= data.tag %>">
-                        </div>
-                      </div>
-
-                      <div class="row layout-top-spacing">
-                        <div class="col-xl-4 mb-xl-0 mb-2">
-                          <h6>생성일</h6>
-                        </div>
-                      </div>
-                      <div>
-                        <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data.create_date %>
-                        </p>
-                      </div>
-                      <div class="row layout-top-spacing">
-                        <div class="col-xl-4 mb-xl-0 mb-2">
-                          <h6>변경일</h6>
-                        </div>
-                      </div>
-                      <div>
-                        <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data.update_date %>
-                        </p>
-                      </div>
-                      <div class="row layout-top-spacing">
-                        <div class="col-xl-4 mb-xl-0 mb-2">
-                          <h6>삭제일</h6>
-                        </div>
-                      </div>
-                      <div>
-                        <p class="form-control col-xl-4 mb-xl-0 mb-2">
-                          <%= data.delete_date %>
-                        </p>
-                      </div>
-
-                      <div class="row layout-top-spacing">
-                        <div class="col-lg-6 col-12 ">
-                          <div class="form-group">
-                            <% if(id) { %>
-                            <button class="btn btn-outline-success mb-2 me-4">수정하기</button>
-                            <% } else { %>
-                            <button class="btn btn-outline-success mb-2 me-4">등록하기</button>
-                            <% } %>
-
-                            <% if(id) { %>
-                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/product/delete/<%= data.id %>';">삭제하기</button>
-                            <% } %>
-                            <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="cancel()">취소</button>
-                          </div>
-                        </div>
+                <div class="statbox widget box box-shadow">
+                  <div class="widget-header">
+                    <div class="row">
+                      <div class="col-12">
+                        <h4></h4>
                       </div>
                     </div>
                   </div>
-                </form>
+
+                  <div class="widget-content widget-content-area">
+                    <form method="post" enctype="multipart/form-data" action="/admin/image/add">
+                      <div class="form-group row mb-4">
+                        <div class="input-group">
+                          <div class="col-12 ">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">상품 썸네일</label>
+                          </div>
+                          <div class="col-12 ">
+                            <% 
+                            if(data.thumbnail) {
+                              let image_url = encodeURI(data.thumbnail.replace(/\\/g, '/'));
+                            %>
+                            <a target="_blank" href="/<%= image_url %>">
+                              <div class="col-12 card-thumbnail" style="background-image: url('/<%= image_url %>')"></div>
+                            </a>
+                            <% }else{ %>
+                            <div class="col-12 card-thumbnail" style="background-image: url('https://via.placeholder.com/150.jpg?text=No%20Image')"></div>
+                            <% } %>
+                          </div>
+                          <div class="col-12">
+                            <input hidden name="image_type" value="0">
+                            <input hidden name="product_id" value="<%= data.id %>">
+                            <input hidden name="title" value="<%= data.title %>">
+                            <input hidden name="content" value="<%= data.description %>">
+                            <input type="file" name="path" class="form-control-file mt-3">
+                          </div>
+                          <div class="col-12">
+                            <button class="btn btn-outline-primary mt-3">썸네일 업로드</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+
+
+                    <form method="post">
+                      <div class="form-group">
+                        <div class="input-group row mb-4">
+                          <div class="col-12 ">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">Id</label>
+                          </div>
+                          <div class="col-12 ">
+                            <input id="id" type="text" name="id" placeholder="" class="form-control" value="<%= data.id %>" readOnly>
+                          </div>
+                        </div>
+
+
+
+
+                        <div class="input-group row mb-4">
+                          <div class="col-12 ">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
+                          </div>
+                          <div class="col-12 ">
+                            <input id="title" type="text" name="title" placeholder="" class="form-control" value="<%= data.title %>" required>
+                          </div>
+                        </div>
+
+                        <div class="input-group row mb-4">
+                          <div class="col-12 ">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">설명</label>
+                          </div>
+                          <div class="col-12 ">
+                            <textarea rows="5" id="description" type="text" name="description" placeholder="" class="form-control" required><%= data.description %></textarea>
+                          </div>
+                        </div>
+
+                        <div class="input-group row mb-4">
+                          <div class="col-12 ">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">가격</label>
+                          </div>
+                          <div class="col-12 ">
+                            <input id="price" type="text" name="price" placeholder="" class="form-control" value="<%= data.price %>" required>
+                          </div>
+                        </div>
+
+                        <div class="input-group row mb-4">
+                          <div class="col-12 ">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">배송비</label>
+                          </div>
+                          <div class="col-12 ">
+                            <input id="delivery_fee" type="text" name="delivery_fee" placeholder="" class="form-control" value="<%= data.delivery_fee %>" required>
+                          </div>
+                        </div>
+
+                        <div class="input-group row mb-4">
+                          <div class="col-12 ">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">태그</label>
+                          </div>
+                          <div class="col-12 ">
+                            <input id="tag" type="text" name="tag" placeholder="" class="form-control" value="<%= data.tag %>">
+                          </div>
+                        </div>
+
+                        <div class="row layout-top-spacing">
+                          <div class="col-xl-4 mb-xl-0 mb-2">
+                            <h6>생성일</h6>
+                          </div>
+                        </div>
+                        <div>
+                          <p class="form-control col-xl-4 mb-xl-0 mb-2">
+                            <%= data.create_date %>
+                          </p>
+                        </div>
+                        <div class="row layout-top-spacing">
+                          <div class="col-xl-4 mb-xl-0 mb-2">
+                            <h6>변경일</h6>
+                          </div>
+                        </div>
+                        <div>
+                          <p class="form-control col-xl-4 mb-xl-0 mb-2">
+                            <%= data.update_date %>
+                          </p>
+                        </div>
+                        <div class="row layout-top-spacing">
+                          <div class="col-xl-4 mb-xl-0 mb-2">
+                            <h6>삭제일</h6>
+                          </div>
+                        </div>
+                        <div>
+                          <p class="form-control col-xl-4 mb-xl-0 mb-2">
+                            <%= data.delete_date %>
+                          </p>
+                        </div>
+
+                        <div class="row layout-top-spacing">
+                          <div class="col-lg-6 col-12 ">
+                            <div class="input-group">
+                              <% if(id) { %>
+                              <button class="btn btn-outline-success mb-2 me-4">수정하기</button>
+                              <% } else { %>
+                              <button class="btn btn-outline-success mb-2 me-4">등록하기</button>
+                              <% } %>
+
+                              <% if(id) { %>
+                              <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="location.href='/admin/product/delete/<%= data.id %>';">삭제하기</button>
+                              <% } %>
+                              <button class="btn btn-outline-danger mb-2 me-4" type="button" onclick="cancel()">취소</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
                 <!-- /Post Form -->
 
+                <% if(id) { %>
                 <!-- 상품 옵션 -->
                 <div class="statbox widget box box-shadow layout-top-spacing">
                   <!-- header -->
                   <div class="widget-header">
-                    <div class="row">
-                      <div class="col-12 text-center pt-3">
+                    <div class="row justify-content-between">
+                      <div class="col-4"></div>
+                      <div class="col-4 text-center pt-3">
                         <h2>상품 옵션</h2>
+                      </div>
+                      <div class="col-4 text-end p-3">
+                        <a class="btn btn-outline-primary" href="/admin/option/add?product_id=<%= data.id %>">
+                          추가하기
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -217,7 +246,7 @@
                     </div> -->
                   </div>
                 </div>
-
+                <% } %>
 
               </div>
             </div>

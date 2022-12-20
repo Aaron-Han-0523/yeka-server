@@ -73,10 +73,16 @@ exports.findEmpty = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Product.findByPk(id)
-    .then(async data => {
+  const data = Product.findByPk(id)
+  const option = db.option.findAll({ where: { product_id: id } })
+  const thumbnail = db.image.findOne({ where: { image_type: 0, product_id: id } })
+
+  Promise.all([data, option, thumbnail])
+    .then(([data, option, thumbnail]) => {
       if (data) {
-        const option = await db.option.findAll({ where: { product_id: id } })
+        if (thumbnail) {
+          data.thumbnail = thumbnail.path;
+        }
         return res.render('admin/product/detail', {
           count: 1,
           data: data,
@@ -105,7 +111,7 @@ exports.update = (req, res) => {
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num == 1 || num == 0) {
         res.redirect('/admin/product/detail/' + id);
       } else {
         res.send({

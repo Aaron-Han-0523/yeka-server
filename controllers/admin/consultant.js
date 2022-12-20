@@ -12,6 +12,9 @@ exports.create = (req, res) => {
     return;
   }
 
+  if (req.file) {
+    req.body.business_registration_file = req.file.path;
+  }
   // Create a User
   const user = {
     id: null,
@@ -156,11 +159,14 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
+  if (req.file) {
+    req.body.business_registration_file = req.file.path;
+  }
   User.update(req.body, {
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num == 1 || num == 0) {
         res.redirect('/admin/consultant/detail/' + id);
       } else {
         res.send({
