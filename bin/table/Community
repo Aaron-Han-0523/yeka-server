@@ -3,6 +3,7 @@ int community_type
 String community_title
 String community_content
 String community_link
+int views
 String writer
 String create_date
 String update_date

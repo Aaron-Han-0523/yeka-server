@@ -1,6 +1,6 @@
 int id
 int user_id
-int community_id
+int product_id
 String create_date
 String update_date
 String delete_date

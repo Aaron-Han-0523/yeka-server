@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
-    "like_community",
+    "like_product",
     {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -16,11 +16,11 @@ module.exports = function (sequelize, DataTypes) {
         defaultValue: 0,
         comment: "작성자 식별번호",
       },
-      community_id: {
+      product_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         defaultValue: 0,
-        comment: "커뮤니티 식별번호",
+        comment: "상품 식별번호",
       },
       create_date: {
         type: DataTypes.DATE,
@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       sequelize,
-      tableName: "like_community",
+      tableName: "like_product",
       timestamps: false,
       indexes: [
         {

@@ -1,8 +1,8 @@
 const db = require("../models");
-const LikeCommunity = db.like_community;
+const LikeProduct = db.like_product;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new LikeCommunity
+// Create and Save a new LikeProduct
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
@@ -12,23 +12,22 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a LikeCommunity
-  const likeCommunity = {
+  // Create a LikeProduct
+  const likeProduct = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false,
   };
 
-  // Save LikeCommunity in the database
-  LikeCommunity.create(likeCommunity)
+  // Save LikeProduct in the database
+  LikeProduct.create(likeProduct)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message ||
-          "Some error occurred while creating the LikeCommunity.",
+          err.message || "Some error occurred while creating the LikeProduct.",
       });
     });
 };
@@ -38,92 +37,92 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  LikeCommunity.findAll({ where: condition })
+  LikeProduct.findAll({ where: condition })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving likeCommunity.",
+          err.message || "Some error occurred while retrieving likeProduct.",
       });
     });
 };
 
-// Find a single LikeCommunity with an id
+// Find a single LikeProduct with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  LikeCommunity.findByPk(id)
+  LikeProduct.findByPk(id)
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find LikeCommunity with id=${id}.`,
+          message: `Cannot find LikeProduct with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving LikeCommunity with id=" + id,
+        message: "Error retrieving LikeProduct with id=" + id,
       });
     });
 };
 
-// Update a LikeCommunity by the id in the request
+// Update a LikeProduct by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  LikeCommunity.update(req.body, {
+  LikeProduct.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "LikeCommunity was updated successfully.",
+          message: "LikeProduct was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update LikeCommunity with id=${id}. Maybe LikeCommunity was not found or req.body is empty!`,
+          message: `Cannot update LikeProduct with id=${id}. Maybe LikeProduct was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating LikeCommunity with id=" + id,
+        message: "Error updating LikeProduct with id=" + id,
       });
     });
 };
 
-// Delete a LikeCommunity with the specified id in the request
+// Delete a LikeProduct with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  LikeCommunity.destroy({
+  LikeProduct.destroy({
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "LikeCommunity was deleted successfully!",
+          message: "LikeProduct was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete LikeCommunity with id=${id}. Maybe LikeCommunity was not found!`,
+          message: `Cannot delete LikeProduct with id=${id}. Maybe LikeProduct was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete LikeCommunity with id=" + id,
+        message: "Could not delete LikeProduct with id=" + id,
       });
     });
 };
 
 // Delete all Communities from the database.
 exports.deleteAll = (req, res) => {
-  LikeCommunity.destroy({
+  LikeProduct.destroy({
     where: {},
     truncate: false,
   })
@@ -140,9 +139,9 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// find all published LikeCommunity
+// find all published LikeProduct
 exports.findAllPublished = (req, res) => {
-  LikeCommunity.findAll({ where: { published: true } })
+  LikeProduct.findAll({ where: { published: true } })
     .then((data) => {
       res.send(data);
     })
