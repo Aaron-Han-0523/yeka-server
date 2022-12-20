@@ -67,6 +67,7 @@
                     <th class="text-center" scope="col">글제목</th>
                     <th class="text-center" scope="col">글내용</th>
                     <th class="text-center" scope="col">링크</th>
+                    <th class="text-center" scope="col">조회수</th>
                     <th class="text-center" scope="col">작성자</th>
                     <th class="text-center" scope="col">생성일</th>
                     <th class="text-center" scope="col">변경일</th>
@@ -108,6 +109,11 @@
                       <a class="media-body align-self-center" href="<%= item.community_link %>">
                         <%= myUtils.text_ellipsis(item.community_link) %>
                       </a>
+                    </td>
+                    <td class="text-center">
+                      <span class="media-body align-self-center">
+                        <%= item.views %>
+                      </span>
                     </td>
                     <td class="">
                       <span class="media-body align-self-center">
