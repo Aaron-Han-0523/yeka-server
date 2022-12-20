@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const likeCommunity = require("../controllers/likeCommunity.js");
+  const likeCommunity = require("../controllers/like_community.js");
 
   var router = require("express").Router();
 

@@ -1,5 +1,5 @@
 const db = require("../models");
-const LikeCommunity = db.likeCommunity;
+const LikeCommunity = db.like_community;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new LikeCommunity
