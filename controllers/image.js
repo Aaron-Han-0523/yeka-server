@@ -48,9 +48,9 @@ exports.findAll = (req, res) => {
 };
 
 // Retrieve all Images from the database.
-exports.findAllProductId = (req, res) => {
-  const product_id = req.params.product_id;
-  var condition = product_id ? { product_id: { [Op.eq]: product_id } } : null;
+exports.findAllCommunityId = (req, res) => {
+  const community_id = req.params.community_id;
+  var condition = community_id ? { community_id: { [Op.eq]: community_id } } : null;
 
   Image.findAll({ where: condition })
     .then((data) => {
@@ -69,6 +69,22 @@ exports.findAllConsultantId = (req, res) => {
   var condition = consultant_id
     ? { consultant_id: { [Op.eq]: consultant_id } }
     : null;
+
+  Image.findAll({ where: condition })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving image.",
+      });
+    });
+};
+
+// Retrieve all Images from the database.
+exports.findAllProductId = (req, res) => {
+  const product_id = req.params.product_id;
+  var condition = product_id ? { product_id: { [Op.eq]: product_id } } : null;
 
   Image.findAll({ where: condition })
     .then((data) => {

@@ -16,7 +16,13 @@ module.exports = (app) => {
   router.get("/youtube", community.findAllYoutube);
 
   // Retrieve all Community
+  router.get("/youtube/news/:id", community.findYoutubeNews);
+
+  // Retrieve all Community
   router.get("/freeboard", community.findAllFreeboard);
+
+  // Retrieve all Community
+  router.get("/freeboard/news/:id", community.findFreeboardNews);
 
   // Retrieve all published Community
   router.get("/published", community.findAllPublished);

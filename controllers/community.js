@@ -106,6 +106,28 @@ exports.findAllYoutube = (req, res) => {
 };
 
 // Retrieve all Communities from the database.
+exports.findYoutubeNews = (req, res) => {
+  const title = req.query.title;
+  const id = req.params.id;
+
+  var condition = { community_type: { [Op.eq]: 1 }, id: { [Op.gt]: id } };
+
+  Community.findAndCountAll({
+    where: condition,
+    limit: 4,
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving community.",
+      });
+    });
+};
+
+// Retrieve all Communities from the database.
 exports.findAllFreeboard = (req, res) => {
   const title = req.query.title;
   const pageNum = req.query.pageNum;
@@ -121,6 +143,29 @@ exports.findAllFreeboard = (req, res) => {
     where: { community_type: 2 },
     offset: offset,
     limit: 10,
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving community.",
+      });
+    });
+};
+
+// Retrieve all Communities from the database.
+exports.findFreeboardNews = (req, res) => {
+  const title = req.query.title;
+  const id = req.params.id;
+
+//  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  var condition = { community_type: { [Op.eq]: 2 }, id: { [Op.gt]: id } };
+
+  Community.findAndCountAll({
+    where: condition,
+    limit: 4,
   })
     .then((data) => {
       res.send(data);

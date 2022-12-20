@@ -10,6 +10,9 @@ module.exports = (app) => {
   router.get("/", image.findAll);
 
   // Retrieve all Image with ConsultantId
+  router.get("/community/:community_id", image.findAllCommunityId);
+
+  // Retrieve all Image with ConsultantId
   router.get("/consultant/:consultant_id", image.findAllConsultantId);
 
   // Retrieve all Image with ProductId
