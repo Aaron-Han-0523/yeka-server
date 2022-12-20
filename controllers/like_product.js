@@ -4,8 +4,16 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new LikeProduct
 exports.create = (req, res) => {
+  console.log(req);
+  console.log(req.query);
+  console.log(req.params);
+  console.log(req.body);
+  console.log(req.query.product_id);
+  console.log(req.params.product_id);
+  console.log(req.body.product_id);
+
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.user_id || !req.body.product_id) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
@@ -14,9 +22,8 @@ exports.create = (req, res) => {
 
   // Create a LikeProduct
   const likeProduct = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+    user_id: req.body.user_id,
+    product_id: req.body.product_id,
   };
 
   // Save LikeProduct in the database

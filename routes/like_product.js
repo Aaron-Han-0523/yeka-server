@@ -24,5 +24,5 @@ module.exports = (app) => {
   // Delete all LikeProduct
   router.delete("/", likeProduct.deleteAll);
 
-  app.use("/api/likeProduct", router);
+  app.use("/api/like_product", router);
 };
