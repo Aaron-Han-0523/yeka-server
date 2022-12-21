@@ -1,13 +1,13 @@
-require('dotenv').config();
+require("dotenv").config();
 
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var session = require('express-session');
-const redis = require('redis');
-const connectRedis = require('connect-redis');
+var session = require("express-session");
+const redis = require("redis");
+const connectRedis = require("connect-redis");
 
 var indexRouter = require("./routes/index");
 var adminIndexRouter = require("./routes/admin/index");
@@ -25,7 +25,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-
 // redis 세팅
 const RedisStore = connectRedis(session);
 const client = redis.createClient({
@@ -35,6 +34,7 @@ const client = redis.createClient({
   logErrors: true, // 레디스 에러 로깅
   legacyMode: true,
 });
+
 // 세션 세팅
 const sessionOption = {
   secret: process.env.SECRET_KEY,
@@ -44,13 +44,11 @@ const sessionOption = {
     maxAge: process.env.ACCESS_MAXAGE * 60 * 1000,
   },
   store: new RedisStore({ client: client }),
-}
+};
 
 client.connect().catch(console.error);
 
 app.use(session(sessionOption));
-
-
 
 // ejs 도구 추가
 const myUtils = require("./utils/myUtils");

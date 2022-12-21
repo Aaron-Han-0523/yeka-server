@@ -3,7 +3,9 @@ int consultant_id
 int client_id
 String client_name
 String client_image
+String client_phone
 String payment_date
+String reservation_date
 String consulting_title
 int payment_status
 int consulting_status
