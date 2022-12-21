@@ -161,7 +161,7 @@ exports.findFreeboardNews = (req, res) => {
   const id = req.params.id;
 
 //  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  var condition = { community_type: { [Op.eq]: 2 }, id: { [Op.gt]: id } };
+  var condition = { community_type: { [Op.eq]: 2 }, id: { [Op.lt]: id } };
 
   Community.findAndCountAll({
     where: condition,

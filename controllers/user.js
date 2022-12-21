@@ -58,6 +58,26 @@ exports.findAll = (req, res) => {
 };
 
 // Retrieve all Products from the database.
+exports.findAllConsultant = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  // SELECT a.*, b.path FROM yeka.product a, yeka.image b where a.id = b.product_id;
+  sequelize
+    .query(
+      "SELECT a.*, b.path title_image FROM yeka.user a left join (select b1.path, b1.consultant_id from yeka.user a1, yeka.image b1 where a1.id = b1.consultant_id limit 1) b on a.id = b.consultant_id",
+      { type: QueryTypes.SELECT }
+    )
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving product.",
+      });
+    });
+};
+
+// Retrieve all Products from the database.
 exports.findAllThumbnail = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;

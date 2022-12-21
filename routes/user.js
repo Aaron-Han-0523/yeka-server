@@ -12,6 +12,9 @@ module.exports = (app) => {
   // Retrieve all User with Thumbnail
   router.get("/list", user.findAllThumbnail);
 
+  // Retrieve all User with Thumbnail
+  router.get("/consultant", user.findAllConsultant);
+
   // Retrieve all published User
   router.get("/published", user.findAllPublished);
 
