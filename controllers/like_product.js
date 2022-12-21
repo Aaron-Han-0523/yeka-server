@@ -4,14 +4,6 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new LikeProduct
 exports.create = (req, res) => {
-  console.log(req);
-  console.log(req.query);
-  console.log(req.params);
-  console.log(req.body);
-  console.log(req.query.product_id);
-  console.log(req.params.product_id);
-  console.log(req.body.product_id);
-
   // Validate request
   if (!req.body.user_id || !req.body.product_id) {
     res.status(400).send({
