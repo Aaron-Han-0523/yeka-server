@@ -19,10 +19,10 @@ module.exports = (app) => {
   router.put("/:id", likeProduct.update);
 
   // Delete a LikeProduct with id
-  router.delete("/:id", likeProduct.delete);
+  router.delete("/", likeProduct.delete);
 
   // Delete all LikeProduct
-  router.delete("/", likeProduct.deleteAll);
+  // router.delete("/", likeProduct.deleteAll);
 
   app.use("/api/like_product", router);
 };

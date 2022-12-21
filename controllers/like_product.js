@@ -105,9 +105,11 @@ exports.update = (req, res) => {
 // Delete a LikeProduct with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
+  const user_id = req.query.user_id;
+  const product_id = req.query.product_id;
 
   LikeProduct.destroy({
-    where: { id: id },
+    where: { user_id: user_id, product_id: product_id },
   })
     .then((num) => {
       if (num == 1) {

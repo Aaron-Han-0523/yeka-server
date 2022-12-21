@@ -62,7 +62,7 @@ exports.findAllThumbnail = (req, res) => {
 
   sequelize
     .query(
-      "SELECT a.*, b.path thumbnail, c.id like_product_id FROM yeka.product a left join (select b1.path, b1.product_id from yeka.product a1, yeka.image b1 where a1.id = b1.product_id limit 1) b on a.id = b.product_id left join (select c1.id, c1.product_id from yeka.product a1, yeka.like_product c1 where a1.id = c1.product_id limit 1) c on a.id = c.product_id",
+      "SELECT *, (select path from image b where b.product_id = a.id limit 1) thumbnail, (select c.id from like_product c where c.product_id = a.id limit 1) like_product_id FROM product a",
       { type: QueryTypes.SELECT }
     )
     .then((data) => {

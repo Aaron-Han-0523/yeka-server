@@ -78,6 +78,19 @@ exports.findAllConsultant = (req, res) => {
 };
 
 // Retrieve all Products from the database.
+exports.findSuperUser = (req, res) => {
+  User.findOne({ where: { user_type: 99 } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving product.",
+      });
+    });
+};
+
+// Retrieve all Products from the database.
 exports.findAllThumbnail = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
