@@ -110,7 +110,7 @@ exports.findYoutubeNews = (req, res) => {
   const title = req.query.title;
   const id = req.params.id;
 
-  var condition = { community_type: { [Op.eq]: 1 }, id: { [Op.gt]: id } };
+  var condition = { community_type: { [Op.eq]: 1 }, id: { [Op.lt]: id } };
 
   Community.findAndCountAll({
     where: condition,
@@ -160,7 +160,7 @@ exports.findFreeboardNews = (req, res) => {
   const title = req.query.title;
   const id = req.params.id;
 
-//  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  //  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   var condition = { community_type: { [Op.eq]: 2 }, id: { [Op.lt]: id } };
 
   Community.findAndCountAll({
