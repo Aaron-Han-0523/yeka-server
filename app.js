@@ -1,8 +1,13 @@
+require('dotenv').config();
+
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var session = require('express-session');
+const redis = require('redis');
+const connectRedis = require('connect-redis');
 
 var indexRouter = require("./routes/index");
 var adminIndexRouter = require("./routes/admin/index");
@@ -19,6 +24,33 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+
+// redis 세팅
+const RedisStore = connectRedis(session);
+const client = redis.createClient({
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: process.env.REDIS_PORT || 6379,
+  // password: process.env.REDIS_PASSWORD,
+  logErrors: true, // 레디스 에러 로깅
+  legacyMode: true,
+});
+// 세션 세팅
+const sessionOption = {
+  secret: process.env.SECRET_KEY,
+  resave: true,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: process.env.ACCESS_MAXAGE * 60 * 1000,
+  },
+  store: new RedisStore({ client: client }),
+}
+
+client.connect().catch(console.error);
+
+app.use(session(sessionOption));
+
+
 
 // ejs 도구 추가
 const myUtils = require("./utils/myUtils");
@@ -46,12 +78,12 @@ app.use("/", indexRouter);
 app.use("/admin", adminIndexRouter);
 //app.use('/users', usersRouter);
 
-const UPLOADFILES_ROOT = process.env.UPLOADFILES_ROOT || "uploads"
+const UPLOADFILES_ROOT = process.env.UPLOADFILES_ROOT || "uploads";
 
 app.use(
-  path.join('/', UPLOADFILES_ROOT).replace('\\', '/'),
+  path.join("/", UPLOADFILES_ROOT).replace("\\", "/"),
   express.static(path.join(process.cwd(), UPLOADFILES_ROOT))
-)
+);
 
 require("./routes/community")(app);
 require("./routes/consulting")(app);
@@ -63,6 +95,16 @@ require("./routes/order")(app);
 require("./routes/product")(app);
 require("./routes/user")(app);
 require("./routes/personal_color")(app);
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    res.redirect("/admin/login");
+  } else {
+    res.locals.user = req.session.user;
+    console.log(res.user);
+    next();
+  }
+});
 
 require("./routes/admin/community")(app);
 require("./routes/admin/consulting")(app);
