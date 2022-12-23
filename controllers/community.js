@@ -5,18 +5,22 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Community
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
+  // if (!req.body.title) {
+  //   res.status(400).send({
+  //     message: "Content can not be empty!",
+  //   });
+  //   return;
+  // }
 
   // Create a Community
   const community = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+    community_type: req.body.community_type,
+    community_title: req.body.community_title,
+    community_content: req.body.community_content,
+    community_link: req.body.community_link,
+    views: req.body.views,
+    writer: req.body.writer,
+    create_date: req.body.create_date,
   };
 
   // Save Community in the database
@@ -37,7 +41,7 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Community.findAll({ where: condition, limit: 4 })
+  Community.findAll({ where: condition, limit: 4, order: [["id", "DESC"]] })
     .then((data) => {
       res.send(data);
     })
@@ -65,6 +69,7 @@ exports.findAllNotice = (req, res) => {
     where: { community_type: 0 },
     offset: offset,
     limit: 10,
+    order: [["id", "DESC"]],
   })
     .then((data) => {
       res.send(data);
@@ -93,6 +98,7 @@ exports.findAllYoutube = (req, res) => {
     where: { community_type: 1 },
     offset: offset,
     limit: 10,
+    order: [["id", "DESC"]],
   })
     .then((data) => {
       res.send(data);
@@ -115,6 +121,7 @@ exports.findYoutubeNews = (req, res) => {
   Community.findAndCountAll({
     where: condition,
     limit: 4,
+    order: [["id", "DESC"]],
   })
     .then((data) => {
       res.send(data);
@@ -143,6 +150,7 @@ exports.findAllFreeboard = (req, res) => {
     where: { community_type: 2 },
     offset: offset,
     limit: 10,
+    order: [["id", "DESC"]],
   })
     .then((data) => {
       res.send(data);
@@ -166,6 +174,7 @@ exports.findFreeboardNews = (req, res) => {
   Community.findAndCountAll({
     where: condition,
     limit: 4,
+    order: [["id", "DESC"]],
   })
     .then((data) => {
       res.send(data);

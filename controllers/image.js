@@ -5,18 +5,19 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Image
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
+  // if (!req.body.title) {
+  //   res.status(400).send({
+  //     message: "Content can not be empty!",
+  //   });
+  //   return;
+  // }
 
   // Create a Image
   const image = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+    community_id: req.body.community_id,
+    create_date: req.body.create_date,
+    path: req.file.path,
+    image_type: req.body.image_type,
   };
 
   // Save Image in the database
@@ -50,7 +51,9 @@ exports.findAll = (req, res) => {
 // Retrieve all Images from the database.
 exports.findAllCommunityId = (req, res) => {
   const community_id = req.params.community_id;
-  var condition = community_id ? { community_id: { [Op.eq]: community_id } } : null;
+  var condition = community_id
+    ? { community_id: { [Op.eq]: community_id } }
+    : null;
 
   Image.findAll({ where: condition })
     .then((data) => {

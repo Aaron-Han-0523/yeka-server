@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const menu = require("../controllers/menu.js");
 
   var router = require("express").Router();
@@ -8,6 +8,9 @@ module.exports = app => {
 
   // Retrieve all Menu
   router.get("/", menu.findAll);
+
+  // Retrieve all Menu
+  router.get("/consultant", menu.findAllConsultant);
 
   // Retrieve all published Menu
   router.get("/published", menu.findAllPublished);
@@ -24,5 +27,5 @@ module.exports = app => {
   // Delete all Menu
   router.delete("/", menu.deleteAll);
 
-  app.use('/api/menu', router);
+  app.use("/api/menu", router);
 };

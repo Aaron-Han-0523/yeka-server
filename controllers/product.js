@@ -75,6 +75,28 @@ exports.findAllThumbnail = (req, res) => {
     });
 };
 
+// Retrieve all Products from the database.
+exports.findAllMyFavorite = (req, res) => {
+  const title = req.query.title;
+  const user_id = req.query.user_id;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  sequelize
+    .query(
+      "SELECT *, (select path from image b where b.product_id = a.id limit 1) thumbnail, (select c.id from like_product c where c.product_id = a.id limit 1) like_product_id FROM product a, like_product d where d.product_id = a.id and d.user_id = " +
+        user_id,
+      { type: QueryTypes.SELECT }
+    )
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving product.",
+      });
+    });
+};
+
 // Find a single Product with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;

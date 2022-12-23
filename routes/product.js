@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const product = require("../controllers/product.js");
 
   var router = require("express").Router();
@@ -11,6 +11,9 @@ module.exports = app => {
 
   // Retrieve all Product with Thumbnail
   router.get("/list", product.findAllThumbnail);
+
+  // Retrieve all Product with Thumbnail
+  router.get("/favorite", product.findAllMyFavorite);
 
   // Retrieve all published Product
   router.get("/published", product.findAllPublished);
@@ -27,5 +30,5 @@ module.exports = app => {
   // Delete all Product
   router.delete("/", product.deleteAll);
 
-  app.use('/api/product', router);
+  app.use("/api/product", router);
 };

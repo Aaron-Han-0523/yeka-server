@@ -7,7 +7,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!",
     });
     return;
   }
@@ -16,18 +16,17 @@ exports.create = (req, res) => {
   const menu = {
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    published: req.body.published ? req.body.published : false,
   };
 
   // Save Menu in the database
   Menu.create(menu)
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Menu."
+        message: err.message || "Some error occurred while creating the Menu.",
       });
     });
 };
@@ -38,13 +37,31 @@ exports.findAll = (req, res) => {
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   Menu.findAll({ where: condition })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving menu."
+        message: err.message || "Some error occurred while retrieving menu.",
+      });
+    });
+};
+
+// Retrieve all Menus from the database.
+exports.findAllConsultant = (req, res) => {
+  const consultant_id = req.query.consultant_id;
+
+  var condition = consultant_id
+    ? { consultant_id: { [Op.eq]: consultant_id } }
+    : null;
+
+  Menu.findAll({ where: condition })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving menu.",
       });
     });
 };
@@ -54,18 +71,18 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Menu.findByPk(id)
-    .then(data => {
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Menu with id=${id}.`
+          message: `Cannot find Menu with id=${id}.`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Menu with id=" + id
+        message: "Error retrieving Menu with id=" + id,
       });
     });
 };
@@ -75,22 +92,22 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Menu.update(req.body, {
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Menu was updated successfully."
+          message: "Menu was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update Menu with id=${id}. Maybe Menu was not found or req.body is empty!`
+          message: `Cannot update Menu with id=${id}. Maybe Menu was not found or req.body is empty!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating Menu with id=" + id
+        message: "Error updating Menu with id=" + id,
       });
     });
 };
@@ -100,22 +117,22 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Menu.destroy({
-    where: { id: id }
+    where: { id: id },
   })
-    .then(num => {
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Menu was deleted successfully!"
+          message: "Menu was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Menu with id=${id}. Maybe Menu was not found!`
+          message: `Cannot delete Menu with id=${id}. Maybe Menu was not found!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Menu with id=" + id
+        message: "Could not delete Menu with id=" + id,
       });
     });
 };
@@ -124,15 +141,14 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   Menu.destroy({
     where: {},
-    truncate: false
+    truncate: false,
   })
-    .then(numbers => {
+    .then((numbers) => {
       res.send({ message: `${numbers} Menus were deleted successfully!` });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all menus."
+        message: err.message || "Some error occurred while removing all menus.",
       });
     });
 };
@@ -140,13 +156,12 @@ exports.deleteAll = (req, res) => {
 // find all published Menu
 exports.findAllPublished = (req, res) => {
   Menu.findAll({ where: { published: true } })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving menus."
+        message: err.message || "Some error occurred while retrieving menus.",
       });
     });
 };

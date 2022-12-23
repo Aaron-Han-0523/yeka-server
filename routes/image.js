@@ -1,10 +1,25 @@
 module.exports = (app) => {
   const image = require("../controllers/image.js");
+  const fileParser = require("../utils/fileParser");
 
   var router = require("express").Router();
 
   // Create a new Image
-  router.post("/", image.create);
+  router.post(
+    "/community",
+    fileParser.upload("community").single("file"),
+    image.create
+  );
+
+  // Create a new Image
+  router.post(
+    "/product",
+    fileParser.upload("product").single("file"),
+    image.create
+  );
+
+  // Create a new Image
+  router.post("/user", fileParser.upload("user").single("file"), image.create);
 
   // Retrieve all Image
   router.get("/", image.findAll);
