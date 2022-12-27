@@ -15,6 +15,9 @@ module.exports = (app) => {
   // Retrieve a single personalColor with id
   router.get("/:id", personalColor.findOne);
 
+  // Retrieve a single personalColor with id
+  router.get("/condition", personalColor.findOne);
+
   // Update a personalColor with id
   router.put("/:id", personalColor.update);
 
