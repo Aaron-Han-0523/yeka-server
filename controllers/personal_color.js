@@ -71,6 +71,32 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Find a single PersonalColor with an id
+exports.findOneCondition = (req, res) => {
+  const id = req.params.id;
+
+  PersonalColor.findOne({
+    where: {
+      season: req.query.season,
+      detail_season_type: req.query.detail_season_type,
+    },
+  })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find PersonalColor with id=${id}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving PersonalColor with id=" + id,
+      });
+    });
+};
+
 // Update a PersonalColor by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
