@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const consulting = require("../controllers/consulting.js");
 
   var router = require("express").Router();
@@ -15,6 +15,9 @@ module.exports = app => {
   // Retrieve a single Consulting with id
   router.get("/:id", consulting.findOne);
 
+  // Retrieve all Consulting
+  router.get("/client/:id", consulting.findOneByClientId);
+
   // Update a Consulting with id
   router.put("/:id", consulting.update);
 
@@ -24,5 +27,5 @@ module.exports = app => {
   // Delete all Consulting
   router.delete("/", consulting.deleteAll);
 
-  app.use('/api/consulting', router);
+  app.use("/api/consulting", router);
 };

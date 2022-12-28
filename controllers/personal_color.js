@@ -73,12 +73,13 @@ exports.findOne = (req, res) => {
 
 // Find a single PersonalColor with an id
 exports.findOneCondition = (req, res) => {
-  const id = req.params.id;
+  const season = req.query.season;
+  const detail_season_type = req.query.detail_season_type;
 
   PersonalColor.findOne({
     where: {
-      season: req.query.season,
-      detail_season_type: req.query.detail_season_type,
+      season: season,
+      detail_season_type: detail_season_type,
     },
   })
     .then((data) => {
@@ -86,7 +87,7 @@ exports.findOneCondition = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find PersonalColor with id=${id}.`,
+          message: `Cannot find PersonalColor with season=${season} and detail_season_type=${detail_season_type}.`,
         });
       }
     })

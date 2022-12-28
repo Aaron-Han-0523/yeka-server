@@ -80,6 +80,31 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Find a single Consulting with an id
+exports.findOneByClientId = (req, res) => {
+  const id = req.params.id;
+
+  Consulting.findOne({
+    where: {
+      client_id: id,
+    },
+  })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Consulting with id=${id}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Consulting with id=" + id,
+      });
+    });
+};
+
 // Update a Consulting by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
