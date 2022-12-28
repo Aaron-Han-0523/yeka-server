@@ -60,9 +60,13 @@ exports.findAllThumbnail = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
+  const user_id = req.query.user_id;
+
   sequelize
     .query(
-      "SELECT *, (select path from image b where b.product_id = a.id limit 1) thumbnail, (select c.id from like_product c where c.product_id = a.id limit 1) like_product_id FROM product a",
+      "SELECT *, (select path from image b where b.product_id = a.id limit 1) thumbnail, (select c.id from like_product c where c.product_id = a.id and c.user_id = " +
+        user_id +
+        " limit 1) like_product_id FROM product a",
       { type: QueryTypes.SELECT }
     )
     .then((data) => {

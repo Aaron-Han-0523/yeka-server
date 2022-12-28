@@ -1,150 +1,149 @@
-const Sequelize = require("sequelize");
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define(
-    "order",
-    {
-      id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-        comment: "주문 정보 식별번호",
-      },
-      orderer_id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        defaultValue: 0,
-        comment: "주문자 식별번호",
-      },
-      orderer_name: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "주문자 이름",
-      },
-      orderer_phone: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "주문자 휴대폰 번호",
-      },
-      orderer_address1: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "주문자 주소1",
-      },
-      orderer_address2: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "주문자 주소2",
-      },
-      orderer_address3: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "주문자 주소3",
-      },
-      recipient_place: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "수령자 배송지",
-      },
-      recipient_name: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "수령자 이름",
-      },
-      recipient_phone: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "수령자 휴대폰 번호",
-      },
-      recipient_address1: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "수령자 주소1",
-      },
-      recipient_address2: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "수령자 주소2",
-      },
-      recipient_address3: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "수령자 주소3",
-      },
-      image1: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: "",
-        comment: "대표 이미지",
-      },
-      title: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "제목",
-      },
-      option: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        defaultValue: "",
-        comment: "옵션",
-      },
-      quantity: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        defaultValue: 0,
-        comment: "수량",
-      },
-      price: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        defaultValue: 0,
-        comment: "판매가",
-      },
-      delivery_fee: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        defaultValue: 0,
-        comment: "배송비",
-      },
-      total_fee: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        defaultValue: 0,
-        comment: "총금액",
-      },
-      create_date: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: Sequelize.Sequelize.NOW,
-        comment: "생성일",
-      },
-      update_date: { type: DataTypes.DATE, allowNull: true, comment: "수정일" },
-      delete_date: { type: DataTypes.DATE, allowNull: true, comment: "삭제일" },
-    },
-    {
-      sequelize,
-      tableName: "order",
-      timestamps: false,
-      indexes: [
-        {
-          name: "PRIMARY",
-          unique: true,
-          using: "BTREE",
-          fields: [{ name: "id" }],
-        },
-      ],
-    }
-  );
+const db = require("../models");
+const Order = db.order;
+const Op = db.Sequelize.Op;
+
+// Create and Save a new Order
+exports.create = (req, res) => {
+  // Validate request
+  if (!req.body.title) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+    return;
+  }
+
+  // Create a Order
+  const order = {
+    title: req.body.title,
+    description: req.body.description,
+    published: req.body.published ? req.body.published : false,
+  };
+
+  // Save Order in the database
+  Order.create(order)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating the Order.",
+      });
+    });
+};
+
+// Retrieve all Orders from the database.
+exports.findAll = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  Order.findAll({ where: condition })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving order.",
+      });
+    });
+};
+
+// Find a single Order with an id
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+
+  Order.findByPk(id)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Order with id=${id}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Order with id=" + id,
+      });
+    });
+};
+
+// Update a Order by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Order.update(req.body, {
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: "Order was updated successfully.",
+        });
+      } else {
+        res.send({
+          message: `Cannot update Order with id=${id}. Maybe Order was not found or req.body is empty!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Order with id=" + id,
+      });
+    });
+};
+
+// Delete a Order with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Order.destroy({
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: "Order was deleted successfully!",
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Order with id=${id}. Maybe Order was not found!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete Order with id=" + id,
+      });
+    });
+};
+
+// Delete all Orders from the database.
+exports.deleteAll = (req, res) => {
+  Order.destroy({
+    where: {},
+    truncate: false,
+  })
+    .then((numbers) => {
+      res.send({ message: `${numbers} Orders were deleted successfully!` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all orders.",
+      });
+    });
+};
+
+// find all published Order
+exports.findAllPublished = (req, res) => {
+  Order.findAll({ where: { published: true } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving orders.",
+      });
+    });
 };
