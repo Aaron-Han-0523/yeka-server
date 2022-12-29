@@ -84,6 +84,35 @@ exports.findAllConsultant = (req, res) => {
 };
 
 // Retrieve all Products from the database.
+exports.findAllConsultantWithAddress = (req, res) => {
+  const limit = req.query.limit;
+  const skip = req.query.skip;
+  const sido = req.query.sido;
+  const dong = req.query.dong;
+
+  sequelize
+    .query(
+      "SELECT a.*, b.path title_image FROM yeka.user a left join (select b1.path, b1.consultant_id from yeka.user a1, yeka.image b1 where a1.id = b1.consultant_id limit 1) b on a.id = b.consultant_id where user_type = 1 and a.address2 like '%" +
+        sido +
+        "%' and a.address2 like '%" +
+        dong +
+        "%' limit " +
+        skip +
+        ", " +
+        limit,
+      { type: QueryTypes.SELECT }
+    )
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving product.",
+      });
+    });
+};
+
+// Retrieve all Products from the database.
 exports.findSuperUser = (req, res) => {
   User.findOne({ where: { user_type: 99 } })
     .then((data) => {

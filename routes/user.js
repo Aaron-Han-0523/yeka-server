@@ -16,6 +16,9 @@ module.exports = (app) => {
   router.get("/consultant", user.findAllConsultant);
 
   // Retrieve all User with Thumbnail
+  router.get("/consultant/address", user.findAllConsultantWithAddress);
+
+  // Retrieve all User with Thumbnail
   router.get("/super", user.findSuperUser);
 
   // Retrieve all published User
