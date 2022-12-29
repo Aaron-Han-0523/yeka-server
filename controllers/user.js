@@ -251,13 +251,15 @@ exports.findAllPublished = (req, res) => {
 exports.login = (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log(username);
+  console.log(password);
 
   User.findOne({ where: { username: username, password: password } })
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
-        console.log("ddd");
+        console.log("login error");
         res.status(404).send({
           message: `Cannot find User with username=${username}.`,
         });

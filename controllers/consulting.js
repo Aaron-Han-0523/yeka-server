@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
   sequelize
     .query(
       // "SELECT *, (select phone from user b where b.id = a.client_id limit 1) client_phone FROM consulting a limit " +
-      "SELECT * client_phone FROM consulting a limit " + skip + ", " + limit,
+      "SELECT * FROM consulting a limit " + skip + ", " + limit,
       { type: QueryTypes.SELECT }
     )
     .then((data) => {

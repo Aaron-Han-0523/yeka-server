@@ -5,18 +5,16 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Menu
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
+  console.log("req.body");
+  console.log(req.body);
 
   // Create a Menu
   const menu = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+    consultant_id: req.body.consultant_id,
+    menu_title: req.body.menu_title,
+    menu_amount: req.body.menu_amount,
+    menu_content: req.body.menu_content,
+    menu_image: req.body.menu_image,
   };
 
   // Save Menu in the database
