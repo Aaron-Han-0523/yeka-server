@@ -46,6 +46,12 @@ module.exports = function (sequelize, DataTypes) {
         defaultValue: "",
         comment: "주문자 주소3",
       },
+      orderer_email: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        defaultValue: "",
+        comment: "주문자 이메일",
+      },
       recipient_place: {
         type: DataTypes.STRING(255),
         allowNull: false,

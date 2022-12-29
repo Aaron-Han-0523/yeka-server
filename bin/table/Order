@@ -5,6 +5,7 @@ String orderer_phone
 String orderer_address1
 String orderer_address2
 String orderer_address3
+String orderer_email
 String recipient_place
 String recipient_name
 String recipient_phone

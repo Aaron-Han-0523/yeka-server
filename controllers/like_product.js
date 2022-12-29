@@ -110,7 +110,7 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete LikeProduct with id=${id}. Maybe LikeProduct was not found!`,
+          message: `Cannot delete LikeProduct with user_id=${user_id} or product_id=${product_id}. Maybe LikeProduct was not found!`,
         });
       }
     })
