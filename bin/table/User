@@ -11,7 +11,6 @@ String address2
 String address3
 int season
 int detail_season_type
-String personal_image
 String business_registration_number
 String business_registration_file
 String hashtag

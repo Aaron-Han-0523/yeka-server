@@ -14,11 +14,15 @@ exports.create = (req, res) => {
 
   // Create a Image
   const image = {
+    product_id: req.body.product_id,
     community_id: req.body.community_id,
+    user_id: req.body.user_id,
     consultant_id: req.body.consultant_id,
     create_date: req.body.create_date,
     path: req.file.path,
     image_type: req.body.image_type,
+    title: req.body.title,
+    content: req.body.content,
   };
 
   // Save Image in the database

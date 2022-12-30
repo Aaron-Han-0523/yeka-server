@@ -2,9 +2,11 @@ int id
 int image_type
 int product_id
 int consultant_id
+int user_id
 int community_id
 String title
 String content
+String path
 String create_date
 String update_date
 String delete_date
