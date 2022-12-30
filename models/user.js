@@ -82,6 +82,12 @@ module.exports = function (sequelize, DataTypes) {
         defaultValue: 0,
         comment: "내 퍼스널 컬러 세부분류",
       },
+      personal_image: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        defaultValue: "",
+        comment: "내 퍼스널 컬러 이미지",
+      },
       business_registration_number: {
         type: DataTypes.STRING(255),
         allowNull: true,
