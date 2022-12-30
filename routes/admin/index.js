@@ -12,7 +12,7 @@ router.post("/login", (req, res, next) => {
 
   User.findOne({ where: { username: username } })
     .then((user) => {
-      if (user) {
+      if (user.user_type == 99) {
         if (password == user.password) {
           req.session.user = user;
 
