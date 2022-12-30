@@ -9,12 +9,16 @@ int gender
 String address1
 String address2
 String address3
+int season
+int detail_season_type
 String business_registration_number
 String business_registration_file
 String hashtag
 String resume
 String working_hour
 int withdrawal
+int withdrawal_request_flag
+int withdrawal_request_amount
 String bank1
 String bank2
 String bank3
