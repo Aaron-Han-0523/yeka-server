@@ -116,12 +116,12 @@ exports.findYoutubeNews = (req, res) => {
   const title = req.query.title;
   const id = req.params.id;
 
-  var condition = { community_type: { [Op.eq]: 1 }, id: { [Op.lt]: id } };
+  var condition = { community_type: { [Op.eq]: 1 }, id: { [Op.gt]: id } };
 
   Community.findAndCountAll({
     where: condition,
     limit: 4,
-    order: [["id", "DESC"]],
+    order: [["id", "ASC"]],
   })
     .then((data) => {
       res.send(data);
@@ -169,7 +169,7 @@ exports.findFreeboardNews = (req, res) => {
   const id = req.params.id;
 
   //  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  var condition = { community_type: { [Op.eq]: 2 }, id: { [Op.lt]: id } };
+  var condition = { community_type: { [Op.eq]: 2 }, id: { [Op.gt]: id } };
 
   Community.findAndCountAll({
     where: condition,

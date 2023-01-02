@@ -109,7 +109,7 @@ exports.findAllProductId = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Image.findByPk(id)
+  Image.findOne({ where: { user_id: id } })
     .then((data) => {
       if (data) {
         res.send(data);

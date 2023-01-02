@@ -9,6 +9,9 @@ module.exports = (app) => {
   // Retrieve all Consulting
   router.get("/", consulting.findAll);
 
+  // Retrieve all Consulting
+  router.get("/consultant/:id", consulting.findAllConsultant);
+
   // Retrieve all published Consulting
   router.get("/published", consulting.findAllPublished);
 
