@@ -64,8 +64,8 @@ exports.findAllConsultant = (req, res) => {
   // const title = req.query.title;
   const limit = req.query.limit;
   const skip = req.query.skip;
-  const id = req.query.id;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const id = req.params.id;
+  // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
   // Consulting.findAll({ where: condition })
   sequelize
@@ -73,7 +73,7 @@ exports.findAllConsultant = (req, res) => {
       // "SELECT *, (select phone from user b where b.id = a.client_id limit 1) client_phone FROM consulting a limit " +
       "SELECT * FROM consulting a where consultant_id = " +
         id +
-        "limit " +
+        " limit " +
         skip +
         ", " +
         limit,

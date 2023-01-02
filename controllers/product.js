@@ -92,6 +92,7 @@ exports.findAllMyFavorite = (req, res) => {
       { type: QueryTypes.SELECT }
     )
     .then((data) => {
+      console.log(data);
       res.send(data);
     })
     .catch((err) => {
