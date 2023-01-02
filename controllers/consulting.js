@@ -59,6 +59,37 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Retrieve all Consulting from the database.
+exports.findAllConsultant = (req, res) => {
+  // const title = req.query.title;
+  const limit = req.query.limit;
+  const skip = req.query.skip;
+  const id = req.query.id;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  // Consulting.findAll({ where: condition })
+  sequelize
+    .query(
+      // "SELECT *, (select phone from user b where b.id = a.client_id limit 1) client_phone FROM consulting a limit " +
+      "SELECT * FROM consulting a where consultant_id = " +
+        id +
+        "limit " +
+        skip +
+        ", " +
+        limit,
+      { type: QueryTypes.SELECT }
+    )
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving consulting.",
+      });
+    });
+};
+
 // Find a single Consulting with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
