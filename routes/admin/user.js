@@ -12,6 +12,8 @@ module.exports = app => {
 
   router.post("/add", user.create);
 
+  router.post("/edit/:id", user.update);
+
   router.get("/detail/:id", user.findOne);
 
   router.get("/delete/:id", user.delete);
