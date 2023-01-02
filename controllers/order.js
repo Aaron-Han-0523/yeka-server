@@ -47,6 +47,32 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Retrieve all Orders from the database.
+exports.findAllById = (req, res) => {
+  // const title = req.query.title;
+  // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  const limit = req.query.limit;
+  const skip = req.query.skip;
+  const user_id = req.query.user_id;
+
+  Order.findAll({
+    where: { orderer_id: parseInt(user_id) },
+    offset: parseInt(skip),
+    limit: parseInt(limit),
+  })
+    .then((data) => {
+      console.log(data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving order.",
+      });
+    });
+};
+
 // Find a single Order with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;

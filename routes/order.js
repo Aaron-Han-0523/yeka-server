@@ -9,6 +9,9 @@ module.exports = (app) => {
   // Retrieve all Order
   router.get("/", order.findAll);
 
+  // Retrieve all Order
+  router.get("/list", order.findAllById);
+
   // Retrieve all published Order
   router.get("/published", order.findAllPublished);
 
