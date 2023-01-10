@@ -62,7 +62,7 @@ exports.findAllThumbnail = (req, res) => {
 
   var user_id = req.query.user_id;
 
-  user_id != null ? (user_id = " and c.user_id = " + user_id + " ") : " ";
+  user_id != "null" ? (user_id = " and c.user_id = " + user_id + " ") : " ";
 
   sequelize
     .query(

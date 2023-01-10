@@ -56,10 +56,10 @@ exports.findAllById = (req, res) => {
   const skip = req.query.skip;
   var user_id = req.query.user_id;
   var condition =
-    user_id != null ? { orderer_id: { [Op.eq]: parseInt(user_id) } } : null;
+    user_id != "null" ? { orderer_id: { [Op.eq]: parseInt(user_id) } } : null;
 
   Order.findAll({
-    where: { condition },
+    where: condition,
     offset: parseInt(skip),
     limit: parseInt(limit),
   })
