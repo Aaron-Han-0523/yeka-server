@@ -67,7 +67,7 @@ exports.findAllConsultant = (req, res) => {
 
   sequelize
     .query(
-      "SELECT a.*, b.path title_image FROM yeka.user a left join (select b1.path, b1.consultant_id from yeka.user a1, yeka.image b1 where a1.id = b1.consultant_id group by consultant_id) b on a.id = b.consultant_id where user_type = 1 limit " +
+      "SELECT a.*, b.path title_image FROM yeka.user a left join (select b1.path, b1.consultant_id from yeka.user a1, yeka.image b1 where a1.id = b1.consultant_id group by b1.consultant_id) b on a.id = b.consultant_id where user_type = 1 limit " +
         skip +
         ", " +
         limit,
