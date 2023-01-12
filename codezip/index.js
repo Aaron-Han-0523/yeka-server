@@ -14,7 +14,7 @@ codezip.consulting_status = ["상담 진행 대기", "상담 진행 중", "상�
 codezip.community_type = ["공지사항", "유튜브 및 칼럼", "자유게시판"]
 codezip.culture_type = ["동양식", "서양식"]
 codezip.season = ["봄", "여름", "가을", "겨울"]
-codezip.detail_season_type = ["브라이트", "라이트", "딥", "스트롱", "뮤트"]
+codezip.detail_season_type = ["브라이트", "라이트", "딥", "스트롱", "뮤트", "소프트", "페일"]
 
 
 module.exports = codezip;

@@ -99,10 +99,8 @@ exports.update = (req, res) => {
     where: { id: id },
   })
     .then((num) => {
-      if (num == 1 || num == 0) {
-        res.send({
-          message: "PersonalColor was updated successfully.",
-        });
+      if (num == 1) {
+        return res.redirect("/admin/personal_color/detail/" + id);
       } else {
         res.send({
           message: `Cannot update PersonalColor with id=${id}. Maybe PersonalColor was not found or req.body is empty!`,

@@ -48,6 +48,7 @@
                     </div>
                   </div>
 
+                  <% if(data.id) {%> 
                   <div class="widget-content widget-content-area">
                     <form method="post" enctype="multipart/form-data" action="/admin/image/add">
                       <div class="form-group row mb-4">
@@ -80,7 +81,7 @@
                         </div>
                       </div>
                     </form>
-
+                    <% } %>
 
                     <form method="post">
                       <div class="form-group">

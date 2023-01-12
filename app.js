@@ -41,7 +41,7 @@ const sessionOption = {
   resave: true,
   saveUninitialized: false,
   cookie: {
-    maxAge: process.env.ACCESS_MAXAGE * 60 * 1000,
+    maxAge: process.env.ACCESS_MAXAGE * 60 * 60 * 1000,
   },
   store: new RedisStore({ client: client }),
 };
