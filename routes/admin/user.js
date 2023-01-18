@@ -8,6 +8,8 @@ module.exports = app => {
 
   router.get("/", user.findAll);
 
+  router.get("/checkId", user.checkId);
+
   router.get("/add", user.findEmpty);
 
   router.post("/add", user.create);

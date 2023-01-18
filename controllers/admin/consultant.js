@@ -20,6 +20,7 @@ exports.create = (req, res) => {
     id: null,
     user_type: parseInt(req.body.user_type),
     username: req.body.username,
+    password: "asdf123!",
     name: req.body.name,
     phone: req.body.phone,
     email: req.body.email,

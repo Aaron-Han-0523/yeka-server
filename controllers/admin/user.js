@@ -17,6 +17,7 @@ exports.create = (req, res) => {
     id: null,
     user_type: parseInt(req.body.user_type),
     username: req.body.username,
+    password: "asdf123!",
     name: req.body.name,
     phone: req.body.phone,
     email: req.body.email,
@@ -97,7 +98,7 @@ exports.findEmpty = (req, res) => {
 // Find a single User with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  
+
   User.findByPk(id)
     .then(data => {
       if (data) {
@@ -196,3 +197,13 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
+
+exports.checkId = (req, res) => {
+  User.findOne({ where: { username: req.query.username } }).then(data => {
+    if (data) {
+      res.status(403).end()
+    } else {
+      res.end()
+    }
+  })
+}
