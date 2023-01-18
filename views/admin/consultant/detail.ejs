@@ -316,7 +316,7 @@
                           <%= data.update_date %>
                         </p>
                       </div>
-                      <div class="row layout-top-spacing">
+                      <!-- <div class="row layout-top-spacing">
                         <div class="mb-2">
                           <h6>삭제일</h6>
                         </div>
@@ -325,7 +325,7 @@
                         <p class="form-control mb-2">
                           <%= data.delete_date %>
                         </p>
-                      </div>
+                      </div> -->
 
                       <div class="row layout-top-spacing">
                         <div class="col-12 ">
@@ -373,7 +373,7 @@
                         <div class="col border">메뉴이미지</div>
                         <div class="col border">생성일</div>
                         <div class="col border">수정일</div>
-                        <div class="col border rounded-end">삭제일</div>
+                        <!-- <div class="col border rounded-end">삭제일</div> -->
                       </div>
                     </div>
 
@@ -388,7 +388,7 @@
                         <div class="col border"><%= item.menu_image ? "O":"X" %></div>
                         <div class="col border"><%= myUtils.formatDateTime(item.create_date) %></div>
                         <div class="col border"><%= myUtils.formatDateTime(item.update_date) %></div>
-                        <div class="col border"><%= myUtils.formatDateTime(item.delete_date) %></div>
+                        <!-- <div class="col border"><%= myUtils.formatDateTime(item.delete_date) %></div> -->
                       </div>
                       <% }) %>
                     </div>
