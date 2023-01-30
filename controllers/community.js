@@ -1,4 +1,4 @@
-const db = require("../models");
+const { sequelize } = require("../models");
 const Community = db.community;
 const Op = db.Sequelize.Op;
 
@@ -38,8 +38,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Communities from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  var condition = { community_type: { [Op.ne]: 0 } };
 
   Community.findAll({ where: condition, limit: 4, order: [["id", "DESC"]] })
     .then((data) => {
