@@ -105,22 +105,6 @@ exports.findAllProductId = (req, res) => {
     });
 };
 
-// Retrieve all Images from the database.
-exports.findAllUserId = (req, res) => {
-  const user_id = req.params.user_id;
-  var condition = user_id ? { user_id: { [Op.eq]: user_id } } : null;
-
-  Image.findAll({ where: condition })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving image.",
-      });
-    });
-};
-
 // Find a single Image with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;

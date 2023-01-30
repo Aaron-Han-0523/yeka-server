@@ -24,7 +24,7 @@ module.exports = (app) => {
   // Retrieve all Image
   router.get("/", image.findAll);
 
-  // Retrieve all Image with CommunityId
+  // Retrieve all Image with ConsultantId
   router.get("/community/:community_id", image.findAllCommunityId);
 
   // Retrieve all Image with ConsultantId
@@ -32,9 +32,6 @@ module.exports = (app) => {
 
   // Retrieve all Image with ProductId
   router.get("/product/:product_id", image.findAllProductId);
-
-  // Retrieve all Image with UserId
-  router.get("/product/:user_id", image.findAllUserId);
 
   // Retrieve all published Image
   router.get("/published", image.findAllPublished);
