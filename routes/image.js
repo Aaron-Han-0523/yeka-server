@@ -34,7 +34,7 @@ module.exports = (app) => {
   router.get("/product/:product_id", image.findAllProductId);
 
   // Retrieve all Image with UserId
-  router.get("/user/:user_id", image.findAllUserId);
+  router.get("/product/:user_id", image.findAllUserId);
 
   // Retrieve all published Image
   router.get("/published", image.findAllPublished);
