@@ -1,4 +1,4 @@
-const { sequelize } = require("../models");
+const db = require("../models");
 const Community = db.community;
 const Op = db.Sequelize.Op;
 
