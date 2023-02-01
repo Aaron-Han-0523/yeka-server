@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Consulting
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.consulting_title) {
+  if (!req.body.client_id) {
     res.status(400).send({
       message: "Content can not be empty!"
     });

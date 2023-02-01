@@ -7,7 +7,10 @@ const sequelize = db.sequelize;
 // Create and Save a new Consulting
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  console.log('@@@@@@@@@@@@@@@==>body: '+req.body);
+  console.log('@@@@@@@@@@@@@@@==>file: '+req.file);
+  console.log('@@@@@@@@@@@@@@@==>header: '+req.header);
+  if (!req.body.clients_id) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
@@ -16,9 +19,22 @@ exports.create = (req, res) => {
 
   // Create a Consulting
   const consulting = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+    consultant_id: req.body.consultant_id,
+    client_id: req.body.client_id,
+    client_name: req.body.client_name,
+    client_image: req.body.client_image,
+    client_phone: req.body.client_phone,
+    reservation_date: req.body.reservation_date,
+    consulting_title: req.body.consulting_title,
+    payment_status: req.body.payment_status,
+    consulting_status: req.body.consulting_status,
+    season: req.body.season,
+    detail_season_type: req.body.detail_season_type,
+    payment_amount: req.body.payment_amount,
+    reservation_amount: req.body.reservation_amount,
+    // payment_date: req.body.payment_date,
+    // commission: req.body.commission,
+    final_amount: req.body.final_amount,
   };
 
   // Save Consulting in the database

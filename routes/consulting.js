@@ -1,10 +1,10 @@
 module.exports = (app) => {
   const consulting = require("../controllers/consulting.js");
-
+  const fileParser = require("../utils/fileParser");
   var router = require("express").Router();
 
   // Create a new Consulting
-  router.post("/", consulting.create);
+  router.post("/", fileParser.upload("consulting").single("client_image"), consulting.create);
 
   // Retrieve all Consulting
   router.get("/", consulting.findAll);
