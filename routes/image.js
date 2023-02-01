@@ -39,6 +39,9 @@ module.exports = (app) => {
   // Retrieve a single Image with id
   router.get("/:id", image.findOne);
 
+  // Retrieve a single User Image with id and image_type
+  router.get("/:id/:image_type", image.findOneUser);
+
   // Update a Image with id
   router.put("/:id", image.update);
 

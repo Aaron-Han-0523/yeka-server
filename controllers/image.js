@@ -126,6 +126,28 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Find a single User Image with an id, an image_type
+exports.findOneUser = (req, res) => {
+  const id = req.params.id;
+  const image_type = req.params.image_type;
+
+  Image.findOne({ where: {[Op.and]:[ { user_id: id }, {image_type: image_type} ]} })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Image with id=${id}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Image with id=" + id,
+      });
+    });
+};
+
 // Update a Image by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;

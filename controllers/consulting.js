@@ -7,9 +7,6 @@ const sequelize = db.sequelize;
 // Create and Save a new Consulting
 exports.create = (req, res) => {
   // Validate request
-  console.log('@@@@@@@@@@@@@@@==>body: '+req.body);
-  console.log('@@@@@@@@@@@@@@@==>file: '+req.file);
-  console.log('@@@@@@@@@@@@@@@==>header: '+req.header);
   if (!req.body.clients_id) {
     res.status(400).send({
       message: "Content can not be empty!",
