@@ -85,7 +85,7 @@
                           <input id="client_name" type="text" name="client_name" placeholder="" class="form-control" value="<%= data.client_name %>" readOnly>
                         </div>
                       </div>
-
+                      
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
                           <label class="col-sm-2 col-form-label col-form-label-sm">고객 이미지</label>
@@ -104,7 +104,16 @@
 
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">결제일</label>
+                          <label class="col-sm-2 col-form-label col-form-label-sm">고객 전화번호</label>
+                        </div>
+                        <div class="col-12 ">
+                          <input id="client_phone" type="text" name="client_name" placeholder="" class="form-control" value="<%= data.client_phone %>" readOnly>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mb-4">
+                        <div class="col-12 ">
+                          <label class="col-sm-2 col-form-label col-form-label-sm">예약일</label>
                         </div>
                         <div class="col-12 ">
                           <input id="payment_date" type="date" name="payment_date" placeholder="" class="form-control w-auto" value="<%= myUtils.formatDate(data.payment_date) %>" required>
