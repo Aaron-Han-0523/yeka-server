@@ -131,7 +131,7 @@ exports.findOneUser = (req, res) => {
   const id = req.params.id;
   const image_type = req.params.image_type;
 
-  Image.findOne({ where: {[Op.and]:[ { user_id: id }, {image_type: image_type} ]} })
+  Image.findOne({ where: {[Op.and]:[ { user_id: id }, { image_type: image_type} ]} })
     .then((data) => {
       if (data) {
         res.send(data);
