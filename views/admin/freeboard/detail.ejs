@@ -93,14 +93,27 @@
                           <textarea rows="5" id="community_content" type="text" name="community_content" placeholder="" class="form-control" required><%= data.community_content %></textarea>
                         </div>
                       </div>
-                      <div class="form-group row mb-4">
-                        <div class="col-12 ">
-                          <label class="col-sm-2 col-form-label col-form-label-sm">링크</label>
+
+                      <div class="row">
+                        <div class="row layout-top-spacing">
+                          <div class="mb-2">
+                            <h6>자유게시판 이미지</h6>
+                          </div>
                         </div>
                         <div class="col-12 ">
-                          <input id="community_link" type="text" name="community_link" placeholder="" class="form-control" value="<%= data.community_link %>">
+                          <%
+                            if(data.community_link) {
+                            let image_url = encodeURI(data.community_link.replace(/\\/g, '/'));
+                          %>
+                          <a target="_blank" href="/<%= image_url %>">
+                            <div class="card-thumbnail" style="background-image: url('/<%= image_url %>');"></div>
+                          </a>
+                          <% }else{ %>
+                          <div class="col-12 card-thumbnail" style="background-image: url('https://via.placeholder.com/150.jpg?text=No%20Image')"></div>
+                          <% } %>
                         </div>
                       </div>
+
                       <div class="form-group row mb-4">
                         <div class="col-12 ">
                           <label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
