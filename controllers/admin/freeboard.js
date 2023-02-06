@@ -1,6 +1,8 @@
 const db = require("../../models");
 const Community = db.community;
 const Op = db.Sequelize.Op;
+const QueryTypes = db.Sequelize.QueryTypes;
+const sequelize = db.sequelize;
 
 // Create and Save a new Community
 exports.create = (req, res) => {
@@ -82,12 +84,19 @@ exports.findEmpty = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Community.findByPk(id)
+  sequelize.query(
+    "select * from yeka.community a left join yeka.image b on a.id = b.community_id where a.id = "
+    + 
+    id,
+    { type: QueryTypes.SELECT}
+  )
     .then(data => {
+      console.log
       if (data) {
+        console.log(data)
         return res.render('admin/freeboard/detail', {
           count: 1,
-          data: data,
+          data: data[0],
           community: {},
           id
         });

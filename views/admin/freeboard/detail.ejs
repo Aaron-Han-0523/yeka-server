@@ -102,8 +102,10 @@
                         </div>
                         <div class="col-12 ">
                           <%
-                            if(data.community_link) {
-                            let image_url = encodeURI(data.community_link.replace(/\\/g, '/'));
+                            console.log(data.path)
+                            if(data.path) {
+                            let image_url = encodeURI(data.path.replace(/\\/g, '/'));
+                          
                           %>
                           <a target="_blank" href="/<%= image_url %>">
                             <div class="card-thumbnail" style="background-image: url('/<%= image_url %>');"></div>
