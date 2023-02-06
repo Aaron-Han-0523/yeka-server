@@ -1,5 +1,6 @@
 const db = require("../../models");
 const Community = db.community;
+const Image = db.image;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Community
@@ -25,6 +26,13 @@ exports.create = (req, res) => {
   // Save Community in the database
   Community.create(community)
     .then(data => {
+      Image.create({
+        image_type: 6,
+        community_id: data.id,
+        title: "",
+        content: "",
+        path: req.body.path
+      })
       return res.redirect('/admin/notice');
     })
     .catch(err => {
@@ -51,7 +59,7 @@ exports.findAll = (req, res) => {
   // "community_type": 2 (자유게시판)
   Community.findAll({ where: condition })
     .then(data => {
-//      res.send(data);
+      //      res.send(data);
       return res.render('admin/notice/index', {
         count: 1,
         data: data,
@@ -70,27 +78,32 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/notice/detail', {
-       count: 1,
-       data: [],
-       community: {},
-       id,
-     });
+  return res.render('admin/notice/detail', {
+    count: 1,
+    data: [],
+    community: {},
+    id,
+  });
 };
 
 // Find a single Community with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  
+
   Community.findByPk(id)
-    .then(data => {
+    .then(async data => {
       if (data) {
+        data.path = await Image.findOne({ where: { image_type: 6, community_id: id } }).then(result => {
+          // console.log(result.path);
+          return result?.path
+        });
+        // console.log("???", data.path);
         return res.render('admin/notice/detail', {
-                    count: 1,
-                    data: data,
-                    community: {},
-                    id,
-                  });
+          count: 1,
+          data: data,
+          community: {},
+          id,
+        });
       } else {
         res.status(404).send({
           message: `Cannot find Community with id=${id}.`
@@ -111,8 +124,24 @@ exports.update = (req, res) => {
   Community.update(req.body, {
     where: { id: id }
   })
-    .then(num => {
-      if (num == 1) {
+    .then(async num => {
+      if (num == 1 || num == 0) {
+        let image_path = req.body.path;
+        if (image_path) {
+          image = await Image.findOne({ where: { image_type: 6, community_id: id } })
+          if (image) {
+            await Image.update({ path: image_path }, { where: { image_type: 6, community_id: id } });
+          }
+          else {
+            await Image.create({
+              image_type: 6,
+              community_id: id,
+              title: "",
+              content: "",
+              path: image_path
+            })
+          }
+        }
         res.redirect('/admin/notice/detail/' + id);
       } else {
         res.send({
@@ -136,6 +165,7 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1 || num == 0) {
+        Image.destroy({ where: { community_id: id } })
         res.redirect('/admin/notice');
       } else {
         res.send({

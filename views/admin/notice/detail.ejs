@@ -102,15 +102,16 @@
                         </div>
                         <div class="col-12 ">
                           <%
-                            if(data.community_link) {
-                            let image_url = encodeURI(data.community_link.replace(/\\/g, '/'));
+                            if(data.path) {
+                            let image_url = encodeURI(data.path.replace(/\\/g, '/'));
                           %>
                           <a target="_blank" href="/<%= image_url %>">
                             <div class="card-thumbnail" style="background-image: url('/<%= image_url %>');"></div>
                           </a>
-                          <% }else{ %>
+                          <% }else{
+                            if(id){ %>
                           <div class="col-12 card-thumbnail" style="background-image: url('https://via.placeholder.com/150.jpg?text=No%20Image')"></div>
-                          <% } %>
+                          <% }} %>
                         </div>
                       </div>
                       <div class="mt-3">

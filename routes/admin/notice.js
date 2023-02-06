@@ -21,7 +21,7 @@ module.exports = app => {
   function path_injection(req, res, next) {
     console.log("notice file :", req.file);
     if (req.file) {
-      req.body.community_link = req.file.path;
+      req.body.path = req.file.path;
     }
     next()
   }
