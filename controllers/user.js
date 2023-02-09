@@ -170,8 +170,6 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  console.log(req.body);
-
   User.update(req.body, {
     where: { id: id },
   })
@@ -251,8 +249,6 @@ exports.findAllPublished = (req, res) => {
 exports.login = (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  console.log(username);
-  console.log(password);
 
   User.findOne({ where: { username: username, password: password } })
     .then((data) => {
