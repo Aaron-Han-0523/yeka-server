@@ -1,93 +1,280 @@
 <!DOCTYPE html>
 <html lang="ko">
+  <head>
+    <link rel="stylesheet" href="/css/reservation.css" />
+    <%- include("../partials/header.ejs")%>
+  </head>
 
-<head>
-  <link rel="stylesheet" href="/css/reservation.css" />
-  <%- include("../partials/header.ejs")%>
-</head>
+  <body class="layout-boxed remove-alt-menu">
+    <%- include("../partials/loader.ejs")%> <%- include("../partials/nav.ejs")%>
 
-<body class="layout-boxed remove-alt-menu">
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container sidebar-closed" id="container">
+      <div class="overlay"></div>
+      <div class="search-overlay"></div>
 
-  <%- include("../partials/loader.ejs")%>
+      <%-include("../partials/sidebar.ejs") %>
 
-  <%- include("../partials/nav.ejs")%>
-
-  <!--  BEGIN MAIN CONTAINER  -->
-  <div class="main-container sidebar-closed " id="container">
-
-    <div class="overlay"></div>
-    <div class="search-overlay"></div>
-
-    <%-include("../partials/sidebar.ejs") %>
-
-    <!--  BEGIN CONTENT AREA  -->
-    <div id="content" class="main-content">
-      <div class="layout-px-spacing">
-
-        <div class="middle-content container-xxl p-0">
-          <!-- BREADCRUMB -->
-          <div class="page-meta">
-            <nav class="breadcrumb-style-one" aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <!-- <li class="breadcrumb-item"><a href="#">Table</a></li> -->
-                <li class="breadcrumb-item active" aria-current="page">예약 관리
-                </li>
-              </ol>
-            </nav>
-          </div>
-          <!-- /BREADCRUMB -->
-
-          <div class="col-12 layout-top-spacing">
-            
-            <p id="searchCount"></p>
-          </div>
-
-          <div class="row layout-top-spacing">
-
-
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered w-auto" id="consulting_list_table">
-                <main>
-                  <div class="rap">
-                    <div class="header">
-                      <div class="btn prevDay"></div>
-                      <h2 class="dateTitle"></h2>
-                      <div class="btn nextDay"></div>
+      <!--  BEGIN CONTENT AREA  -->
+      <div id="content" class="main-content">
+        <div class="layout-px-spacing">
+          <div class="middle-content container-xxl p-0">
+            <form id="reserve" method="post" action="/admin/reservation/add">
+              <div class="row layout-top-spacing">
+                <div class="row layout-top-spacing">
+                  <div class="row layout-top-spacing">
+                    <div class="table-responsive">
+                      <table
+                        class="table table-hover table-bordered w-auto"
+                        id="consulting_list_table"
+                      >
+                        <main>
+                          <div class="rap">
+                            <div class="header">
+                              <div class="btn prevDay"></div>
+                              <h2 class="dateTitle"></h2>
+                              <div class="btn nextDay"></div>
+                            </div>
+                            <% let consultantIdList = []; %>
+                            <% data.forEach( function(item, index) { %>
+                              <% consultantIdList.push(item.id); %>
+                            <% }); %>
+                            <input type="hidden" id="consultantIdList" name="consultantIdList" id="id" value=<%=consultantIdList%>>
+                            <div class="grid dateHead">
+                              <div>일</div>
+                              <div>월</div>
+                              <div>화</div>
+                              <div>수</div>
+                              <div>목</div>
+                              <div>금</div>
+                              <div>토</div>
+                            </div>
+                            <div class="grid dateBoard"></div>
+                          </div>
+                        </main>
+                      </table>
                     </div>
-            
-                    <div class="grid dateHead">
-                      <div>일</div>
-                      <div>월</div>
-                      <div>화</div>
-                      <div>수</div>
-                      <div>목</div>
-                      <div>금</div>
-                      <div>토</div>
-                    </div>
-                    <div class="grid dateBoard"></div>
                   </div>
-                </main>
-            </div>
-
+                  <div>
+                    <h2>오전</h2>
+                    <!-- <pre id='result'></pre> flipButtonCheck 확인용 --> 
+                    <ul class="tg-list">
+                      <li class="tg-list-item">
+                        <h4>07:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b07"
+                          name="time"
+                          value="07:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b07"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>08:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b08"
+                          name="time"
+                          value="08:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b08"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>09:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b09"
+                          type="checkbox"
+                          value="09:00:00"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b09"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>10:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b10"
+                          value="10:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b10"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>11:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b11"
+                          value="11:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b11"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>12:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b12"
+                          value="12:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b12"
+                        ></label>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h2>오후</h2>
+                    <ul class="tg-list">
+                      <li class="tg-list-item">
+                        <h4>13:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b13"
+                          value="13:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b13"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>14:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b14"
+                          value="14:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b14"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>15:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b15"
+                          value="15:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b15"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>16:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b16"
+                          value="16:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b16"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>17:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b17"
+                          value="17:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b17"
+                        ></label>
+                      </li>
+                      <li class="tg-list-item">
+                        <h4>18:00</h4>
+                        <input
+                          class="tgl tgl-flip"
+                          id="b18"
+                          value="18:00:00"
+                          type="checkbox"
+                          onclick="flipButtonCheck()"
+                        /><label
+                          class="tgl-btn"
+                          data-tg-off="Nope"
+                          data-tg-on="Yeah!"
+                          for="b18"
+                        ></label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <br /><br />
+              <button
+                class="w-btn w-btn-brown"
+                type="button"
+                onclick="dataProcessing()"
+                ;
+              >
+                등록하기
+              </button>
+            </form>
           </div>
-
         </div>
-
       </div>
       <script src="/js/reservation.js"></script>
       <%- include("../partials/footer.ejs") %>
     </div>
+
     <!--  END CONTENT AREA  -->
-  </div>
-  <!-- END MAIN CONTAINER -->
 
-  <%- include("../partials/commonScrpits.ejs") %>
+    <!-- END MAIN CONTAINER -->
 
-  <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-  
-  <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-</body>
+    <%- include("../partials/commonScrpits.ejs") %>
 
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+  </body>
 </html>
-

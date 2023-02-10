@@ -118,6 +118,7 @@ require("./routes/admin/freeboard")(app);
 require("./routes/admin/youtube")(app);
 require("./routes/admin/consultant")(app);
 require("./routes/admin/personal_color")(app);
+require("./routes/admin/reservation")(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
