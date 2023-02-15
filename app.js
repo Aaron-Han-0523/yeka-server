@@ -83,6 +83,7 @@ app.use(
   express.static(path.join(process.cwd(), UPLOADFILES_ROOT))
 );
 
+require("./routes/config")(app);
 require("./routes/community")(app);
 require("./routes/consulting")(app);
 require("./routes/image")(app);
@@ -104,6 +105,7 @@ app.use((req, res, next) => {
   }
 });
 
+require("./routes/admin/config")(app);
 require("./routes/admin/community")(app);
 require("./routes/admin/consulting")(app);
 require("./routes/admin/image")(app);
@@ -118,7 +120,6 @@ require("./routes/admin/freeboard")(app);
 require("./routes/admin/youtube")(app);
 require("./routes/admin/consultant")(app);
 require("./routes/admin/personal_color")(app);
-require("./routes/admin/reservation")(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

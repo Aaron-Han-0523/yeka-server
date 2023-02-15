@@ -82,6 +82,22 @@ exports.findEmpty = (req, res) => {
 
 // Find a single Community with an id
 exports.findOne = (req, res) => {
+  // User.findByPk(id)
+  //   .then(data => {
+  //     if (data) {
+  //       const menu = db.menu.findAll({ where: { consultant_id: id } });
+  //       const portfolio = db.image.findAll({ where: { image_type: 3, consultant_id: id } });
+  //       const total_sales_amount = db.consulting.sum("final_amount", { where: { consultant_id: id } });
+
+  //       Promise.all([menu, portfolio, total_sales_amount]).then(([menu, portfolio, total_sales_amount]) => {
+  //         data.total_sales_amount = total_sales_amount;
+  //         return res.render('admin/consultant/detail', {
+  //           data: data,
+  //           portfolio: portfolio || [],
+  //           menu: menu || [],
+  //           id: id,
+  //         });
+  //       })
   const id = req.params.id;
 
   sequelize.query(

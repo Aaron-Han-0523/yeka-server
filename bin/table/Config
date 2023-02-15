@@ -1,0 +1,7 @@
+int id
+String week_setting
+String start_time
+String end_time
+String create_date
+String update_date
+String delete_date
