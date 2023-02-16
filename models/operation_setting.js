@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
-    "config",
+    "operation_setting",
     {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -39,7 +39,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       sequelize,
-      tableName: "config",
+      tableName: "operation_setting",
       timestamps: false,
       indexes: [
         {

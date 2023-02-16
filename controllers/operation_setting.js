@@ -1,8 +1,8 @@
 const db = require("../models");
-const Config = db.config;
+const operation_setting = db.operation_setting;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Config
+// Create and Save a new operation_setting
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
@@ -16,23 +16,22 @@ exports.create = (req, res) => {
   let start_time = req.body.start_time;
   let end_time = req.body.end_time;
 
-  console.log(week_setting, start_time, end_time);
-  // Create a Config
-  const config = {
+  // Create a operation_setting
+  const operation_setting = {
     week_setting: req.body.week_setting,
     start_time: req.body.start_time,
     end_time: req.body.end_time,
   };
 
-  // Save Config in the database
-  Config.create(config)
+  // Save operation_setting in the database
+  operation_setting.create(operation_setting)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Config."
+          err.message || "Some error occurred while creating the operation_setting."
       });
     });
 };
@@ -44,7 +43,7 @@ exports.findAll = (req, res) => {
 
   db.user.findAll({ where: {user_type: 1} })
     .then(data => {
-      return res.render('admin/config/index', {
+      return res.render('admin/operation_setting/index', {
         count: 1,
         data: data,
         image: {}
@@ -54,12 +53,12 @@ exports.findAll = (req, res) => {
       console.log(err);
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving config."
+          err.message || "Some error occurred while retrieving operation_setting."
       });
     });
 };
 
-// Find a single Config with an id
+// Find a single operation_setting with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
   const limit = req.params.limit;
@@ -69,7 +68,7 @@ exports.findOne = (req, res) => {
     offset = 10 * (pageNum - 1);
   }
 
-  Config.findAndCountAll({
+  operation_setting.findAndCountAll({
     // where: { consultant_id: id },
     offset: offset,
     limit: limit,
@@ -86,59 +85,59 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a Config by the id in the request
+// Update a operation_setting by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Config.update(req.body, {
+  operation_setting.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Config was updated successfully."
+          message: "operation_setting was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Config with id=${id}. Maybe Config was not found or req.body is empty!`
+          message: `Cannot update operation_setting with id=${id}. Maybe operation_setting was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Config with id=" + id
+        message: "Error updating operation_setting with id=" + id
       });
     });
 };
 
-// Delete a Config with the specified id in the request
+// Delete a operation_setting with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Config.destroy({
+  operation_setting.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Config was deleted successfully!"
+          message: "operation_setting was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Config with id=${id}. Maybe Config was not found!`
+          message: `Cannot delete operation_setting with id=${id}. Maybe operation_setting was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Config with id=" + id
+        message: "Could not delete operation_setting with id=" + id
       });
     });
 };
 
 // Delete all Communities from the database.
 exports.deleteAll = (req, res) => {
-  Config.destroy({
+  operation_setting.destroy({
     where: {},
     truncate: false
   })
@@ -153,9 +152,9 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// find all published Config
+// find all published operation_setting
 exports.findAllPublished = (req, res) => {
-  Config.findAll({ where: { published: true } })
+  operation_setting.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })

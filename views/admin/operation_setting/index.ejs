@@ -24,7 +24,7 @@
               <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">
-                    <a href="/admin/config">운영시간 설정</a>
+                    <a href="/admin/operation_setting">운영시간 설정</a>
                   </li>
                   <!-- <li class="breadcrumb-item active" aria-current="page">
                     
@@ -38,7 +38,7 @@
               <div class="col-12 layout-top-spacing">
                 <div class="col-12">
                   <!-- Post Form -->
-                  <form action="/admin/config/add" method="post">
+                  <form action="/admin/operation_setting/add" method="post">
                     <div class="statbox widget box box-shadow">
                       <div class="widget-content widget-content-area">
                         <div class="form-group row mb-4">
@@ -53,12 +53,12 @@
                               <div
                                 class="form-check form-check-primary form-check-inline"
                               >
-                                <% if(data == null) data = [{ week_setting :
+                                <% if(data.length == 0) data = [{ week_setting :
                                 "0000000", start_time : "9", end_time : "18" }]
                                 %> <input class="form-check-input"
-                                type="checkbox" value="" id="form-check-primary"
+                                type="checkbox" value="" id="sun"
                                 <% if(data[0].week_setting[0] == '1') { %>
-                                checked <% } %> onclick="convert_week_setting();" />
+                                checked <% } %> />
                                 <label
                                   class="form-check-label"
                                   for="form-check-primary"
@@ -71,9 +71,9 @@
                                 class="form-check form-check-info form-check-inline"
                               >
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="form-check-info" <%
-                                if(data[0].week_setting[1] == '1') { %>
-                                checked <% } %> onclick="convert_week_setting();" />
+                                value="" id="mon" <%
+                                if(data[0].week_setting[1] == '1') { %> checked
+                                <% } %> onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
                                   for="form-check-info"
@@ -86,9 +86,9 @@
                                 class="form-check form-check-success form-check-inline"
                               >
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="form-check-success" <%
-                                if(data[0].week_setting[2] == '1') { %>
-                                checked <% } %> onclick="convert_week_setting();" />
+                                value="" id="tue" <%
+                                if(data[0].week_setting[2] == '1') { %> checked
+                                <% } %> onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
                                   for="form-check-success"
@@ -101,9 +101,9 @@
                                 class="form-check form-check-danger form-check-inline"
                               >
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="form-check-danger" <%
-                                if(data[0].week_setting[3] == '1') { %>
-                                checked <% } %> onclick="convert_week_setting();" />
+                                value="" id="wed" <%
+                                if(data[0].week_setting[3] == '1') { %> checked
+                                <% } %> onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
                                   for="form-check-danger"
@@ -116,9 +116,9 @@
                                 class="form-check form-check-secondary form-check-inline"
                               >
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="form-check-secondary" <%
-                                if(data[0].week_setting[4] == '1') { %>
-                                checked <% } %> onclick="convert_week_setting();" />
+                                value="" id="thu" <%
+                                if(data[0].week_setting[4] == '1') { %> checked
+                                <% } %> onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
                                   for="form-check-secondary"
@@ -131,9 +131,9 @@
                                 class="form-check form-check-warning form-check-inline"
                               >
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="form-check-warning" <%
-                                if(data[0].week_setting[5] == '1') { %>
-                                checked <% } %> onclick="convert_week_setting();" />
+                                value="" id="fri" <%
+                                if(data[0].week_setting[5] == '1') { %> checked
+                                <% } %> onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
                                   for="form-check-warning"
@@ -146,9 +146,9 @@
                                 class="form-check form-check-dark form-check-inline"
                               >
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="form-check-dark" <%
-                                if(data[0].week_setting[6] == '1') { %>
-                                checked <% } %> onclick="convert_week_setting();" />
+                                value="" id="sat" <%
+                                if(data[0].week_setting[6] == '1') { %> checked
+                                <% } %> onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
                                   for="form-check-dark"
@@ -201,7 +201,7 @@
                           type="hidden"
                           id="week_setting"
                           name="week_setting"
-                          value="<%= data[0].week_setting %>"
+                          value=""
                         />
                         <div class="row layout-top-spacing">
                           <div class="col-12">
@@ -243,18 +243,28 @@
 </html>
 <script>
   function convert_week_setting() {
-    let checks = document.querySelectorAll(".form-check-input");
+    let checks = [];
+    checks.push(document.getElementById("sun").checked);
+    checks.push(document.getElementById("mon").checked);
+    checks.push(document.getElementById("tue").checked);
+    checks.push(document.getElementById("wed").checked);
+    checks.push(document.getElementById("thu").checked);
+    checks.push(document.getElementById("fri").checked);
+    checks.push(document.getElementById("sat").checked);
+
     let week_setting = "";
-    for(let i = 0; i < checks.length; i++) {
-      if(checks[i].getAttribute("checked") == null) {
-        week_setting += "0"
+    for (let i = 0; i < checks.length; i++) {
+      if (checks[i] == false) {
+        week_setting += "0";
       } else {
-        week_setting += "1"
+        week_setting += "1";
       }
 
-      console.log(checks[i]);
-      console.log(checks[i].getAttribute("checked"));
+      
+      // console.log(checks[i].getAttribute("checked"));
     }
     document.getElementById("week_setting").value = week_setting;
+    console.log(week_setting);
+
   }
 </script>

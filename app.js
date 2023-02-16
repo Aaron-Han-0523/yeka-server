@@ -83,7 +83,7 @@ app.use(
   express.static(path.join(process.cwd(), UPLOADFILES_ROOT))
 );
 
-require("./routes/config")(app);
+require("./routes/operation_setting")(app);
 require("./routes/community")(app);
 require("./routes/consulting")(app);
 require("./routes/image")(app);
@@ -105,7 +105,7 @@ app.use((req, res, next) => {
   }
 });
 
-require("./routes/admin/config")(app);
+require("./routes/admin/operation_setting")(app);
 require("./routes/admin/community")(app);
 require("./routes/admin/consulting")(app);
 require("./routes/admin/image")(app);

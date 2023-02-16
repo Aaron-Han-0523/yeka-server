@@ -1,8 +1,8 @@
 const db = require("../../models");
-const Config = db.config;
+const OperationSetting = db.operation_setting;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Config
+// Create and Save a new OperationSetting
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.start_time) {
@@ -12,26 +12,23 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Config
-  const config = {
+  // Create a OperationSetting
+  const operation_setting = {
     id: null,
     week_setting: req.body.week_setting,
     start_time: req.body.start_time,
     end_time: req.body.end_time,
   };
 
-  console.log("=====");
-  console.log(config);
-
-  // Save Config in the database
-  Config.create(config)
+  // Save operation_setting in the database
+  OperationSetting.create(operation_setting)
     .then(data => {
-      return res.redirect('/admin/config');
+      return res.redirect('/admin/operation_setting');
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Config."
+          err.message || "Some error occurred while creating the OperationSetting."
       });
     });
 };
@@ -39,16 +36,16 @@ exports.create = (req, res) => {
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
 
-  Config.findAll()
+  OperationSetting.findAll()
     .then(data => {
-      return res.render('admin/config/index', {
+      return res.render('admin/operation_setting/index', {
         data: data
     })
   })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving config."
+          err.message || "Some error occurred while retrieving operation_setting."
       });
     });
 };
@@ -57,108 +54,108 @@ exports.findAll = (req, res) => {
 exports.findEmpty = (req, res) => {
   const id = req.params.id;
 
-   return res.render('admin/config/detail', {
+   return res.render('admin/operation_setting/detail', {
        count: 1,
        data: [],
-       config: {},
+       operation_setting: {},
        id,
      });
 };
 
-// Find a single Config with an id
+// Find a single OperationSetting with an id
 exports.findOne = (req, res) => {
   // const id = req.params.id;
   
-  Config.findOne()
+  OperationSetting.findOne()
     .then(data => {
-        return res.render('admin/config/detail', {
+        return res.render('admin/operation_setting/detail', {
                     count: 1,
                     data: data,
-                    config: {},
+                    operation_setting: {},
     });
       })
       
     
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Config with id=" + id
+        message: "Error retrieving OperationSetting with id=" + id
       });
     });
 };
 
-// Update a Config by the id in the request
+// Update a OperationSetting by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Config.update(req.body, {
+  OperationSetting.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1 || num == 0) {
-        res.redirect('/admin/config/detail/' + id);
+        res.redirect('/admin/operation_setting/detail/' + id);
       } else {
         res.send({
-          message: `Cannot update Config with id=${id}. Maybe Config was not found or req.body is empty!`
+          message: `Cannot update OperationSetting with id=${id}. Maybe OperationSetting was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Config with id=" + id
+        message: "Error updating OperationSetting with id=" + id
       });
     });
 };
 
-// Delete a Config with the specified id in the request
+// Delete a OperationSetting with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Config.destroy({
+  OperationSetting.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
-        res.redirect('/admin/config');
+        res.redirect('/admin/operation_setting');
       } else {
         res.send({
-          message: `Cannot delete Config with id=${id}. Maybe Config was not found!`
+          message: `Cannot delete OperationSetting with id=${id}. Maybe OperationSetting was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Config with id=" + id
+        message: "Could not delete OperationSetting with id=" + id
       });
     });
 };
 
-// Delete all Configs from the database.
+// Delete all OperationSettings from the database.
 exports.deleteAll = (req, res) => {
-  Config.destroy({
+  OperationSetting.destroy({
     where: {},
     truncate: false
   })
     .then(numbers => {
-      res.send({ message: `${numbers} Configs were deleted successfully!` });
+      res.send({ message: `${numbers} OperationSettings were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all configs."
+          err.message || "Some error occurred while removing all operation_settings."
       });
     });
 };
 
-// find all published Config
+// find all published OperationSetting
 exports.findAllPublished = (req, res) => {
-  Config.findAll({ where: { published: true } })
+  OperationSetting.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Configs."
+          err.message || "Some error occurred while retrieving OperationSettings."
       });
     });
 };

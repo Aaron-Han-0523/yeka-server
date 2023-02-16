@@ -64,7 +64,6 @@ exports.findAllById = (req, res) => {
     limit: parseInt(limit),
   })
     .then((data) => {
-      console.log(data);
       res.send(data);
     })
     .catch((err) => {
