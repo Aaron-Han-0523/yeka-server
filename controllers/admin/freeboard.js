@@ -82,51 +82,32 @@ exports.findEmpty = (req, res) => {
 
 // Find a single Community with an id
 exports.findOne = (req, res) => {
-  // User.findByPk(id)
-  //   .then(data => {
-  //     if (data) {
-  //       const menu = db.menu.findAll({ where: { consultant_id: id } });
-  //       const portfolio = db.image.findAll({ where: { image_type: 3, consultant_id: id } });
-  //       const total_sales_amount = db.consulting.sum("final_amount", { where: { consultant_id: id } });
-
-  //       Promise.all([menu, portfolio, total_sales_amount]).then(([menu, portfolio, total_sales_amount]) => {
-  //         data.total_sales_amount = total_sales_amount;
-  //         return res.render('admin/consultant/detail', {
-  //           data: data,
-  //           portfolio: portfolio || [],
-  //           menu: menu || [],
-  //           id: id,
-  //         });
-  //       })
+  
   const id = req.params.id;
 
-  sequelize.query(
-    "select * from yeka.community a left join yeka.image b on a.id = b.community_id where a.id = "
-    + 
-    id,
-    { type: QueryTypes.SELECT}
-  )
-    .then(data => {
-      console.log
-      if (data) {
-        console.log(data)
+  Community.findByPk(id)
+  .then(data => {
+    if(data) {
+      const images = db.image.findAll({ where : { image_type: 7, community_id: id } });
+      Promise.all([images]).then(([images]) => {
         return res.render('admin/freeboard/detail', {
           count: 1,
-          data: data[0],
-          community: {},
-          id
+          data: data,
+          images: images || [],
+          id: id,
         });
-      } else {
-        res.status(404).send({
-          message: `Cannot find Community with id=${id}.`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Community with id=" + id
       });
+    } else {
+      res.status(404).send({
+        message: `Cannot find Community with id=${id}.`
+      });
+    }
+  }).catch(err => {
+    console.log(err);
+    res.status(500).send({
+      message: "Error retrieving Community with id=" + id
     });
+  });
 };
 
 // Update a Community by the id in the request
