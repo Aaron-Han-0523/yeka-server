@@ -1,8 +1,8 @@
 const db = require("../models");
-const operation_setting = db.operation_setting;
+const OperationSetting = db.operation_setting;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new operation_setting
+// Create and Save a new OperationSetting
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
@@ -16,49 +16,45 @@ exports.create = (req, res) => {
   let start_time = req.body.start_time;
   let end_time = req.body.end_time;
 
-  // Create a operation_setting
+  // Create a OperationSetting
   const operation_setting = {
     week_setting: req.body.week_setting,
     start_time: req.body.start_time,
     end_time: req.body.end_time,
   };
 
-  // Save operation_setting in the database
-  operation_setting.create(operation_setting)
+  // Save OperationSetting in the database
+  OperationSetting.create(operation_setting)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the operation_setting."
+          err.message || "Some error occurred while creating the OperationSetting."
       });
     });
 };
 
 // Retrieve all Communities from the database.
 exports.findAll = (req, res) => {
-  // const title = req.query.title;
-  // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-
-  db.user.findAll({ where: {user_type: 1} })
-    .then(data => {
-      return res.render('admin/operation_setting/index', {
-        count: 1,
-        data: data,
-        image: {}
+    OperationSetting.findOne({
+      order: [['id', 'desc']],
+    }
+    )
+      .then(data => {
+        return res.send(data);
     })
-  })
     .catch(err => {
       console.log(err);
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving operation_setting."
+          err.message || "Some error occurred while retrieving OperationSetting."
       });
     });
 };
 
-// Find a single operation_setting with an id
+// Find a single OperationSetting with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
   const limit = req.params.limit;
@@ -68,7 +64,7 @@ exports.findOne = (req, res) => {
     offset = 10 * (pageNum - 1);
   }
 
-  operation_setting.findAndCountAll({
+  OperationSetting.findAndCountAll({
     // where: { consultant_id: id },
     offset: offset,
     limit: limit,
@@ -89,55 +85,55 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  operation_setting.update(req.body, {
+  OperationSetting.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "operation_setting was updated successfully."
+          message: "OperationSetting was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update operation_setting with id=${id}. Maybe operation_setting was not found or req.body is empty!`
+          message: `Cannot update OperationSetting with id=${id}. Maybe OperationSetting was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating operation_setting with id=" + id
+        message: "Error updating OperationSetting with id=" + id
       });
     });
 };
 
-// Delete a operation_setting with the specified id in the request
+// Delete a OperationSetting with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  operation_setting.destroy({
+  OperationSetting.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "operation_setting was deleted successfully!"
+          message: "OperationSetting was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete operation_setting with id=${id}. Maybe operation_setting was not found!`
+          message: `Cannot delete OperationSetting with id=${id}. Maybe OperationSetting was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete operation_setting with id=" + id
+        message: "Could not delete OperationSetting with id=" + id
       });
     });
 };
 
 // Delete all Communities from the database.
 exports.deleteAll = (req, res) => {
-  operation_setting.destroy({
+  OperationSetting.destroy({
     where: {},
     truncate: false
   })
@@ -152,9 +148,9 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// find all published operation_setting
+// find all published OperationSetting
 exports.findAllPublished = (req, res) => {
-  operation_setting.findAll({ where: { published: true } })
+  OperationSetting.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })

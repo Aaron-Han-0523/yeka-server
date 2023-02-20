@@ -51,108 +51,98 @@
                             </div>
                             <div class="col-12">
                               <div
-                                class="form-check form-check-primary form-check-inline"
-                              >
-                                <% if(data.length == 0) data = [{ week_setting :
+                                class="form-check form-check-primary form-check-inline">
+                                <% if(data.length == 0) data = [{ id: "", week_setting :
                                 "0000000", start_time : "9", end_time : "18" }]
-                                %> <input class="form-check-input"
-                                type="checkbox" value="" id="sun"
-                                <% if(data[0].week_setting[0] == '1') { %>
-                                checked <% } %> />
+                                %> 
+                                
+                                <input type="hidden" id="id" value="<%= data[0].id %>">
+                            
+                                <input class="form-check-input"
+                                type="checkbox" value="" id="sun" <%
+                                if(data[0].week_setting[0] == '1') { %> checked
+                                <% } %> />
                                 <label
                                   class="form-check-label"
-                                  for="form-check-primary"
-                                >
+                                  for="form-check-primary">
                                   일
                                 </label>
                               </div>
 
                               <div
-                                class="form-check form-check-info form-check-inline"
-                              >
+                                class="form-check form-check-info form-check-inline">
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="mon" <%
-                                if(data[0].week_setting[1] == '1') { %> checked
-                                <% } %> onclick="convert_week_setting();" />
+                                value="" id="mon" <% if(data[0].week_setting[1]
+                                == '1') { %> checked <% } %>
+                                onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
-                                  for="form-check-info"
-                                >
+                                  for="form-check-info">
                                   월
                                 </label>
                               </div>
 
                               <div
-                                class="form-check form-check-success form-check-inline"
-                              >
+                                class="form-check form-check-success form-check-inline">
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="tue" <%
-                                if(data[0].week_setting[2] == '1') { %> checked
-                                <% } %> onclick="convert_week_setting();" />
+                                value="" id="tue" <% if(data[0].week_setting[2]
+                                == '1') { %> checked <% } %>
+                                onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
-                                  for="form-check-success"
-                                >
+                                  for="form-check-success">
                                   화
                                 </label>
                               </div>
 
                               <div
-                                class="form-check form-check-danger form-check-inline"
-                              >
+                                class="form-check form-check-danger form-check-inline">
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="wed" <%
-                                if(data[0].week_setting[3] == '1') { %> checked
-                                <% } %> onclick="convert_week_setting();" />
+                                value="" id="wed" <% if(data[0].week_setting[3]
+                                == '1') { %> checked <% } %>
+                                onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
-                                  for="form-check-danger"
-                                >
+                                  for="form-check-danger">
                                   수
                                 </label>
                               </div>
 
                               <div
-                                class="form-check form-check-secondary form-check-inline"
-                              >
+                                class="form-check form-check-secondary form-check-inline">
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="thu" <%
-                                if(data[0].week_setting[4] == '1') { %> checked
-                                <% } %> onclick="convert_week_setting();" />
+                                value="" id="thu" <% if(data[0].week_setting[4]
+                                == '1') { %> checked <% } %>
+                                onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
-                                  for="form-check-secondary"
-                                >
+                                  for="form-check-secondary">
                                   목
                                 </label>
                               </div>
 
                               <div
-                                class="form-check form-check-warning form-check-inline"
-                              >
+                                class="form-check form-check-warning form-check-inline">
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="fri" <%
-                                if(data[0].week_setting[5] == '1') { %> checked
-                                <% } %> onclick="convert_week_setting();" />
+                                value="" id="fri" <% if(data[0].week_setting[5]
+                                == '1') { %> checked <% } %>
+                                onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
-                                  for="form-check-warning"
-                                >
+                                  for="form-check-warning">
                                   금
                                 </label>
                               </div>
 
                               <div
-                                class="form-check form-check-dark form-check-inline"
-                              >
+                                class="form-check form-check-dark form-check-inline">
                                 <input class="form-check-input" type="checkbox"
-                                value="" id="sat" <%
-                                if(data[0].week_setting[6] == '1') { %> checked
-                                <% } %> onclick="convert_week_setting();" />
+                                value="" id="sat" <% if(data[0].week_setting[6]
+                                == '1') { %> checked <% } %>
+                                onclick="convert_week_setting();" />
                                 <label
                                   class="form-check-label"
-                                  for="form-check-dark"
-                                >
+                                  for="form-check-dark">
                                   토
                                 </label>
                               </div>
@@ -163,7 +153,7 @@
                             <div class="col-12">
                               <label
                                 class="col-sm-2 col-form-label col-form-label-sm"
-                                >시작시간</label
+                                >상담 시작 시간</label
                               >
                             </div>
                             <div class="col-12">
@@ -173,8 +163,7 @@
                                 name="start_time"
                                 placeholder=""
                                 class="form-control"
-                                value="<%= data[0].start_time %>"
-                              />
+                                value="<%= data[0].start_time %>" />
                             </div>
                           </div>
 
@@ -182,7 +171,7 @@
                             <div class="col-12">
                               <label
                                 class="col-sm-2 col-form-label col-form-label-sm"
-                                >종료시간</label
+                                >마지막 상담 시간</label
                               >
                             </div>
                             <div class="col-12">
@@ -192,8 +181,7 @@
                                 name="end_time"
                                 placeholder=""
                                 class="form-control"
-                                value="<%= data[0].end_time %>"
-                              />
+                                value="<%= data[0].end_time %>" />
                             </div>
                           </div>
                         </div>
@@ -201,23 +189,21 @@
                           type="hidden"
                           id="week_setting"
                           name="week_setting"
-                          value=""
-                        />
+                          value="" />
                         <div class="row layout-top-spacing">
                           <div class="col-12">
                             <div class="form-group">
                               <button
                                 id="enrol"
-                                class="btn btn-outline-success mb-2 me-4"
-                              >
+                                class="btn btn-outline-success mb-2 me-4">
                                 등록하기
                               </button>
+
                               <button
                                 class="btn btn-outline-danger mb-2 me-4"
                                 type="button"
-                                onclick="cancel()"
-                              >
-                                취소
+                                onclick="cancel()">
+                                취소하기
                               </button>
                             </div>
                           </div>
@@ -259,12 +245,17 @@
       } else {
         week_setting += "1";
       }
-
-      
-      // console.log(checks[i].getAttribute("checked"));
     }
     document.getElementById("week_setting").value = week_setting;
     console.log(week_setting);
-
+    let = a;
   }
+  // function delOk() {
+  //   if (!confirm("삭제하시면 복구할수 없습니다. \n정말로 삭제하시겠습니까??")) {S
+  //     return false;
+  //   } else {
+  //     let id = document.getElementById("id").value;
+  //     location.href = "/admin/operation_setting/delete/${id}";
+  //   }
+  // }
 </script>

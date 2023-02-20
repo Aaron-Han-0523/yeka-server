@@ -35,7 +35,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-
+    
   OperationSetting.findAll()
     .then(data => {
       return res.render('admin/operation_setting/index', {

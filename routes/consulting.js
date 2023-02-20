@@ -21,6 +21,9 @@ module.exports = (app) => {
   // Retrieve all Consulting
   router.get("/client/:id", consulting.findOneByClientId);
 
+  // Retrieve a all OperationSetting with id
+  router.get("/list/:id", consulting.findAllByConsultantId);
+
   // Update a Consulting with id
   router.put("/:id", consulting.update);
 

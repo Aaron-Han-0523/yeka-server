@@ -22,6 +22,7 @@ exports.create = (req, res) => {
     client_image: req.body.client_image,
     client_phone: req.body.client_phone,
     reservation_date: req.body.reservation_date,
+    reservation_time: req.body.reservation_time,
     consulting_title: req.body.consulting_title,
     payment_status: req.body.payment_status,
     consulting_status: req.body.consulting_status,
@@ -34,12 +35,15 @@ exports.create = (req, res) => {
     final_amount: req.body.final_amount,
   };
 
+  console.log(consulting);
+
   // Save Consulting in the database
   Consulting.create(consulting)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
+      console.log(err)
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Consulting.",
@@ -147,6 +151,26 @@ exports.findOneByClientId = (req, res) => {
         message: "Error retrieving Consulting with id=" + id,
       });
     });
+};
+
+// Retrieve all Communities from the database.
+exports.findAllByConsultantId = (req, res) => {
+  let id = req.params.id;
+
+  // where: { [Op.and]:[ { user_id: id }, { image_type: image_type} ]}, 
+  Consulting.findAll({
+    where: { consultant_id: id } 
+  })
+    .then(data => {
+      return res.send(data);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving OperationSetting."
+    });
+  });
 };
 
 // Update a Consulting by the id in the request

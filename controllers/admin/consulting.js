@@ -119,6 +119,8 @@ exports.update = (req, res) => {
       }
     })
     .catch(err => {
+      console.log(err);
+      
       res.status(500).send({
         message: "Error updating Consulting with id=" + id
       });

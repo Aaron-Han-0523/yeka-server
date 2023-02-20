@@ -50,6 +50,11 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: true,
         comment: "예약일",
       },
+      reservation_time: {
+        type: DataTypes.STRING(12),
+        allowNull: true,
+        comment: "예약시간",
+      },
       consulting_title: {
         type: DataTypes.STRING(255),
         allowNull: false,
